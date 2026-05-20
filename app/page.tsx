@@ -1,65 +1,140 @@
-import Image from "next/image";
+"use client";
+import Card from "@/components/card";
+import { RawgGame, RawgResponse } from "@/rawg.games.type";
+import { useEffect, useState } from "react";
+import { useDebounce } from "react-use";
+import { BiSearch } from "react-icons/bi";
+import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+if (!BASE_URL) {
+  throw new Error("BASE_URL cannot be fetched from environment variable");
 }
+
+const CardDetail = () => {
+  const [games, setGames] = useState<RawgGame[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [debounceSearch, setDebounceSearch] = useState("");
+
+  // const handleScroll = (e: Event) => {
+  //   console.log("Scrolling...", e.target);
+  // };
+
+  // useEffect(() => {
+  //   if(typeof window !== 'undefined'){
+  //     // const master = window.getElementById("master");
+  //     // if(!master) return
+  //     window.addEventListener("scrollend", handleScroll);
+  //     return () => window.removeEventListener("scrollend", handleScroll);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    const pull = async () => {
+      const res = await fetch(`${BASE_URL}/api/games/`);
+      const fetched = await res.json();
+      const RAWG = (fetched as RawgResponse).results;
+      setGames(RAWG);
+    };
+    pull();
+  }, []);
+
+  const searchGames = async (pageNum: number, search: string = "") => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({
+        page: pageNum.toString(),
+        page_size: "40",
+      });
+
+      if (search) {
+        params.append("search", search);
+      }
+
+      const res = await fetch(`${BASE_URL}/api/games/?${params}`);
+      const fetched = await res.json();
+      const rawg = (fetched as RawgResponse).results;
+      if (rawg) {
+        setGames(rawg);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useDebounce(() => setDebounceSearch(search), 450, [search]);
+
+  useEffect(() => {
+    setPage(1);
+    searchGames(1, debounceSearch);
+  }, [debounceSearch]);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    searchGames(newPage, debounceSearch);
+  };
+
+  return (
+    <>
+      <div className="font-play text-center w-full h-10 text-3xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text">
+        Find Your favourite Games
+      </div>
+      <div className="flex flex-row justify-center w-full my-5">
+        <div className="flex flex-row w-[30%] bg-[#323232] h-10 rounded-2xl sm: max-sm:w-[65%] sm: max-sm:h-9">
+          <BiSearch
+            className="text-white text-2xl mt-2 ml-3 cursor-pointer sm: max-sm:text-xl"
+            onClick={() => searchGames(page, debounceSearch)}
+          />
+          <input
+            className="font-grotesk text-sm text-white w-full ml-2.5 h-full focus:outline-0 sm: max-sm:ml-2 sm: max-sm:text-xs"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search for latest games"
+          />
+        </div>
+      </div>
+      <ul className="grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-1 p-2">
+        {games &&
+          games.length > 0 &&
+          games.map((g) => (
+            <li key={g.id}>
+              <Card {...g} />
+            </li>
+          ))}
+      </ul>
+      <div className="flex flex-row justify-evenly w-full my-10">
+        <div className="flex flex-row rounded-xl transition-all duration-300 hover:shadow-xs shadow-gray-800 cursor-pointer">
+          {page >= 2 && (
+            <GrLinkPrevious className="text-white flex flex-row self-center ml-2" />
+          )}
+          <button
+            className="font-cause text-sm h-10 w-28 disabled:opacity-10"
+            onClick={() => handlePageChange(page - 1)}
+            disabled={loading || page === 1}
+            type="button"
+          >
+            Previous page
+          </button>
+        </div>
+        <div className="flex flex-row rounded-xl transition-all duration-300 hover:shadow-xs shadow-gray-800">
+          <button
+            className="font-cause text-sm h-10 w-23 hover:cursor-pointer"
+            onClick={() => handlePageChange(page + 1)}
+            disabled={loading}
+            type="button"
+          >
+            Next page
+          </button>
+          <GrLinkNext className="text-white flex flex-row self-center mr-2" />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default CardDetail;

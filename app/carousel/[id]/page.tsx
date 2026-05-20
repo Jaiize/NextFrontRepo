@@ -1,0 +1,213 @@
+"use client"
+
+import { RawgClickGames } from "@/rawg.games.type";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { BsNintendoSwitch } from "react-icons/bs";
+import { FaApple, FaLinux, FaPlaystation, FaStar, FaSteam, FaWindows, FaXbox } from "react-icons/fa6";
+import { SiEpicgames } from "react-icons/si";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
+  const [game, setGame] = useState<RawgClickGames>({})
+
+  // Mobile-checking mechanism
+  // const ua = navigator.userAgent;
+  // const touch = navigator.maxTouchPoints > 0;
+  // const winTouch = 'ontouchstart' in window;
+  // const coarse = window.matchMedia('(pointer: coarse)').matches;
+  // const screen = window.innerWidth < 768;
+
+  
+  useEffect(() => {
+    const pullOne = async () => {
+      const { id } = await params;
+      const res = await fetch(`${BASE_URL}/api/games/one/${id}`);
+      const fetched = await res.json();
+      const game = (fetched as RawgClickGames);
+      setGame(game)
+    }
+    pullOne();
+    
+  }, [params])
+
+  const {background_image, name, slug, background_image_additional, description_raw, platforms, genres, stores, rating, released} = game;
+
+
+  return (
+    <>
+      <div className={`flex flex-col items-center relative justify-center overflow-hidden ${ description_raw && description_raw.length > 1500 ? 'h-220' : 'h-170'} ${ description_raw && description_raw.length > 1500 ? 'sm: max-sm:h-220' : ' sm: max-sm:h-120'}`} >
+        {background_image && 
+          <Image loading="eager" alt={name || slug} width={400} height={800} src={background_image_additional || '/Gamelike.png'} className="w-full absolute top-0 left-0 h-full opacity-15 object-cover"/>
+        }
+        <div className="font-rob text-7xl w-full absolute top-20 flex flex-row justify-center sm: max-sm:top-5 sm: max-sm:text-2xl">{name}</div>
+        <div className="w-1/2 absolute h-50 top-50 flex flex-row justify-center font-grotesk z-30 sm: max-sm:w-[80%] sm: max-sm:top-20 sm: max-sm:text-xs sm: max-sm:text-zinc-300" >
+          {description_raw && description_raw}
+        </div>
+        {background_image && 
+          <div  className="w-full h-50 absolute bg-linear-to-t from-black to-transparent bottom-0 z-10"/>
+        }
+      </div>
+
+      {/* Platforms */}
+      <div className="w-1/2 flex flex-col items-start justify-start space-y-5 mx-10 mt-10 h-auto">
+        {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
+        <div className="font-play text-xl">
+          { platforms && 'Platforms:'}
+        </div>
+        <div className="flex flex-row items-center justify-start gap-4 flex-wrap sm: max-sm:flex sm: max-sm:flex-col sm: max-sm:items-start ">
+          { platforms && platforms.some((p) => (
+            p.platform.slug.includes('pc') 
+          )) && 
+          <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between sm: max-sm:w-25 sm: max-sm:h-13">
+            <span className="text-lg font-extrabold sm: max-sm:text-sm">PC</span>
+            <FaWindows className="text-white-500 text-5xl sm: max-sm:text-4xl" />
+          </div>}
+          {platforms && platforms.some((p) => (
+            p.platform.slug.includes('playstation') 
+          )) && 
+          <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13">
+            <span className="text-lg font-extrabold sm: max-sm:text-sm">Playstation</span>
+              <FaPlaystation className="text-blue-500 text-5xl sm: max-sm:text-4xl"/>
+          </div>
+          }
+          {platforms && platforms.some((p) => (
+            p.platform.slug.includes('xbox') 
+          )) && 
+          <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between sm: max-sm:w-30 sm: max-sm:h-13">
+            <span className="text-lg font-extrabold sm: max-sm:text-sm">Xbox</span>
+            <FaXbox className="text-green-500 text-5xl sm: max-sm:text-4xl" />
+          </div>                  
+          }
+          {platforms && platforms.some((p) => (
+            p.platform.slug.includes('linux') 
+          )) && 
+            <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between sm: max-sm:w-30 sm: max-sm:h-13">
+            <span className="text-lg font-extrabold sm: max-sm:text-sm">Linux</span>
+            <FaLinux className="text-amber-300 text-5xl sm: max-sm:text-4xl"/>
+          </div>                  
+          }
+          {platforms && platforms.some((p) => (
+            p.platform.slug.includes('macos') 
+          )) && 
+            <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between sm: max-sm:w-30 sm: max-sm:h-13">
+            <span className="text-lg font-extrabold sm: max-sm:text-sm">MacOS</span>
+            <FaApple className="text-white text-5xl sm: max-sm:text-4xl"/>
+          </div>                  
+          }
+          {platforms && platforms.some((p) => (
+            p.platform.slug.includes('epic-games') 
+          )) &&
+            <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between">
+            <span className="text-lg font-extrabold">Epic Games</span>
+            <SiEpicgames className="text-white-500 mx-0.5"/>
+          </div>
+          }
+          {platforms && platforms.some((p) => (
+            p.platform.slug.includes('nintendo-switch') 
+          )) && 
+          <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between sm: max-sm:w-40 sm: max-sm:h-13">
+            <span className="text-lg font-extrabold sm: max-sm:text-sm">Nintendo</span>
+            <BsNintendoSwitch className="text-white text-5xl sm: max-sm:text-4xl"/>
+          </div>
+          }
+        </div>
+      </div>
+      {/* Stats  */}
+      {rating && 
+        <div className="w-1/2 flex flex-col space-y-10 mt-10 justify-between h-auto m-10 sm: max-sm:w-auto sm: max-sm:space-y-5">
+          <div className="flex flex-row justify-between">
+            <span className="text-zinc-200 font-play text-lg">Rating:</span>
+              <span className="text-lg text-white-600 font-grotesk">
+                <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
+              {rating}</span>
+          </div>
+          <div className="flex flex-row justify-between">
+            <span className="text-zinc-200 text-lg font-play">Genre:</span>
+            <div className="flex flex-col items-end">
+              {genres &&
+                genres.map((g) => (
+                  <span key={g.id} className="text-md text-gray-300 font-grotesk">
+                    {g.name}
+                  </span>
+                ))}
+            </div>
+          </div>
+          <div className="flex flex-row justify-between">
+            <span className="text-zinc-200 text-lg justify-start font-play">Release:</span>
+            <span className="text-gray-400 justify-end text-md font-grotesk">
+              {new Date(released).toLocaleDateString("en-US", {
+                month: "short",
+                year: "numeric",
+                day: "2-digit",
+              })}
+            </span>
+          </div>
+        </div>
+      }
+      {/* Requirements  */}
+      {platforms && platforms.some((r) => r.requirements?.minimum) &&
+        <div className="flex flex-col justify-start m-10 space-y-1.5 sm: max-sm:space-y-0">
+          {platforms && platforms.some((r) => r.requirements?.minimum) && <span className="text-zinc-300 text-xl justify-start font-play mb-3">PC Requirement:</span>}
+          {platforms && platforms.map((r, i) => <span key={i} className="text-zinc-500 text-lg font-black sm: max-sm:text-xs">{r.requirements?.minimum}</span>)}
+          {platforms && platforms.map((r, i) => <span key={i} className="text-zinc-500 text-lg font-black sm: max-sm:text-xs">{r.requirements?.recommended}</span>)}
+        </div>
+      }
+      {/* Stores  */}
+      {stores && stores.some((p) => (
+        p.store.slug.length > 0)) &&
+        <section className="w-1/2 sm: max-sm:w-full">
+          <div className="flex flex-col mx-10 items-start justify-start w-fit text-lg font-mont p-3 rounded-t-2xl bg-[#323232]/20 sm: max-sm:text-xs">
+            {stores && 'Purchase From'}
+          </div>
+          <div className="w-fit flex flex-row flex-wrap gap-3 items-start justify-start space-y-1 mx-10 h-auto border border-gray-600 p-4 mb-2 rounded-b-3xl rounded-se-3xl sm: max-sm:w-auto">
+            {stores && stores.some((p) => (
+              p.store.slug.includes('playstation') 
+            )) && 
+            <Link href={`https://store.playstation.com/en-us/search/${name}`} target="_blank">
+              <div className="bg-[#232121]/20 rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md hover:shadow-blue-600 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13">
+                <span className="text-lg cursor-pointer font-rob sm: max-sm:text-sm">PlayStation Store</span>
+                <FaPlaystation className="text-blue-500 text-5xl sm: max-sm:text-4xl"/>
+              </div>
+            </Link>
+            }
+            {stores && stores.some((p) => (
+              p.store.slug.includes('xbox') 
+            )) && 
+            <Link href={`https://www.xbox.com/en-us/Search/Results?q=${name}`} target="_blank">
+              <div className="bg-[#232121]/20 rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-3">
+                <span className="text-lg font-extrabold sm: max-sm:text-sm">Xbox Store</span>
+                <FaXbox className="text-green-500 text-5xl sm: max-sm:text-4xl" />
+              </div>                  
+            </Link>
+            }
+            {stores && stores.some((p) => (
+              p.store.slug.includes('steam') 
+            )) && 
+            <Link href={`https://store.steampowered.com/search?term=${name.replace(/(\s)/g, '+')}`} target="_blank">
+              <div className="bg-[#232121]/20 rounded-2xl cursor-pointer w-auto px-4 h-18 transition-shadow duration-300 shadow-md hover:shadow-gray-400 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-3">
+                <span className="text-lg font-extrabold sm: max-sm:text-sm">Steam</span>
+                <FaSteam className="text-shadow-white text-5xl sm: max-sm:text-4xl"/>
+              </div>                  
+            </Link>
+            }
+            {stores && stores.some((p) => (
+              p.store.slug.includes('epic-games') 
+            )) &&
+            <Link href={`https://store.epicgames.com/browse?q=${name}&sortBy=relevancy&sortDir=DESC&count=40`} target="_blank">
+              <div className="bg-[#232121]/20 cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-2.5">
+                <span className="text-lg font-extrabold text-gray-300 sm: max-sm:text-sm">Epic Games</span>
+                <SiEpicgames className="text-gray-500 text-5xl sm: max-sm:text-4xl"/>
+              </div>
+            </Link>
+            }
+          </div>
+        </section>
+      }
+    </>
+  );
+};
+
+export default GameDetail;

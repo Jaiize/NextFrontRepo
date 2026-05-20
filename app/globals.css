@@ -1,7 +1,8 @@
 @import "tailwindcss";
+/* @import "tw-animate-css"; */
 
 :root {
-  --background: #ffffff;
+  --background: #f4f4f4;
   --foreground: #171717;
 }
 
@@ -10,10 +11,23 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-inter: var(--font-inter);
+  --font-grotesk: var(--font-schibsted-grotesk);
+  --font-mont: var(--font-montserrat);
+  --font-play: var(--font-playfair-display);
+  --font-cause: var(--font-cause);
+  --font-rob: var(--font-roboto-condensed);
+  --font-super: var(--font-supermercado-one);
 }
 
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light):not(.dark) {
     --background: #0a0a0a;
     --foreground: #ededed;
   }

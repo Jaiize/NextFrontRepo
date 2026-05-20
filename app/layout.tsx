@@ -1,14 +1,69 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Inter,
+  Schibsted_Grotesk,
+  Montserrat,
+  Playfair_Display,
+  Cause,
+  Roboto_Condensed,
+  Supermercado_One,
+} from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import ThemeToggle from "@/components/themeToggle";
+
+const schibsted_grotesk = Schibsted_Grotesk({
+  variable: "--font-schibsted-grotesk",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const roboto_condensed = Roboto_Condensed({
+  variable: "--font-roboto-condensed",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const cause = Cause({
+  variable: "--font-cause",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const playfair_display = Playfair_Display({
+  variable: "--font-playfair-display",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const supermercado_one = Supermercado_One({
+  variable: "--font-supermercado-one",
+  display: "swap",
+  weight: ["400"],
   subsets: ["latin"],
 });
 
@@ -22,12 +77,37 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${supermercado_one.variable} ${roboto_condensed.variable} ${cause.variable} ${geistMono.variable} ${playfair_display.variable} ${montserrat.variable}  ${inter.variable} ${schibsted_grotesk.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+          (function() {
+            const theme = localStorage.getItem('theme')
+            if(theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+              document.documentElement.classList.add('dark')
+            }else{
+              document.documentElement.classList.remove('dark')
+            }
+          })()`,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col">
+        <nav className="h-15 w-full flex flex-row items-center justify-start gap-3 pl-2 bg-blend-color">
+          <ThemeToggle />
+          <Link href="/" className="font-grotesk">
+            {"Home"}
+          </Link>
+        </nav>
+        {children}
+      </body>
     </html>
   );
 }

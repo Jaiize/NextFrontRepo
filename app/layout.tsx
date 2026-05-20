@@ -100,7 +100,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <nav className="h-15 w-full flex flex-row items-center justify-start gap-3 pl-2 bg-blend-color">
+        <nav className="h-15 w-full flex flex-row items-center justify-start gap-3 pl-2 bg-auto">
           <ThemeToggle />
           <Link href="/" className="font-grotesk">
             {"Home"}

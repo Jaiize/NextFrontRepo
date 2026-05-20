@@ -119,13 +119,13 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       {rating && 
         <div className="w-1/2 flex flex-col space-y-10 mt-10 justify-between h-auto m-10 sm: max-sm:w-auto sm: max-sm:space-y-5">
           <div className="flex flex-row justify-between">
-            <span className="text-zinc-200 font-play text-lg">Rating:</span>
+            <span className="font-play text-lg">Rating:</span>
               <span className="text-lg text-white-600 font-grotesk">
                 <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
               {rating}</span>
           </div>
           <div className="flex flex-row justify-between">
-            <span className="text-zinc-200 text-lg font-play">Genre:</span>
+            <span className="text-lg font-play">Genre:</span>
             <div className="flex flex-col items-end">
               {genres &&
                 genres.map((g) => (
@@ -136,7 +136,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
             </div>
           </div>
           <div className="flex flex-row justify-between">
-            <span className="text-zinc-200 text-lg justify-start font-play">Release:</span>
+            <span className="text-lg justify-start font-play">Release:</span>
             <span className="text-gray-400 justify-end text-md font-grotesk">
               {new Date(released).toLocaleDateString("en-US", {
                 month: "short",
@@ -198,7 +198,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
             )) &&
             <Link href={`https://store.epicgames.com/browse?q=${name}&sortBy=relevancy&sortDir=DESC&count=40`} target="_blank">
               <div className="bg-[#232121]/20 cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-2.5">
-                <span className="text-lg font-extrabold text-gray-300 sm: max-sm:text-sm">Epic Games</span>
+                <span className="text-lg font-extrabold sm: max-sm:text-sm">Epic Games</span>
                 <SiEpicgames className="text-gray-500 text-5xl sm: max-sm:text-4xl"/>
               </div>
             </Link>

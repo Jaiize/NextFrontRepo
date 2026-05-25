@@ -1,15 +1,18 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import { CiDark, CiLight } from "react-icons/ci"
 
 const ThemeToggle = () => {
     const [theme, setTheme] = useState<'dark' | 'light'>('light')
     
-    useEffect(() => {
+    useLayoutEffect(() => {
         const isDark = document.documentElement.classList.contains('dark');
-        setTheme(isDark ? 'dark' : 'light');
+        const setIt = () => {
+            setTheme(isDark ? 'dark' : 'light');
+        }
+        setIt()
     }, [])
-
+    
     const handleToggle = () => {
         const newTheme = theme === 'dark' ? 'light' : 'dark';
         setTheme(newTheme);
@@ -19,7 +22,7 @@ const ThemeToggle = () => {
     }
 
   return (
-    <button title="themeToggle" onClick={handleToggle}>{theme === 'dark' ? 
+    <button title="ThemeToggle" onClick={handleToggle}>{theme === 'dark' ? 
         <div className="flex flex-row items-center justify-between w-19 border p-1 border-gray-500 cursor-pointer rounded-xl">
             <CiLight className="text-xl"/>
             <span className="font-grotesk text-md mr-1">Light</span>

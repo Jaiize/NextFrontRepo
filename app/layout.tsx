@@ -80,6 +80,7 @@ export default function RootLayout({
 
   return (
     <html
+      id={'master'}
       lang="en"
       suppressHydrationWarning
       className={`${geistSans.variable} ${supermercado_one.variable} ${roboto_condensed.variable} ${cause.variable} ${geistMono.variable} ${playfair_display.variable} ${montserrat.variable}  ${inter.variable} ${schibsted_grotesk.variable} h-full antialiased`}
@@ -93,9 +94,9 @@ export default function RootLayout({
             if(theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
               document.documentElement.classList.add('dark')
             }else{
-              document.documentElement.classList.remove('dark')
+              document.documentElement.classList.add('light')
             }
-          })()`,
+          })();`,
           }}
         />
       </head>
@@ -106,7 +107,7 @@ export default function RootLayout({
             {"Home"}
           </Link>
         </nav>
-        {children}
+          {children}
       </body>
     </html>
   );

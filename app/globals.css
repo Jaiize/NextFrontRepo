@@ -1,10 +1,16 @@
 @import "tailwindcss";
 /* @import "tw-animate-css"; */
 
-:root {
+.light {
   --background: #f4f4f4;
   --foreground: #171717;
 }
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
 
 @theme inline {
   --color-background: var(--background);
@@ -19,12 +25,6 @@
   --font-rob: var(--font-roboto-condensed);
   --font-super: var(--font-supermercado-one);
 }
-
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light):not(.dark) {

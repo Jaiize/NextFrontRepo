@@ -12,6 +12,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
   const [game, setGame] = useState<RawgClickGames>({})
+  const [theme, setTheme] = useState('')
 
   // Mobile-checking mechanism
   // const ua = navigator.userAgent;
@@ -28,6 +29,8 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       const fetched = await res.json();
       const game = (fetched as RawgClickGames);
       setGame(game)
+      const getTheme = localStorage.getItem('theme')
+      setTheme(getTheme!)
     }
     pullOne();
     
@@ -40,10 +43,10 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
     <>
       <div className={`flex flex-col items-center relative justify-center overflow-hidden ${ description_raw && description_raw.length > 1500 ? 'h-220' : 'h-170'} ${ description_raw && description_raw.length > 1500 ? 'sm: max-sm:h-220' : ' sm: max-sm:h-120'}`} >
         {background_image && 
-          <Image loading="eager" alt={name || slug} width={400} height={800} src={background_image_additional || '/Gamelike.png'} className="w-full absolute top-0 left-0 h-full opacity-15 object-cover"/>
+          <Image loading="eager" alt={name || slug} width={400} height={800} src={background_image_additional || '/Gamelike.png'} className={`w-full absolute top-0 left-0 h-full opacity-15 object-cover`}/>
         }
-        <div className="font-rob text-7xl w-full absolute top-20 flex flex-row justify-center sm: max-sm:top-5 sm: max-sm:text-2xl">{name}</div>
-        <div className="w-1/2 absolute h-50 top-50 flex flex-row justify-center font-grotesk z-30 sm: max-sm:w-[80%] sm: max-sm:top-20 sm: max-sm:text-xs sm: max-sm:text-zinc-300" >
+        <div className={`font-rob text-7xl w-full absolute top-20 flex flex-row justify-center sm: max-sm:top-5 sm: max-sm:text-2xl`}>{name}</div>
+        <div className={`w-1/2 absolute h-50 top-50 flex flex-row justify-center font-grotesk z-30 sm: max-sm:w-[80%] sm: max-sm:top-20 sm: max-sm:text-xs`} >
           {description_raw && description_raw}
         </div>
         {background_image && 
@@ -54,7 +57,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       {/* Platforms */}
       <div className="w-1/2 flex flex-col items-start justify-start space-y-5 mx-10 mt-10 h-auto">
         {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
-        <div className="font-play text-xl">
+        <div className="font-play text-xl sm: max-sm:text-md">
           { platforms && 'Platforms:'}
         </div>
         <div className="flex flex-row items-center justify-start gap-4 flex-wrap sm: max-sm:flex sm: max-sm:flex-col sm: max-sm:items-start ">
@@ -129,7 +132,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
             <div className="flex flex-col items-end">
               {genres &&
                 genres.map((g) => (
-                  <span key={g.id} className="text-md text-gray-300 font-grotesk">
+                  <span key={g.id} className="text-md font-grotesk">
                     {g.name}
                   </span>
                 ))}
@@ -150,7 +153,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       {/* Requirements  */}
       {platforms && platforms.some((r) => r.requirements?.minimum) &&
         <div className="flex flex-col justify-start m-10 space-y-1.5 sm: max-sm:space-y-0">
-          {platforms && platforms.some((r) => r.requirements?.minimum) && <span className="text-zinc-300 text-xl justify-start font-play mb-3">PC Requirement:</span>}
+          {platforms && platforms.some((r) => r.requirements?.minimum) && <span className="text-xl justify-start font-play mb-3 sm: max-sm:text-sm">PC Requirement:</span>}
           {platforms && platforms.map((r, i) => <span key={i} className="text-zinc-500 text-lg font-black sm: max-sm:text-xs">{r.requirements?.minimum}</span>)}
           {platforms && platforms.map((r, i) => <span key={i} className="text-zinc-500 text-lg font-black sm: max-sm:text-xs">{r.requirements?.recommended}</span>)}
         </div>
@@ -167,7 +170,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
               p.store.slug.includes('playstation') 
             )) && 
             <Link href={`https://store.playstation.com/en-us/search/${name}`} target="_blank">
-              <div className="bg-[#232121]/20 rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md hover:shadow-blue-600 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13">
+              <div className="bg-[#232121]/20 rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md active:shadow-none hover:shadow-blue-600 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13">
                 <span className="text-lg cursor-pointer font-rob sm: max-sm:text-sm">PlayStation Store</span>
                 <FaPlaystation className="text-blue-500 text-5xl sm: max-sm:text-4xl"/>
               </div>
@@ -177,7 +180,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
               p.store.slug.includes('xbox') 
             )) && 
             <Link href={`https://www.xbox.com/en-us/Search/Results?q=${name}`} target="_blank">
-              <div className="bg-[#232121]/20 rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-3">
+              <div className="bg-[#232121]/20 rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-3">
                 <span className="text-lg font-extrabold sm: max-sm:text-sm">Xbox Store</span>
                 <FaXbox className="text-green-500 text-5xl sm: max-sm:text-4xl" />
               </div>                  
@@ -187,7 +190,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
               p.store.slug.includes('steam') 
             )) && 
             <Link href={`https://store.steampowered.com/search?term=${name.replace(/(\s)/g, '+')}`} target="_blank">
-              <div className="bg-[#232121]/20 rounded-2xl cursor-pointer w-auto px-4 h-18 transition-shadow duration-300 shadow-md hover:shadow-gray-400 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-3">
+              <div className="bg-[#232121]/20 rounded-2xl cursor-pointer w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-400 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-3">
                 <span className="text-lg font-extrabold sm: max-sm:text-sm">Steam</span>
                 <FaSteam className="text-shadow-white text-5xl sm: max-sm:text-4xl"/>
               </div>                  
@@ -197,7 +200,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
               p.store.slug.includes('epic-games') 
             )) &&
             <Link href={`https://store.epicgames.com/browse?q=${name}&sortBy=relevancy&sortDir=DESC&count=40`} target="_blank">
-              <div className="bg-[#232121]/20 cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-2.5">
+              <div className="bg-[#232121]/20 cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between sm: max-sm:h-13 sm: max-sm:px-2.5">
                 <span className="text-lg font-extrabold sm: max-sm:text-sm">Epic Games</span>
                 <SiEpicgames className="text-gray-500 text-5xl sm: max-sm:text-4xl"/>
               </div>

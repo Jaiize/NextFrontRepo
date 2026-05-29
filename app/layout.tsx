@@ -13,6 +13,10 @@ import {
 import "./globals.css";
 import Link from "next/link";
 import ThemeToggle from "@/components/themeToggle";
+import { IoHome } from "react-icons/io5";
+import { ThemeProvider } from "next-theme";
+import Providers from "@/components/providers";
+import Scroller from "@/components/scroller";
 
 const schibsted_grotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
@@ -86,7 +90,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${supermercado_one.variable} ${roboto_condensed.variable} ${cause.variable} ${geistMono.variable} ${playfair_display.variable} ${montserrat.variable}  ${inter.variable} ${schibsted_grotesk.variable} h-full antialiased`}
     >
       <head>
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
           (function() {
@@ -98,16 +102,23 @@ export default function RootLayout({
             }
           })();`,
           }}
-        />
+        /> */}
       </head>
       <body className="min-h-full flex flex-col">
-        <nav className="h-15 w-full flex flex-row items-center justify-start gap-3 pl-2 bg-auto">
-          <ThemeToggle />
-          <Link href="/" className="font-grotesk">
-            {"Home"}
-          </Link>
-        </nav>
-          {children}
+        <Providers >
+          <Scroller>
+            <nav className="h-13 w-full flex flex-row items-center justify-between gap-3 px-2 bg-[#343434]/30 sticky top-0 z-50">
+              <Link href="/" className="font-grotesk">
+                <div className="flex flex-row cursor-pointer items-center justify-between w-22 p-1 rounded-xl">
+                  <IoHome className="text-xl"/>
+                  <span className="font-grotesk text-md mr-2">Home</span>
+                </div>
+              </Link>
+              <ThemeToggle />
+            </nav>
+              {children}
+          </Scroller>
+        </Providers>
       </body>
     </html>
   );

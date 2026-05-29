@@ -1,6 +1,7 @@
 "use client"
 
 import { RawgClickGames } from "@/rawg.games.type";
+import useTheme from "next-theme";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -12,7 +13,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
   const [game, setGame] = useState<RawgClickGames>({})
-  const [theme, setTheme] = useState('')
+  const {theme} = useTheme()
 
   // Mobile-checking mechanism
   // const ua = navigator.userAgent;
@@ -29,8 +30,6 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       const fetched = await res.json();
       const game = (fetched as RawgClickGames);
       setGame(game)
-      const getTheme = localStorage.getItem('theme')
-      setTheme(getTheme!)
     }
     pullOne();
     
@@ -43,14 +42,14 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
     <>
       <div className={`flex flex-col items-center relative justify-center overflow-hidden ${ description_raw && description_raw.length > 1500 ? 'h-220' : 'h-170'} ${ description_raw && description_raw.length > 1500 ? 'sm: max-sm:h-220' : ' sm: max-sm:h-120'}`} >
         {background_image && 
-          <Image loading="eager" alt={name || slug} width={400} height={800} src={background_image_additional || '/Gamelike.png'} className={`w-full absolute top-0 left-0 h-full opacity-15 object-cover`}/>
+          <Image loading="eager" alt={name || slug} width={400} height={800} src={background_image_additional || '/Nocontent.jpg'} className={`w-full absolute top-0 left-0 h-full ${theme === 'dark' ? 'opacity-15' : 'opacity-80'} object-cover`}/>
         }
         <div className={`font-rob text-7xl w-full absolute top-20 flex flex-row justify-center sm: max-sm:top-5 sm: max-sm:text-2xl`}>{name}</div>
         <div className={`w-1/2 absolute h-50 top-50 flex flex-row justify-center font-grotesk z-30 sm: max-sm:w-[80%] sm: max-sm:top-20 sm: max-sm:text-xs`} >
           {description_raw && description_raw}
         </div>
         {background_image && 
-          <div  className="w-full h-50 absolute bg-linear-to-t from-black to-transparent bottom-0 z-10"/>
+          <div  className={`w-full absolute bg-linear-to-t ${theme === 'dark' ? 'from-black h-50' : 'from-white h-10'} to-transparent bottom-0 z-10`}/>
         }
       </div>
 
@@ -97,7 +96,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
           )) && 
             <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between sm: max-sm:w-30 sm: max-sm:h-13">
             <span className="text-lg font-extrabold sm: max-sm:text-sm">MacOS</span>
-            <FaApple className="text-white text-5xl sm: max-sm:text-4xl"/>
+            <FaApple className="text-5xl sm: max-sm:text-4xl"/>
           </div>                  
           }
           {platforms && platforms.some((p) => (
@@ -113,7 +112,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
           )) && 
           <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between sm: max-sm:w-40 sm: max-sm:h-13">
             <span className="text-lg font-extrabold sm: max-sm:text-sm">Nintendo</span>
-            <BsNintendoSwitch className="text-white text-5xl sm: max-sm:text-4xl"/>
+            <BsNintendoSwitch className="text-5xl sm: max-sm:text-4xl"/>
           </div>
           }
         </div>

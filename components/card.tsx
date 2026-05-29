@@ -2,7 +2,7 @@
 
 import { RawgGenre, RawgPlatform, Store } from "@/rawg.games.type";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaPlaystation,
   FaXbox,
@@ -15,6 +15,7 @@ import {
 import { BsNintendoSwitch } from "react-icons/bs";
 import { SiEpicgames } from "react-icons/si";
 import Link from "next/link";
+import useTheme from "next-theme";
 
 export type CardProps = {
   background_image: string;
@@ -45,23 +46,9 @@ const Card = ({
 }: CardProps) => {
   const [show, setShow] = useState(false);
   const divRef = useRef<HTMLDivElement | null>(null);
-  const [theme, setTheme] = useState("");
+  const {theme} = useTheme();
 
 
-  // Toggle mode for theme
-  useEffect(() => {
-    const sync = () => {
-      const fetchedTheme = localStorage.getItem("theme");
-      if (!fetchedTheme) return;
-      setTheme(fetchedTheme);
-    };
-    sync();
-
-    if(typeof document !== 'undefined'){
-      document.addEventListener('click', sync)
-    }
-    return () => document.removeEventListener('click', sync)
-  }, [theme]);
   
   // Close opened card when outside click is detected
   useEffect(() => {
@@ -86,12 +73,12 @@ const Card = ({
         className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6]"} shadow-md flex flex-col transition-all rounded-[10px] duration-300 hover:shadow-gray-900 ${show ? "rounded-b-none shadow-none" : ""}`}
       >
         <div className="rounded-t-[10px] overflow-hidden">
-          <Link href={`/carousel/${id}`} target="_blank">
+          <Link href={`/carousel/${id}`}>
             <Image
               className="w-full h-48 cursor-pointer object-cover"
               title={name}
               alt={name}
-              src={background_image}
+              src={background_image || '/Nocontent.jpg'}
               width={300}
               loading="eager"
               height={250}
@@ -127,8 +114,8 @@ const Card = ({
                 p.platform.slug.includes("nintendo-switch"),
               ) && <BsNintendoSwitch className="text-white-500" />}
           </div>
-          <Link href={`/carousel/${id}`} target="_blank">
-            <p className="font-rob text-white-600 line-clamp-3 text-sm hover:text-blue-300 mt-2 hover:cursor-pointer">
+          <Link href={`/carousel/${id}`}>
+            <p className="font-rob line-clamp-3 text-sm hover:text-blue-600 mt-2 hover:cursor-pointer">
               {name}
             </p>
           </Link>
@@ -143,7 +130,7 @@ const Card = ({
             </span>
           </div>
           <section
-            className={` ${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6]"} transition-shadow duration-300 ${show ? "absolute top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
+            className={` ${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6] shadow-none"} transition-shadow duration-300 ${show ? "absolute top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
           >
             {show && (
               <>
@@ -163,10 +150,10 @@ const Card = ({
                 <div className="flex flex-row justify-between my-1.5">
                   <span className={`text-xs ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default`}>Purchase from:</span>
                   <div className="flex flex-row">
-                    {stores.some((p) => p.store.slug.includes("steam")) && (
+                    {stores && stores.some((p) => p.store.slug.includes("steam")) && (
                       <FaSteam className="text-white-500 mx-0.5" />
                     )}
-                    {stores.some((p) =>
+                    {stores && stores.some((p) =>
                       p.store.slug.includes("epic-games"),
                     ) && <SiEpicgames className="text-white-500 mx-0.5" />}
                   </div>

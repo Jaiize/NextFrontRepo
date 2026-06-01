@@ -28,6 +28,7 @@ export type CardProps = {
   stores: Store[];
 };
 
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 if (!BASE_URL) {
@@ -120,7 +121,7 @@ const Card = ({
             </p>
           </Link>
           <div className="flex flex-row justify-between mt-1">
-            <span className={`${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} text-xs cursor-default`}>Rating:</span>
+            <span className={`${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} text-sm font-rob cursor-default`}>Rating:</span>
             <span className="cursor-default text-xs text-white-600">
               <FaStar
                 size={10}
@@ -134,21 +135,25 @@ const Card = ({
           >
             {show && (
               <>
-                <hr className="mb-1 text-zinc-500" />
-                <div className="flex flex-row justify-between">
-                  <span className={`text-xs cursor-default ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'}`}>Genre:</span>
-                  <div className="flex flex-col items-end">
-                    {genres &&
-                      genres.map((g) => (
-                        <span key={g.id} className="text-xs cursor-default">
-                          {g.name}
-                        </span>
-                      ))}
-                  </div>
-                </div>
+                { genres.length > 0 && 
+                  (<div>
+                    <hr className="mb-1 text-zinc-500" />
+                    <div className="flex flex-row justify-between">
+                      <span className={`text-sm font-rob cursor-default ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'}`}>Genre:</span>
+                      <div className="flex flex-col items-end">
+                        {genres &&
+                          genres.map((g) => (
+                            <span key={g.id} className="text-xs cursor-default font-grotesk">
+                              {g.name}
+                            </span>
+                          ))}
+                      </div>
+                    </div>
+                  </div>)
+                }
                 <hr className="my-1 text-zinc-500" />
                 <div className="flex flex-row justify-between my-1.5">
-                  <span className={`text-xs ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default`}>Purchase from:</span>
+                  <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default `}>Purchase from:</span>
                   <div className="flex flex-row">
                     {stores && stores.some((p) => p.store.slug.includes("steam")) && (
                       <FaSteam className="text-white-500 mx-0.5" />
@@ -160,10 +165,10 @@ const Card = ({
                 </div>
                 <hr className="my-1 text-zinc-500" />
                 <div className="flex flex-row justify-between">
-                  <span className={`text-xs ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default`}>
+                  <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default`}>
                     Release:
                   </span>
-                  <span className={`text-[11px] ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default`}>
+                  <span className={`text-xs font-rob ${theme === 'dark' ? 'text-zinc-300' : 'text-zinc-900'} cursor-default`}>
                     {new Date(released).toLocaleDateString("en-US", {
                       month: "short",
                       year: "numeric",
@@ -173,7 +178,7 @@ const Card = ({
                 </div>
               </>
             )}
-            <div className={`flex flex-row text-[11px] cursor-default ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} justify-center mt-1.5`}>
+            <div className={`flex flex-row text-[11px] font-sans cursor-default ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} justify-center mt-1.5`}>
               {show && "Click photo to view detail"}
             </div>
             <div className={`${theme === 'dark' ? 'text-blue-300' : 'text-black'} flex flex-row items-center justify-center text-[11px] py-3 cursor-pointer`}>

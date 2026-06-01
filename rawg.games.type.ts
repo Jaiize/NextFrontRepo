@@ -1,4 +1,3 @@
-// For games/?key=KEY&page_size=40 not /games/${id}
 export interface RawgResponse {
   count: number;
   next: string | null;

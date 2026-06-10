@@ -118,14 +118,14 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
         </div>
       </div>
       {/* Stats  */}
-      {rating && 
-        <div className="w-1/2 flex flex-col space-y-10 mt-10 justify-between h-auto m-10 sm: max-sm:w-auto sm: max-sm:space-y-5">
-          <div className="flex flex-row justify-between">
-            <span className="font-play text-lg">Rating:</span>
-              <span className="text-lg text-white-600 font-grotesk">
-                <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
-              {rating}</span>
-          </div>
+      <div className="w-1/2 flex flex-col space-y-10 mt-10 justify-between h-auto m-10 sm: max-sm:w-auto sm: max-sm:space-y-5">
+        <div className="flex flex-row justify-between">
+          <span className="font-play text-lg">Rating:</span>
+            <span className="text-lg text-white-600 font-grotesk">
+              <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
+            {rating}</span>
+        </div>
+        {genres && 
           <div className="flex flex-row justify-between">
             <span className="text-lg font-play">Genre:</span>
             <div className="flex flex-col items-end">
@@ -136,19 +136,19 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
                   </span>
                 ))}
             </div>
-          </div>
+          </div>}
+        {released && 
           <div className="flex flex-row justify-between">
-            <span className="text-lg justify-start font-play">Release:</span>
-            <span className="text-gray-400 justify-end text-md font-grotesk">
-              {new Date(released).toLocaleDateString("en-US", {
-                month: "short",
-                year: "numeric",
-                day: "2-digit",
-              })}
-            </span>
-          </div>
+              <span className="text-lg justify-start font-play">Release:</span>
+              <span className="text-gray-400 justify-end text-md font-grotesk">
+                {new Date(released).toLocaleDateString("en-US", {
+                  month: "short",
+                  year: "numeric",
+                  day: "2-digit",
+                })}
+              </span>
+          </div>}
         </div>
-      }
       {/* Requirements  */}
       {platforms && platforms.some((r) => r.requirements?.minimum) &&
         <div className="flex flex-col justify-start m-10 space-y-1.5 sm: max-sm:space-y-0">

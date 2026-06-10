@@ -7,6 +7,7 @@ import { BiSearch } from "react-icons/bi";
 import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
 import useTheme from "next-theme";
 import CustomSelect from "@/components/customSelect";
+// import Loading from "./loading";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -28,16 +29,20 @@ const CardDetail = () => {
     { value: "-created", label: "Created", slug: "dsc" },
     { value: "released", label: "Release Date", slug: "asc" },
     { value: "-released", label: "Release Date", slug: "dsc" },
-    { value: "name", label: "Name", slug: "asc" },
-    { value: "-name", label: "Name", slug: "dsc" },
+    { value: "name", label: "Name", slug: "" },
+    { value: "metacritic", label: "Metacritic", slug: "asc" },
+    { value: "-metacritic", label: "Metacritic", slug: "dsc" },
     { value: "rating", label: "Rating", slug: "asc" },
     { value: "-rating", label: "Rating", slug: "dsc" },
-    { value: "popularity", label: "Popularity", slug: "asc" },
-    { value: "-popularity", label: "Popularity", slug: "dsc" },
+    { value: "popularity", label: "Popularity", slug: "" },
   ];
+  // metacritic
 
   useEffect(() => {
     setPage(1);
+    if(order.includes("name")){
+      searchGames(1, "", order, true);
+    }
     searchGames(1, "", order);
   }, [order]);
 
@@ -55,6 +60,7 @@ const CardDetail = () => {
     pageNum: number,
     search: string = "",
     order: string = "",
+    sortNames: boolean = false
   ) => {
     setLoading(true);
     try {
@@ -74,7 +80,19 @@ const CardDetail = () => {
       const res = await fetch(`${BASE_URL}/api/games/?${params}`);
       const fetched = await res.json();
       const rawg = (fetched as RawgResponse).results;
-      if (rawg) {
+      if(sortNames && rawg){
+        // Sort English-titled games only
+        // const newSorted = rawg.filter((f) => /^[a-z0-9\s\-\:\?]+$/i.test(f.name))
+        const newSorted = rawg.filter((f) => /[\u4e00\-\u9fff]/i.test(f.name))
+        // const sortedGames = rawg.sort((a, b) => {
+        //   const aEng = /[\u4e00\-\u9fff]/i.test(a.name)
+        //   const bEng = /[\u4e00\-\u9fff]/i.test(b.name)
+        //   if(aEng !== bEng) return aEng ? 1 : -1
+        //   return a.name.localeCompare(b.name, 'en', {sensitivity: 'base'})
+        // })
+        // setGames(sortedGames)
+        setGames(newSorted)
+      }else if (!sortNames && rawg) {
         setGames(rawg);
       }
     } catch (e) {
@@ -98,12 +116,17 @@ const CardDetail = () => {
 
   return (
     <>
+      {/* {loading ? 
+        <Loading /> : 
+        <>
+        </>
+      } */}
       <div className="font-play text-center w-full h-10 text-3xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text">
         Find Your favourite Games
       </div>
-      <div className="flex flex-row justify-center w-full my-5 group">
+      <div className="flex flex-row justify-center w-full my-5">
         <div
-          className={`flex flex-row items-center w-[30%] ${theme === "light" ? "bg-white" : "bg-[#323232]"} h-10 rounded-2xl sm: max-sm:w-[65%] sm: max-sm:h-9 transition-all duration-300`}
+          className={`flex flex-row items-center w-[30%] ${theme === "light" ? "bg-gray-300" : "bg-[#323232]"} h-10 rounded-2xl sm: max-sm:w-[65%] sm: max-sm:h-9 transition-all duration-300`}
         >
           <BiSearch
             className="text-2xl ml-3 cursor-pointer sm: max-sm:text-xl"
@@ -123,7 +146,7 @@ const CardDetail = () => {
             fill="none"
             viewBox="0 0 24 24"
             onClick={() => setSearch('')}
-            className={`w-4 h-4 mr-3 transition-opacity duration-300 ${search ? 'opacity-100 pointer-events-auto hover:cursor-pointer' : 'opacity-0 pointer-events-none'}`}
+            className={`w-4 h-4 mr-3 transition-opacity duration-300 ${(search && search.length > 0) ? 'opacity-100 pointer-events-auto hover:cursor-pointer' : 'opacity-0 pointer-events-none'}`}
           >
             {/* <path d="M4 4 L21 21 M21 4 L4 21" /> */}
             <path d="M4 4 l17 17 M21 4 l-17 17" />

@@ -113,6 +113,7 @@ const CustomSelect = ({
   return (
     <div ref={ref} className="relative w-fit sm: max-sm:ml-1">
       <button
+        type="button"
         onKeyDown={handleKeyDown}
         ref={buttonref}
         role="combobox"
@@ -153,7 +154,7 @@ const CustomSelect = ({
         ref={listref}
         role="listbox"
         id="dropdown-listbox"
-        className={`${theme === "dark" ? "bg-zinc-900" : "bg-zinc-500"} absolute z-20 w-45 top-8 -left-13 transition-all duration-300 
+        className={`${theme === "dark" ? "bg-zinc-900" : "bg-zinc-500"} absolute z-20 w-45 top-8 -left-20 sm: max-sm:-left-18 transition-all duration-300 
           shadow-md shadow-zinc-900 rounded-md py-2 sm: max-sm:w-42 ${show ? "opacity-100 translate-y-0 pointer-events-auto" : "translate-y-3 pointer-events-none opacity-0"}`}
       >
         {options.map((o, i) => (

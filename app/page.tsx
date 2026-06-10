@@ -29,7 +29,7 @@ const CardDetail = () => {
     { value: "-created", label: "Created", slug: "dsc" },
     { value: "released", label: "Release Date", slug: "asc" },
     { value: "-released", label: "Release Date", slug: "dsc" },
-    { value: "name", label: "Name", slug: "" },
+    { value: "-name", label: "Name", slug: "" },
     { value: "metacritic", label: "Metacritic", slug: "asc" },
     { value: "-metacritic", label: "Metacritic", slug: "dsc" },
     { value: "rating", label: "Rating", slug: "asc" },
@@ -158,7 +158,7 @@ const CardDetail = () => {
       </div>
       <div
         className="flex flex-row items-center justify-between shadow-sm hover:shadow-mauve-600 transition-shadow duration-300 gap-1 w-fit mx-5 bg-zinc-900/45 h-10 pl-3 pr-3 rounded-xl 
-        sm: max-sm:w-48 sm: max-sm:pl-3"
+        sm: max-sm:w-fit sm: max-sm:pl-3"
       >
         <div className="font-grotesk text-sm w-fit mr-1.5 sm: max-sm:text-xs sm: max-sm:mr-0 hover:cursor-default">
           Order by:

@@ -159,7 +159,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       }
       {/* Stores  */}
       {stores && stores.some((p) => (
-        p.store.slug.length > 0)) &&
+        p.store.slug.includes('playstation') || p.store.slug.includes('xbox')) || p.store.slug.includes('steam') || p.store.slug.includes('epic-games')) &&
         <section className="w-1/2 sm: max-sm:w-full">
           <div className="flex flex-col mx-10 items-start justify-start w-fit text-lg font-mont p-3 rounded-t-2xl bg-[#323232]/20 sm: max-sm:text-xs">
             {stores && 'Purchase From'}

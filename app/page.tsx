@@ -47,11 +47,13 @@ const CardDetail = () => {
   }, [order]);
 
   useEffect(() => {
+    setLoading(true)
     const pull = async () => {
       const res = await fetch(`${BASE_URL}/api/games/`);
       const fetched = await res.json();
       const RAWG = (fetched as RawgResponse).results;
       setGames(RAWG);
+      setLoading(false)
     };
     pull();
   }, []);
@@ -82,12 +84,13 @@ const CardDetail = () => {
       const rawg = (fetched as RawgResponse).results;
       if(sortNames && rawg){
         // Sort English-titled games only
-        // const newSorted = rawg.filter((f) => /^[a-z0-9\s\-\:\?]+$/i.test(f.name))
-        const newSorted = rawg.filter((f) => /[\u4e00\-\u9fff]/i.test(f.name))
+        const newSorted = rawg.filter((f) => /^[a-z0-9\s\-\:\?]+$/i.test(f.name))
+        // const newSorted = rawg.filter((f) => /[\u4e00\-\u9fff]/i.test(f.name))
+        // const newSorted = rawg.filter((f) => /[\u4e00\-\u9fff\u3040-\u30ff\uac00-\ud7af\u0400-\u04ff\u0600-\u06ff]/i.test(f.name))
         // const sortedGames = rawg.sort((a, b) => {
-        //   const aEng = /[\u4e00\-\u9fff]/i.test(a.name)
-        //   const bEng = /[\u4e00\-\u9fff]/i.test(b.name)
-        //   if(aEng !== bEng) return aEng ? 1 : -1
+        //   // const aEng = /[\u4e00\-\u9fff]/i.test(a.name)
+        //   // const bEng = /[\u4e00\-\u9fff]/i.test(b.name)
+        //   // if(aEng !== bEng) return aEng ? 1 : -1
         //   return a.name.localeCompare(b.name, 'en', {sensitivity: 'base'})
         // })
         // setGames(sortedGames)
@@ -167,11 +170,11 @@ const CardDetail = () => {
           value={order}
         />
       </div>
-      <ul className="grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-1 p-2">
+      <ul className="grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-1 p-2 sm: max-sm:snap-y sm: max-sm:snap-mandatory">
         {games &&
           games.length > 0 &&
           games.map((g) => (
-            <li key={g.id}>
+            <li key={g.id} className="sm: max-sm:snap-start">
               <Card {...g} />
             </li>
           ))}

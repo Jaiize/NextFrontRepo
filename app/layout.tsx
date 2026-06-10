@@ -86,21 +86,6 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${supermercado_one.variable} ${roboto_condensed.variable} ${cause.variable} ${geistMono.variable} ${playfair_display.variable} ${montserrat.variable}  ${inter.variable} ${schibsted_grotesk.variable} h-full antialiased`}
     >
-      <head>
-        {/* <script
-          dangerouslySetInnerHTML={{
-            __html: `
-          (function() {
-            const theme = localStorage.getItem('theme')
-            if(theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-              document.documentElement.classList.add('dark')
-            }else{
-              document.documentElement.classList.add('light')
-            }
-          })();`,
-          }}
-        /> */}
-      </head>
       <body className="min-h-full flex flex-col">
         <Providers >
           <Scroller>

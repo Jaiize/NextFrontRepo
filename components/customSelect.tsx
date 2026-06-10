@@ -81,12 +81,12 @@ const CustomSelect = ({
       case "ArrowDown":
         e.preventDefault();
         setnav(true);
-        setActiveIndex((prev) => (prev === options.length - 1 ? 0 : prev + 1));
+        setActiveIndex((prev) => ((prev === options.length - 1) ? 0 : prev + 1));
         break;
       case "ArrowUp":
         e.preventDefault();
         setnav(true);
-        setActiveIndex((prev) => (prev === 0 ? options.length - 1 : prev - 1));
+        setActiveIndex((prev) => ((prev === 0) ? options.length - 1 : prev - 1));
         break;
       case "Home":
         e.preventDefault();
@@ -154,7 +154,7 @@ const CustomSelect = ({
         role="listbox"
         id="dropdown-listbox"
         className={`${theme === "dark" ? "bg-zinc-900" : "bg-zinc-500"} absolute z-20 w-45 top-8 -left-13 transition-all duration-300 
-            shadow-md shadow-zinc-900 rounded-xl py-2 sm: max-sm:w-42 ${show ? "opacity-100 translate-y-0 pointer-events-auto" : "translate-y-3 pointer-events-none opacity-0"}`}
+          shadow-md shadow-zinc-900 rounded-md py-2 sm: max-sm:w-42 ${show ? "opacity-100 translate-y-0 pointer-events-auto" : "translate-y-3 pointer-events-none opacity-0"}`}
       >
         {options.map((o, i) => (
           <div
@@ -170,7 +170,7 @@ const CustomSelect = ({
             role="option"
             aria-selected={value === o.value}
             key={o.value}
-            className={`${i === activeIndex && nav === true ? "bg-blue-500/20" : "bg-none"} flex flex-row gap-2 items-center justify-center hover:text-blue-800 focus:border-2 focus:border-gray-200`}
+            className={`${i === activeIndex && nav === true ? "bg-blue-500/20 shadow-sm shadow-zinc-800" : "bg-none"} flex flex-row gap-2 items-center justify-center hover:text-blue-800 focus:border-2 focus:border-gray-200`}
           >
             <div className="font-cause h-8 hover:cursor-pointer text-sm flex flex-row items-center sm: max-sm:text-xs sm: max-sm:h-7">
               {o.label}

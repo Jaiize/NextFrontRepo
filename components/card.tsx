@@ -12,6 +12,7 @@ import {
   FaApple,
   FaSteam,
 } from "react-icons/fa6";
+import { DiAndroid } from "react-icons/di";
 import { BsNintendoSwitch } from "react-icons/bs";
 import { SiEpicgames } from "react-icons/si";
 import Link from "next/link";
@@ -76,7 +77,7 @@ const Card = ({
         <div className="rounded-t-[10px] overflow-hidden">
           <Link href={`/carousel/${id}`}>
             <Image
-              className="w-full h-48 cursor-pointer object-cover"
+              className="w-62 sm: max-sm:w-70 h-48 cursor-pointer object-cover"
               title={name}
               alt={name}
               src={background_image || '/Nocontent.jpg'}
@@ -89,7 +90,7 @@ const Card = ({
         <div
           className={`h-1/2 flex flex-col justify-center ${show ? "px-4 pt-4 pb-2" : "p-4"}`}
         >
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-2 mb-2">
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("pc")) && (
                 <FaWindows className="text-white-500" />
@@ -111,12 +112,16 @@ const Card = ({
                 <FaApple className="text-white-500" />
               )}
             {platforms &&
+              platforms.some((p) => p.platform.slug.includes("android")) && (
+                <DiAndroid className="text-green-500" />
+              )}
+            {platforms &&
               platforms.some((p) =>
                 p.platform.slug.includes("nintendo-switch"),
               ) && <BsNintendoSwitch className="text-white-500" />}
           </div>
           <Link href={`/carousel/${id}`}>
-            <p className="font-rob line-clamp-3 text-sm hover:text-blue-600 mt-2 hover:cursor-pointer">
+            <p className="font-rob line-clamp-3 text-sm hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5">
               {name}
             </p>
           </Link>

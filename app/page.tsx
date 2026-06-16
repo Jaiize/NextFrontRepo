@@ -7,6 +7,7 @@ import { BiSearch } from "react-icons/bi";
 import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
 import useTheme from "next-theme";
 import CustomSelect from "@/components/customSelect";
+import Loading from "./loading";
 // import Loading from "./loading";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -29,22 +30,12 @@ const CardDetail = () => {
     { value: "-created", label: "Created", slug: "dsc" },
     { value: "released", label: "Release Date", slug: "asc" },
     { value: "-released", label: "Release Date", slug: "dsc" },
-    { value: "-name", label: "Name", slug: "" },
     { value: "metacritic", label: "Metacritic", slug: "asc" },
     { value: "-metacritic", label: "Metacritic", slug: "dsc" },
     { value: "rating", label: "Rating", slug: "asc" },
     { value: "-rating", label: "Rating", slug: "dsc" },
     { value: "popularity", label: "Popularity", slug: "" },
   ];
-  // metacritic
-
-  useEffect(() => {
-    setPage(1);
-    if(order.includes("name")){
-      searchGames(1, "", order, true);
-    }
-    searchGames(1, "", order);
-  }, [order]);
 
   useEffect(() => {
     setLoading(true)
@@ -82,22 +73,7 @@ const CardDetail = () => {
       const res = await fetch(`${BASE_URL}/api/games/?${params}`);
       const fetched = await res.json();
       const rawg = (fetched as RawgResponse).results;
-      if(sortNames && rawg){
-        // Sort English-titled games only
-        const newSorted = rawg.filter((f) => /^[a-z0-9\s\-\:\?]+$/i.test(f.name))
-        // const newSorted = rawg.filter((f) => /[\u4e00\-\u9fff]/i.test(f.name))
-        // const newSorted = rawg.filter((f) => /[\u4e00\-\u9fff\u3040-\u30ff\uac00-\ud7af\u0400-\u04ff\u0600-\u06ff]/i.test(f.name))
-        // const sortedGames = rawg.sort((a, b) => {
-        //   // const aEng = /[\u4e00\-\u9fff]/i.test(a.name)
-        //   // const bEng = /[\u4e00\-\u9fff]/i.test(b.name)
-        //   // if(aEng !== bEng) return aEng ? 1 : -1
-        //   return a.name.localeCompare(b.name, 'en', {sensitivity: 'base'})
-        // })
-        // setGames(sortedGames)
-        setGames(newSorted)
-      }else if (!sortNames && rawg) {
-        setGames(rawg);
-      }
+      setGames(rawg);
     } catch (e) {
       console.error(e);
     } finally {
@@ -119,11 +95,6 @@ const CardDetail = () => {
 
   return (
     <>
-      {/* {loading ? 
-        <Loading /> : 
-        <>
-        </>
-      } */}
       <div className="font-play text-center w-full h-10 text-3xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text">
         Find Your favourite Games
       </div>
@@ -141,7 +112,7 @@ const CardDetail = () => {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search for latest games"
           />
-           <svg
+          <svg
             stroke="currentColor"
             strokeLinecap="round"
             strokeWidth={2}

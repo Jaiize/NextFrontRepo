@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "fast": "next dev --turbo",
+    "fasp": "next dev -p 4000 --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

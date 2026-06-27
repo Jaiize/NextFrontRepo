@@ -15,13 +15,6 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
   const [game, setGame] = useState<RawgClickGames>({})
   const {theme} = useTheme()
 
-  // Mobile-checking mechanism
-  // const ua = navigator.userAgent;
-  // const touch = navigator.maxTouchPoints > 0;
-  // const winTouch = 'ontouchstart' in window;
-  // const coarse = window.matchMedia('(pointer: coarse)').matches;
-  // const screen = window.innerWidth < 768;
-
   
   useEffect(() => {
     const pullOne = async () => {
@@ -119,12 +112,14 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       </div>
       {/* Stats  */}
       <div className="w-1/2 flex flex-col space-y-10 mt-10 justify-between h-auto m-10 sm: max-sm:w-auto sm: max-sm:space-y-5">
-        <div className="flex flex-row justify-between">
-          <span className="font-play text-lg">Rating:</span>
-            <span className="text-lg text-white-600 font-grotesk">
-              <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
-            {rating}</span>
-        </div>
+        {rating && 
+          <div className="flex flex-row justify-between">
+            <span className="font-play text-lg">Rating:</span>
+              <span className="text-lg text-white-600 font-grotesk">
+                <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
+              {rating}</span>
+          </div>
+        }
         {genres && 
           <div className="flex flex-row justify-between">
             <span className="text-lg font-play">Genre:</span>

@@ -25,6 +25,10 @@ const CardDetail = () => {
   const { theme } = useTheme();
   const [order, setOrder] = useState("");
 
+  /** ------------------------------------
+   * Array of object options to order from
+   */
+
   const options = [
     { value: "created", label: "Created", slug: "asc" },
     { value: "-created", label: "Created", slug: "dsc" },
@@ -32,34 +36,57 @@ const CardDetail = () => {
     { value: "-released", label: "Release Date", slug: "dsc" },
     { value: "metacritic", label: "Metacritic", slug: "asc" },
     { value: "-metacritic", label: "Metacritic", slug: "dsc" },
+    { value: "-name", label: "Name", slug: "" },
     { value: "rating", label: "Rating", slug: "asc" },
     { value: "-rating", label: "Rating", slug: "dsc" },
     { value: "popularity", label: "Popularity", slug: "" },
   ];
 
+  /** ------------------------------------------------------------------------------------------------------------
+   * Order Effect and init view Effect
+   */
+
   useEffect(() => {
-    setLoading(true)
+    if (order.includes("name")) {
+      setGames([]) // Check if this works!
+      searchGames({ pageNum: page, order, sortNames: true });
+    } else {
+      searchGames({ pageNum: page, order, sortNames: false });
+    }
+  }, [order]);
+
+  useEffect(() => {
+    // setLoading(true);
     const pull = async () => {
       const res = await fetch(`${BASE_URL}/api/games/`);
       const fetched = await res.json();
       const RAWG = (fetched as RawgResponse).results;
       setGames(RAWG);
-      setLoading(false)
+      // setLoading(false);
     };
     pull();
   }, []);
 
-  const searchGames = async (
-    pageNum: number,
-    search: string = "",
-    order: string = "",
-    sortNames: boolean = false
-  ) => {
+  // searcGames method ------------------------------------------------------------------------------------------------------------
+
+  const searchGames = async ({
+    pageNum,
+    order,
+    pageSize,
+    search,
+    sortNames,
+  }: {
+    pageNum: number;
+    pageSize?: string;
+    search?: string;
+    order?: string;
+    sortNames?: boolean;
+  }) => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
         page: pageNum.toString(),
-        page_size: "40",
+        page_size: pageSize || "40",
       });
 
       if (search) {
@@ -73,7 +100,38 @@ const CardDetail = () => {
       const res = await fetch(`${BASE_URL}/api/games/?${params}`);
       const fetched = await res.json();
       const rawg = (fetched as RawgResponse).results;
-      setGames(rawg);
+
+      if (sortNames && rawg) {
+
+        // Sort out English-titled games only
+        const newSorted = rawg.filter((f) =>
+          /^[a-z0-9\s\-\:\?]+$/i.test(f.name),
+        );
+
+        setGames((prev) => prev.concat(newSorted));
+
+        console.log('Outside...')
+        if (games.length < 40) {
+          
+          console.log('Inside...')
+          const remaining = 40 - games.length;
+          setPage((p) => (p += 1));
+          searchGames({
+            pageNum: page,
+            pageSize: remaining.toString(),
+            sortNames: true,
+            order
+          });
+
+        }
+        // else if(order?.includes('-name')) {
+        //   setGames((full) => full.sort((a, b) => b.name.localeCompare(a.name))) // Z - A
+        // } else {
+        //   setGames((full) => full.sort((a, b) => a.name.localeCompare(b.name))) // A - Z
+        // }
+      } else if (!sortNames && rawg) {
+        setGames(rawg);
+      }
     } catch (e) {
       console.error(e);
     } finally {
@@ -81,16 +139,19 @@ const CardDetail = () => {
     }
   };
 
+  /**  ------------------------------------------------------------------------------------------------------------------------------------------------
+   *  Debounce => search
+   */
+
   useDebounce(() => setDebounceSearch(search), 450, [search]);
 
   useEffect(() => {
-    setPage(1);
-    searchGames(1, debounceSearch);
+    searchGames({ pageNum: page, search: debounceSearch });
   }, [debounceSearch]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    searchGames(newPage, debounceSearch);
+    searchGames({ pageNum: page, search: debounceSearch });
   };
 
   return (
@@ -104,7 +165,9 @@ const CardDetail = () => {
         >
           <BiSearch
             className="text-2xl ml-3 cursor-pointer sm: max-sm:text-xl"
-            onClick={() => searchGames(page, debounceSearch)}
+            onClick={() =>
+              searchGames({ pageNum: page, search: debounceSearch })
+            }
           />
           <input
             className="font-grotesk text-sm w-full ml-2.5 h-full focus:outline-0 sm: max-sm:ml-2 sm: max-sm:text-xs"
@@ -119,8 +182,8 @@ const CardDetail = () => {
             strokeLinejoin="round"
             fill="none"
             viewBox="0 0 24 24"
-            onClick={() => setSearch('')}
-            className={`w-4 h-4 mr-3 transition-opacity duration-300 ${(search && search.length > 0) ? 'opacity-100 pointer-events-auto hover:cursor-pointer' : 'opacity-0 pointer-events-none'}`}
+            onClick={() => setSearch("")}
+            className={`w-4 h-4 mr-3 transition-opacity duration-300 ${search && search.length > 0 ? "opacity-100 pointer-events-auto hover:cursor-pointer" : "opacity-0 pointer-events-none"}`}
           >
             {/* <path d="M4 4 L21 21 M21 4 L4 21" /> */}
             <path d="M4 4 l17 17 M21 4 l-17 17" />
@@ -141,7 +204,8 @@ const CardDetail = () => {
           value={order}
         />
       </div>
-      <ul className="grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-1 p-2 sm: max-sm:snap-y sm: max-sm:snap-mandatory">
+      {/* sm: max-sm:h-screen sm: max-sm:sticky sm: max-sm:top-0 */}
+      <ul className="grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-1 p-2 sm: max-sm:snap-y sm: max-sm:snap-mandatory sm: max-sm:overflow-y-auto">
         {games &&
           games.length > 0 &&
           games.map((g) => (

@@ -3,6 +3,8 @@ Game App - Next.js 16 + Tailwind
 Game App for displaying and finding out latest games, ratings most popular and platforms to purchase them from
 
 ## Screenshots
+![Dark Landing page](<screenshots/Dark landing page.png.png>)
+![Light landing page](<screenshots/Light landing page.png.png>)
 
 
 ## Tech Stack

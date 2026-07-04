@@ -18,7 +18,7 @@ const CustomSelect = ({
   placeholder,
 }: SelectProps) => {
   const [show, setShow] = useState(false);
-  const [nav, setnav] = useState(false);
+  const [nav, setNav] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const buttonref = useRef<HTMLButtonElement | null>(null);
   const listref = useRef<HTMLDivElement | null>(null);
@@ -29,11 +29,11 @@ const CustomSelect = ({
   const handleOutside = (e: MouseEvent) => {
     if (ref.current && !ref.current.contains(e.target as Node)) {
       setShow(false);
-      setnav(false);
+      setNav(false);
     }
   };
 
-  // Focus on options when navigating
+  // Focus on options when navigating through select options
   useEffect(() => {
     if (show && optionRefs.current[activeIndex]) {
       optionRefs.current[activeIndex].scrollIntoView({
@@ -75,27 +75,27 @@ const CustomSelect = ({
       case "Escape":
         e.preventDefault();
         setShow(false);
-        setnav(false);
+        setNav(false);
         buttonref.current?.focus();
         break;
       case "ArrowDown":
         e.preventDefault();
-        setnav(true);
-        setActiveIndex((prev) => ((prev === options.length - 1) ? 0 : prev + 1));
+        setNav(true);
+        setActiveIndex((prev) => (prev === options.length - 1 ? 0 : prev + 1));
         break;
       case "ArrowUp":
         e.preventDefault();
-        setnav(true);
-        setActiveIndex((prev) => ((prev === 0) ? options.length - 1 : prev - 1));
+        setNav(true);
+        setActiveIndex((prev) => (prev === 0 ? options.length - 1 : prev - 1));
         break;
       case "Home":
         e.preventDefault();
-        setnav(true);
+        setNav(true);
         setActiveIndex(0);
         break;
       case "End":
         e.preventDefault();
-        setnav(true);
+        setNav(true);
         setActiveIndex(options.length - 1);
         break;
       case "Enter":
@@ -103,7 +103,7 @@ const CustomSelect = ({
         if (show) {
           onChange(options[activeIndex].value);
           setShow(false);
-          setnav(false);
+          setNav(false);
           buttonref.current?.focus();
         }
         break;
@@ -113,8 +113,8 @@ const CustomSelect = ({
   return (
     <div ref={ref} className="relative w-fit sm: max-sm:ml-1">
       <button
-        type="button"
         onKeyDown={handleKeyDown}
+        type="button"
         ref={buttonref}
         role="combobox"
         aria-expanded={show}
@@ -154,8 +154,8 @@ const CustomSelect = ({
         ref={listref}
         role="listbox"
         id="dropdown-listbox"
-        className={`${theme === "dark" ? "bg-zinc-900" : "bg-zinc-500"} absolute z-20 w-45 top-8 -left-20 sm: max-sm:-left-18 transition-all duration-300 
-          shadow-md shadow-zinc-900 rounded-md py-2 sm: max-sm:w-42 ${show ? "opacity-100 translate-y-0 pointer-events-auto" : "translate-y-3 pointer-events-none opacity-0"}`}
+        className={`${theme === "dark" ? "bg-zinc-900" : "bg-zinc-500"} absolute z-20 w-50 top-8 -left-20 sm: max-sm:-left-18 transition-all duration-300 
+          shadow-md shadow-zinc-900 rounded-md py-2 sm: max-sm:w-47 ${show ? "opacity-100 translate-y-0 pointer-events-auto" : "translate-y-3 pointer-events-none opacity-0"}`}
       >
         {options.map((o, i) => (
           <div
@@ -171,14 +171,16 @@ const CustomSelect = ({
             role="option"
             aria-selected={value === o.value}
             key={o.value}
-            className={`${i === activeIndex && nav === true ? "bg-blue-500/20 shadow-sm shadow-zinc-800" : "bg-none"} flex flex-row gap-2 items-center justify-center hover:text-blue-800 focus:border-2 focus:border-gray-200`}
+            className={`${i === activeIndex && nav === true ? "bg-blue-500/20 shadow-sm shadow-zinc-800" : "bg-none"} flex flex-row gap-7 items-center justify-between hover:text-blue-800 focus:border-2 focus:border-gray-200`}
           >
-            <div className="font-cause h-8 hover:cursor-pointer text-sm flex flex-row items-center sm: max-sm:text-xs sm: max-sm:h-7">
+            <div className="font-cause h-8.5 ml-5 hover:cursor-pointer text-sm flex flex-row items-center gap-3 sm: max-sm:text-xs sm: max-sm:h-8">
+              {o.slug.includes("asc") && <GrAscend className="h-4 w-4" />}
+              {o.slug.includes("dsc") && <GrDescend className="h-4 w-4" />}
               {o.label}
             </div>
-            {o.slug.includes("asc") && <GrAscend className="h-4 w-4" />}
-            {o.slug.includes("dsc") && <GrDescend className="h-4 w-4" />}
-            {value === o.value && <HiCheck className="h-5 w-5" />}
+            <div className="flex items-center mr-3">
+              {value === o.value && <HiCheck className="h-5 w-5" />}
+            </div>
           </div>
         ))}
       </div>

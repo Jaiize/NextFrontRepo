@@ -68,16 +68,16 @@ const Card = ({
     }
     return () => controller.abort();
   }, [show]);
-
+// onClick={() => console.log(name, background_image)}
   return (
-    <div ref={divRef} className={`m-2 relative`}>
+    <div ref={divRef} className={`my-2 relative`} >
       <div
         className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6]"} shadow-md flex flex-col transition-all rounded-[10px] duration-300 hover:shadow-gray-900 ${show ? "rounded-b-none shadow-none" : ""}`}
       >
         <div className="rounded-t-[10px] overflow-hidden">
           <Link href={`/carousel/${id}`}>
             <Image
-              className="w-62 sm: max-sm:w-70 h-48 cursor-pointer object-cover"
+              className="w-fit sm: max-sm:w-75 h-48 cursor-pointer object-cover"
               title={name}
               alt={name}
               src={background_image || '/Nocontent.jpg'}
@@ -135,8 +135,11 @@ const Card = ({
               {rating}
             </span>
           </div>
+          {/* Shrink filler for card below a currently opened card in small screens */}
+          {show && <span className="sm: max-sm:h-14 sm: max-sm:z-0 sm: max-sm:pointer-events-none sm: max-sm:-mb-px"/>}
           <section
-            className={` ${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6] shadow-none"} transition-shadow duration-300 ${show ? "absolute top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
+            className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6] shadow-none"} transition-shadow duration-300 
+            ${show ? "absolute sm: max-sm:top-[84%] top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
           >
             {show && (
               <>

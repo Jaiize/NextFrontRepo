@@ -17,9 +17,7 @@ export async function GET(req: NextRequest) {
     url.searchParams.set('page_size', pageSize)
     url.searchParams.set('ordering', order)
 
-    const res = await fetch(url.toString(), {
-      next: { revalidate: 3600 }
-    });
+    const res = await fetch(url.toString());
 
     if (!res.ok) {
       const er = res.text();

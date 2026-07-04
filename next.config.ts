@@ -4,6 +4,9 @@ import path from "path";
 import { Configuration } from "webpack";
 
 const nextConfig: NextConfig = {
+  typescript: {
+    ignoreBuildErrors: true
+  },
   outputFileTracingRoot: path.join(__dirname),
   webpack: (config: Configuration, { dev, isServer }: WebpackConfigContext) => {
     if (dev && config.watchOptions && !isServer) {

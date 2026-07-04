@@ -76,7 +76,7 @@ const CardDetail = () => {
   useEffect(() => {
     const pull = async () => {
       setLoading(true);
-      const res = await fetch(`${BASE_URL}/api/games/`);
+      const res = await fetch(`${BASE_URL}/api/games/`, { cache: 'no-store' });
       const fetched = await res.json();
       const RAWG = (fetched as RawgResponse).results;
       setGames(RAWG);

@@ -33,7 +33,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
 
   return (
     <>
-      <div className={`flex flex-col items-center relative justify-center overflow-hidden ${ description_raw && description_raw.length > 1500 ? 'h-220 sm: max-sm:h-190' : 'h-170 sm: max-sm:h-120'}`}>
+      <div className={`flex flex-col items-center relative justify-center overflow-hidden ${ description_raw && description_raw.length > 1500 ? 'h-220 sm: max-sm:h-180' : 'h-170 sm: max-sm:h-120'}`}>
         {background_image && 
           <Image loading="eager" alt={name || slug} width={1920} height={1080} src={background_image_additional || '/Nocontent.jpg'} className={`w-full absolute top-0 left-0 h-full ${theme === 'dark' ? 'opacity-20' : 'opacity-80'} aspect-video object-cover`}/>
         }

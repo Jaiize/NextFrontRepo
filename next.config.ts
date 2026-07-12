@@ -3,9 +3,11 @@ import { WebpackConfigContext } from "next/dist/server/config-shared";
 import path from "path";
 import { Configuration } from "webpack";
 
+const { version } = require('./package.json')
+
 const nextConfig: NextConfig = {
   env: {
-    APP_VERSION: "1.3.2"
+    APP_VERSION: version
   },
   typescript: {
     ignoreBuildErrors: true

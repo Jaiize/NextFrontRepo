@@ -4,6 +4,9 @@ import path from "path";
 import { Configuration } from "webpack";
 
 const nextConfig: NextConfig = {
+  env: {
+    APP_VERSION: "1.3.2"
+  },
   typescript: {
     ignoreBuildErrors: true
   },

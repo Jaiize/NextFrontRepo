@@ -253,12 +253,12 @@ const CardDetail = () => {
         {/* Grid view */}
         {/* sm: max-sm:h-screen sm: max-sm:sticky sm: max-sm:top-0 */}
         <ul
-          className={`grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ${sideNav ? "2xl:grid-cols-5" : "2xl:grid-cols-6"} gap-3 p-2 sm: max-sm:snap-y sm: max-sm:snap-mandatory sm: max-sm:overflow-y-auto`}
+          className={`grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ${sideNav ? "2xl:grid-cols-5" : "2xl:grid-cols-6"} gap-3 p-2`}
         >
           {games &&
             games.length > 0 &&
             games.map((g) => (
-              <li key={g.id} className="sm: max-sm:snap-start sm: max-sm:px-3">
+              <li key={g.id} className="sm: max-sm:px-3">
                 <Card {...g} isOpen={sideNav} />
               </li>
             ))}

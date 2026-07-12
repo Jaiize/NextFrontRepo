@@ -52,13 +52,13 @@ const CardDetail = () => {
 
   useEffect(() => {
     if (order.includes("-name")) {
-      setDebounceSearch("a");
-      searchGames({ pageNum: page, search: debounceSearch });
-    } else if (order.includes("name")) {
       setDebounceSearch("z");
-      searchGames({ pageNum: page, search: debounceSearch });
+      searchGames({ pageNum: page, search: debounceSearch, gen: genre });
+    } else if (order.includes("name")) {
+      setDebounceSearch("a");
+      searchGames({ pageNum: page, search: debounceSearch, gen: genre });
     } else {
-      searchGames({ pageNum: page, orderBy: order });
+      searchGames({ pageNum: page, orderBy: order, gen: genre });
     }
   }, [order]);
 
@@ -66,7 +66,7 @@ const CardDetail = () => {
    * Genres Effect
    */
   useEffect(() => {
-    searchGames({ pageNum: page, gen: genre });
+    searchGames({ pageNum: page, gen: genre, orderBy: order });
   }, [genre]);
 
    /** ------------------------------------------------------------------------------------------------------------
@@ -76,14 +76,14 @@ const CardDetail = () => {
   useEffect(() => {
     const pull = async () => {
       setLoading(true);
-      const res = await fetch(`${BASE_URL}/api/games/`, { cache: 'no-store' });
+      const res = await fetch(`${BASE_URL}/api/games/`);
       const fetched = await res.json();
       const RAWG = (fetched as RawgResponse).results;
       setGames(RAWG);
       setLoading(false);
     };
     pull();
-  }, []);
+  }, [] );
 
   // searcGames method ------------------------------------------------------------------------------------------------------------
 
@@ -107,20 +107,16 @@ const CardDetail = () => {
         page_size: pageSize || "40",
       });
 
-      if (search) {
-        params.append("search", search);
-      }
+      if (search) params.append("search", search);
 
-      if (orderBy) {
-        params.append("ordering", orderBy);
-      }
-      if (gen) {
-        params.append("genres", gen);
-      }
+      if (orderBy) params.append("ordering", orderBy);
+
+      if (gen) params.append("genres", gen);
 
       const res = await fetch(`${BASE_URL}/api/games/?${params}`);
       const fetched = await res.json();
       const rawg = (fetched as RawgResponse).results;
+      console.log("Here...", rawg)
 
       if (rawg && rawg.length > 0) {
         setGames(rawg);
@@ -139,7 +135,7 @@ const CardDetail = () => {
   useDebounce(() => setDebounceSearch(search), 450, [search]);
 
   useEffect(() => {
-    searchGames({ pageNum: page, search: debounceSearch });
+    searchGames({ pageNum: page, search: debounceSearch, gen: genre, orderBy: order });
   }, [debounceSearch]);
 
   /** ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -172,7 +168,7 @@ const CardDetail = () => {
       {/* Wrapper for Sidenav and svg */}
       <div
         onKeyDown={handleKeyDown}
-        className={`${!sideNav ? "sm: max-sm:focus-within:border-0 focus-within:border-2 focus-within:rounded-lg focus-within:border-blue-600" : "border-0"} ${sideNav ? "flex sm: max-sm:absolute sm: max-sm:z-20 sm: max-sm:bg-zinc-700/85 sm: max-sm:w-fit sm: max-sm:rounded-br-lg" : "absolute"}`}
+        className={`${!sideNav ? "sm: max-sm:focus-within:border-0 focus-within:border-2 focus-within:rounded-lg focus-within:border-blue-600" : ""} border-2 border-transparent ${sideNav ? "flex sm: max-sm:absolute sm: max-sm:z-20 sm: max-sm:bg-zinc-700/85 sm: max-sm:w-fit sm: max-sm:rounded-br-lg" : "absolute"}`}
       >
         <svg
           onClick={() => {
@@ -184,7 +180,7 @@ const CardDetail = () => {
           strokeLinejoin="round"
           viewBox="0 0 24 24"
           fill="none"
-          className={`w-8 h-8 m-3 cursor-pointer sticky top-16 ${sideNav ? "sm: max-sm:static" : ""}`}
+          className={`w-8 h-8 m-3 cursor-pointer sticky top-17 ${sideNav ? "sm: max-sm:static" : ""}`}
         >
           <path d="M0 3 H24 M0 12 H24 M0 21 H24" />
         </svg>
@@ -202,7 +198,7 @@ const CardDetail = () => {
       {/* Wrapper for title and search bar and main grid */}
       <div>
         <div className="flex flex-col justify-center w-full mb-5">
-          <div className="font-play text-center w-full h-10 text-3xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text sm: max-sm:mt-15">
+          <div className="font-play text-center w-full h-10 text-3xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text sm: max-sm:mt-15 sm: max-sm:px-1">
             Find Your favourite Games
           </div>
 
@@ -262,8 +258,8 @@ const CardDetail = () => {
           {games &&
             games.length > 0 &&
             games.map((g) => (
-              <li key={g.id} className="sm: max-sm:snap-start">
-                <Card {...g} />
+              <li key={g.id} className="sm: max-sm:snap-start sm: max-sm:px-3">
+                <Card {...g} isOpen={sideNav} />
               </li>
             ))}
         </ul>

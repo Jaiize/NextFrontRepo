@@ -32,7 +32,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
     },
     {
       name: "Strategy",
-      img: "",
+      img: "https://media.rawg.io/media/games/0bd/0bd5646a3d8ee0ac3314bced91ea306d.jpg",
       slug: "strategy",
     },
     {
@@ -43,17 +43,33 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
     {
       name: "RPG",
       img: "https://media.rawg.io/media/games/26d/26d4437715bee60138dab4a7c8c59c92.jpg",
-      slug: "rpg",
+      slug: "role-playing-games",
     },
     {
       name: "Platformer",
       img: "https://media.rawg.io/media/games/4cf/4cfc6b7f1850590a4634b08bfab308ab.jpg",
       slug: "platformer",
     },
-    { name: "Racing", img: "", slug: "racing" },
-    { name: "Shooting", img: "", slug: "shooting" },
-    { name: "Arcade", img: "", slug: "arcade" },
-    { name: "Fighting", img: "", slug: "fighting" },
+    {
+      name: "Racing",
+      img: "https://media.rawg.io/media/games/e96/e96d3582bf1bd6dbe6edae5319dcdb83.jpg",
+      slug: "racing",
+    },
+    {
+      name: "Shooter",
+      img: "https://media.rawg.io/media/games/1e5/1e5e33b88be978f451196a751424a72e.jpg",
+      slug: "shooter",
+    },
+    {
+      name: "Arcade",
+      img: "https://media.rawg.io/media/games/082/082365507ff04d456c700157072d35db.jpg",
+      slug: "arcade",
+    },
+    {
+      name: "Fighting",
+      img: "https://media.rawg.io/media/games/aa3/aa36ba4b486a03ddfaef274fb4f5afd4.jpg",
+      slug: "fighting",
+    },
   ];
 
   const handleMobileSelect = () => {
@@ -65,13 +81,28 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
 
   const handleMobClickOutside = (e: TouchEvent) => {
     if (butRef.current && !butRef.current.contains(e.target as Node)) {
-      if(sideNav){
+      if (sideNav) {
         setTimeout(() => {
           setSideNav(false);
-        }, 10)
+        }, 10);
       }
     }
   };
+
+  const turnOffIndicator = (e: MouseEvent) => {
+     if (butRef.current && !butRef.current.contains(e.target as Node)) {
+      setScreen(false);
+    }
+  }
+
+  // Turn of indicator for screen reader
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.addEventListener("click", turnOffIndicator);
+    }
+    return () =>
+      document.removeEventListener("click", turnOffIndicator);
+  }, []);
 
   // Handling touch outside
   useEffect(() => {
@@ -82,7 +113,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
       document.removeEventListener("touchend", handleMobClickOutside);
   }, [sideNav]);
 
-  // In progress
+  // On Keydown
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (sideNav && butRef.current) {
       e.preventDefault();
@@ -127,13 +158,11 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
     }
   };
 
-
-
   return (
     <button
       type="button"
       ref={butRef}
-      className="flex flex-col items-center w-30 justify-start m-3 sticky top-16"
+      className="flex flex-col items-center w-30 justify-start m-3 sticky top-17"
       role="combobox"
       aria-expanded={genre}
       aria-controls="dropdown-listbox"
@@ -153,18 +182,18 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
         {Genre &&
           Genre.map(({ img, name, slug }, i) => (
             <div
-              className={`${screen && activeIndex === i ? "bg-gray-900" : ""} flex flex-row gap-3 w-30 h-10 py-3 pr-3 rounded-md mb-2 items-center justify-start hover:text-blue-500`}
+              className={`${screen && activeIndex === i ? "bg-gray-500" : "bg-transparent"} flex flex-row gap-3 w-full h-10 py-3 pr-3 rounded-md mb-2 items-center justify-start hover:text-blue-500`}
               id={`option-${i}`}
               role="option"
               aria-selected={genre === slug}
               key={name}
               onClick={() => {
-                setGenre(slug);
+                setGenre(prev => (prev === slug ? "" : slug));
                 handleMobileSelect();
               }}
             >
               <Image
-                className="w-10 h-10 rounded-md my-3 object-cover"
+                className="w-12 h-10 rounded-md my-3 object-cover"
                 title={name}
                 alt={name}
                 src={img || "/Nocontent.jpg"}
@@ -185,14 +214,3 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
 };
 
 export default SideNav;
-
-/**
- * Adventure: The Walking Dead Season 1 => "https://media.rawg.io/media/games/8d6/8d69eb6c32ed6acfd75f82d532144993.jpg"
- * Action: God of War (2018) => "https://media.rawg.io/media/games/4be/4be6a6ad0364751a96229c56bf69be59.jpg"
- * Racing:
- * Shooting:
- * Massively Multiplayer: Warframe => "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg"
- * Sports: Rocket League => "https://media.rawg.io/media/games/8cc/8cce7c0e99dcc43d66c8efd42f9d03e3.jpg"
- * RPG: Cyberpunk 2077 => "https://media.rawg.io/media/games/26d/26d4437715bee60138dab4a7c8c59c92.jpg"
- * Platformer: Hollow Knight => "https://media.rawg.io/media/games/4cf/4cfc6b7f1850590a4634b08bfab308ab.jpg"
- */

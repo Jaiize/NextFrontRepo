@@ -33,9 +33,9 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
 
   return (
     <>
-      <div className={`flex flex-col items-center relative justify-center overflow-hidden ${ description_raw && description_raw.length > 1500 ? 'h-220' : 'h-170'} ${ description_raw && description_raw.length > 1500 ? 'sm: max-sm:h-220' : ' sm: max-sm:h-120'}`} >
+      <div className={`flex flex-col items-center relative justify-center overflow-hidden ${ description_raw && description_raw.length > 1500 ? 'h-220' : 'h-170'} ${ description_raw && description_raw.length > 1500 ? 'sm: max-sm:h-220' : ' sm: max-sm:h-120'}`}>
         {background_image && 
-          <Image loading="eager" alt={name || slug} width={400} height={800} src={background_image_additional || '/Nocontent.jpg'} className={`w-full absolute top-0 left-0 h-full ${theme === 'dark' ? 'opacity-15' : 'opacity-80'} object-cover`}/>
+          <Image loading="eager" alt={name || slug} width={1920} height={1080} src={background_image_additional || '/Nocontent.jpg'} className={`w-full absolute top-0 left-0 h-full ${theme === 'dark' ? 'opacity-20' : 'opacity-80'} aspect-video object-cover`}/>
         }
         <div className={`font-rob text-7xl w-full absolute top-20 flex flex-row justify-center sm: max-sm:top-5 sm: max-sm:text-2xl`}>{name}</div>
         <div className={`w-1/2 absolute h-50 top-50 flex flex-row justify-center font-grotesk z-30 sm: max-sm:w-[80%] sm: max-sm:top-20 sm: max-sm:text-xs`} >

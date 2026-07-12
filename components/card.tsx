@@ -17,6 +17,7 @@ import { BsNintendoSwitch } from "react-icons/bs";
 import { SiEpicgames } from "react-icons/si";
 import Link from "next/link";
 import useTheme from "next-theme";
+import SideNav from "./sidenav";
 
 export type CardProps = {
   background_image: string;
@@ -27,6 +28,7 @@ export type CardProps = {
   genres: RawgGenre[];
   platforms: RawgPlatform[];
   stores: Store[];
+  isOpen: boolean
 };
 
 
@@ -45,6 +47,7 @@ const Card = ({
   platforms,
   stores,
   id,
+  isOpen
 }: CardProps) => {
   const [show, setShow] = useState(false);
   const divRef = useRef<HTMLDivElement | null>(null);
@@ -68,22 +71,24 @@ const Card = ({
     }
     return () => controller.abort();
   }, [show]);
-// onClick={() => console.log(name, background_image)}
+
+  
   return (
-    <div ref={divRef} className={`my-2 relative`} >
+    <div ref={divRef} className={`my-2 relative`}>
       <div
         className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6]"} shadow-md flex flex-col transition-all rounded-[10px] duration-300 hover:shadow-gray-900 ${show ? "rounded-b-none shadow-none" : ""}`}
       >
         <div className="rounded-t-[10px] overflow-hidden">
-          <Link href={`/carousel/${id}`}>
+          <Link href={`/carousel/${id}`} className={`${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}>
             <Image
-              className="w-fit sm: max-sm:w-75 h-48 cursor-pointer object-cover"
+              className="min-w-full h-48 aspect-auto cursor-pointer object-cover"
               title={name}
               alt={name}
               src={background_image || '/Nocontent.jpg'}
-              width={300}
+              width={1280}
+              height={720}
               loading="eager"
-              height={250}
+              sizes="(max-width: 360px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           </Link>
         </div>
@@ -120,7 +125,7 @@ const Card = ({
                 p.platform.slug.includes("nintendo-switch"),
               ) && <BsNintendoSwitch className="text-white-500" />}
           </div>
-          <Link href={`/carousel/${id}`}>
+          <Link href={`/carousel/${id}`} className={`${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}>
             <p className="font-rob line-clamp-3 text-sm hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5">
               {name}
             </p>
@@ -136,10 +141,10 @@ const Card = ({
             </span>
           </div>
           {/* Shrink filler for card below a currently opened card in small screens */}
-          {show && <span className="sm: max-sm:h-14 sm: max-sm:z-0 sm: max-sm:pointer-events-none sm: max-sm:-mb-px"/>}
+          {show && <span className="sm: max-sm:h-12.25 sm: max-sm:z-0 sm: max-sm:pointer-events-none"/>}
           <section
             className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6] shadow-none"} transition-shadow duration-300 
-            ${show ? "absolute sm: max-sm:top-[84%] top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
+            ${show ? "absolute sm: max-sm:top-[85%] top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
           >
             {show && (
               <>
@@ -186,9 +191,7 @@ const Card = ({
                 </div>
               </>
             )}
-            <div className={`flex flex-row text-[11px] font-sans cursor-default ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} justify-center mt-1.5`}>
-              {show && "Click photo to view detail"}
-            </div>
+            { show && <div className={`flex flex-row text-[11px] font-sans cursor-default ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} justify-center mt-1.5`}>Click photo to view detail</div> }
             <div className={`${theme === 'dark' ? 'text-blue-300' : 'text-black'} flex flex-row items-center justify-center text-[11px] py-3 cursor-pointer`}>
               <button type="button" className="underline cursor-pointer" onClick={() => setShow((s) => !s)}>
                 {show ? "Show less" : "Show More"}

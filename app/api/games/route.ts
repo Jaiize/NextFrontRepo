@@ -9,15 +9,18 @@ export async function GET(req: NextRequest) {
     const search = searchParams.get('search') || ''
     const pageSize = searchParams.get('page_size') || '40'
     const order = searchParams.get('ordering') || ''
+    const genres = searchParams.get('genres') || ''
 
     const url = new URL('https://api.rawg.io/api/games')
     url.searchParams.set('key', (API_KEY as string))
     url.searchParams.set('page', pageNum)
-    url.searchParams.set('search', search)
     url.searchParams.set('page_size', pageSize)
-    url.searchParams.set('ordering', order)
+    
+    if(search) url.searchParams.set('search', search)
+    if(order) url.searchParams.set('ordering', order)
+    if(genres) url.searchParams.set('genres', genres)
 
-    const res = await fetch(url.toString(), { cache: 'no-store' });
+    const res = await fetch(url.toString(), { next: { revalidate: 3600 } });
 
     if (!res.ok) {
       const er = res.text();

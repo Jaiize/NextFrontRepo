@@ -43,7 +43,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
     {
       name: "RPG",
       img: "https://media.rawg.io/media/games/26d/26d4437715bee60138dab4a7c8c59c92.jpg",
-      slug: "role-playing-games",
+      slug: "role-playing-games-rpg",
     },
     {
       name: "Platformer",
@@ -95,7 +95,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
     }
   }
 
-  // Turn of indicator for screen reader
+  // Turn off indicator for screen reader
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.addEventListener("click", turnOffIndicator);

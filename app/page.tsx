@@ -53,10 +53,8 @@ const CardDetail = () => {
   useEffect(() => {
     if (order.includes("-name")) {
       setDebounceSearch("z");
-      searchGames({ pageNum: page, search: debounceSearch, gen: genre });
     } else if (order.includes("name")) {
       setDebounceSearch("a");
-      searchGames({ pageNum: page, search: debounceSearch, gen: genre });
     } else {
       searchGames({ pageNum: page, orderBy: order, gen: genre });
     }
@@ -116,7 +114,7 @@ const CardDetail = () => {
       const res = await fetch(`${BASE_URL}/api/games/?${params}`);
       const fetched = await res.json();
       const rawg = (fetched as RawgResponse).results;
-      console.log("Here...", rawg)
+      // console.log("Here...", rawg)
 
       if (rawg && rawg.length > 0) {
         setGames(rawg);
@@ -135,7 +133,7 @@ const CardDetail = () => {
   useDebounce(() => setDebounceSearch(search), 450, [search]);
 
   useEffect(() => {
-    searchGames({ pageNum: page, search: debounceSearch, gen: genre, orderBy: order });
+    searchGames({ pageNum: page, search: debounceSearch });
   }, [debounceSearch]);
 
   /** ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -251,7 +249,6 @@ const CardDetail = () => {
           />
         </div>
         {/* Grid view */}
-        {/* sm: max-sm:h-screen sm: max-sm:sticky sm: max-sm:top-0 */}
         <ul
           className={`grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ${sideNav ? "2xl:grid-cols-5" : "2xl:grid-cols-6"} gap-3 p-2`}
         >

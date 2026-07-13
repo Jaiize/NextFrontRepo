@@ -37,7 +37,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
         {background_image && 
           <Image loading="eager" alt={name || slug} width={1920} height={1080} src={background_image_additional || '/Nocontent.jpg'} className={`w-full absolute top-0 left-0 h-full ${theme === 'dark' ? 'opacity-45' : 'opacity-80'} aspect-video object-cover`}/>
         }
-        <div className={`font-rob text-7xl w-full absolute top-20 flex flex-row justify-center sm: max-sm:top-5 sm: max-sm:text-2xl`}>{name}</div>
+        <div className={`font-rob text-7xl w-full absolute top-20 flex flex-row justify-center sm: max-sm:top-5 sm: max-sm:text-2xl sm: max-sm:px-3`}>{name}</div>
         <div className={`w-1/2 absolute h-50 top-50 flex flex-row justify-center font-grotesk z-30 sm: max-sm:w-[80%] sm: max-sm:top-20 sm: max-sm:text-xs`} >
           {description_raw && description_raw}
         </div>
@@ -47,12 +47,12 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       </div>
 
       {/* Platforms */}
-      <div className="w-1/2 flex flex-col items-start justify-start space-y-5 mx-10 mt-10 h-auto">
+      <div className="w-fit flex flex-col items-start justify-start space-y-5 mx-10 mt-10 h-auto">
         {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
         <div className="font-play text-xl sm: max-sm:text-md">
           { platforms && 'Platforms:'}
         </div>
-        <div className="flex flex-row items-center justify-start gap-4 flex-wrap sm: max-sm:flex sm: max-sm:flex-col sm: max-sm:items-start ">
+        <div className="flex flex-row items-center justify-start gap-4 flex-wrap ">
           { platforms && platforms.some((p) => (
             p.platform.slug.includes('pc') 
           )) && 

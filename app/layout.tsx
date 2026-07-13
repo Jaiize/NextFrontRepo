@@ -71,6 +71,27 @@ const supermercado_one = Supermercado_One({
 export const metadata: Metadata = {
   title: "Discover Games",
   description: "Discover and look up new and trending games",
+  metadataBase: new URL('https://keakstein.vercel.app'),
+  openGraph: {
+    title: "Discover new and trending Games",
+    description: "Discover and look up new and trending games",
+    type: "website",
+    siteName: "Keakstein",
+    images: [
+      {
+        url: "/page-for-meta.png",
+        width: 1600,
+        height: 900,
+        alt: "Find your favourite games and more"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Keakstein - GameGrid",
+    description: "Discover and look up new and trending games",
+    images: ["/page-for-meta.png"],
+  }
 };
 
 export default function RootLayout({
@@ -89,6 +110,7 @@ export default function RootLayout({
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" href="/favicon.ico"/>
+        <link rel="icon" href="/faviconsvg.svg"/>
         <link rel="icon" sizes="96x96" href="/favicon-96x96.png"/>
         <link rel="manifest" href="/keakstein.webmanifest.json"/>
         <meta name="theme-color" content="ffffff"/>

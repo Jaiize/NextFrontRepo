@@ -7,7 +7,6 @@ import { BiSearch } from "react-icons/bi";
 import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
 import useTheme from "next-theme";
 import CustomSelect from "@/components/customSelect";
-import Loading from "./loading";
 import SideNav from "@/components/sidenav";
 // import Loading from "./loading";
 
@@ -53,10 +52,8 @@ const CardDetail = () => {
   useEffect(() => {
     if (order.includes("-name")) {
       setDebounceSearch("z");
-      setOrder('')
     } else if (order.includes("name")) {
       setDebounceSearch("a");
-      setOrder('')
     } else {
       searchGames({ pageNum: page, orderBy: order, gen: genre });
     }

@@ -30,10 +30,12 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
 
   const {background_image, name, slug, background_image_additional, description_raw, platforms, genres, stores, rating, released} = game;
 
+  const interfc = `${ description_raw && (description_raw.length > 1400 && description_raw.length < 1550) ? 'h-220 sm: max-sm:h-170' : description_raw && (description_raw.length > 1560 && description_raw.length < 2000) ? 'h-220 sm: max-sm:h-200' : description_raw && description_raw.length > 2000 ? 'h-220 sm: max-sm:h-220' : 'h-170 sm: max-sm:h-120'}`
+  
 
   return (
     <>
-      <div className={`flex flex-col items-center relative justify-center overflow-hidden ${ description_raw && description_raw.length > 1500 ? 'h-220 sm: max-sm:h-180' : 'h-170 sm: max-sm:h-120'}`}>
+      <div className={`flex flex-col items-center relative justify-center overflow-hidden ${interfc}`}>
         {background_image && 
           <Image loading="eager" alt={name || slug} width={1920} height={1080} src={background_image_additional || '/Nocontent.jpg'} className={`w-full absolute top-0 left-0 h-full ${theme === 'dark' ? 'opacity-45' : 'opacity-80'} aspect-video object-cover`}/>
         }

@@ -3,6 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 // import { BiChevronDown } from 'react-icons/bi'
 import { HiCheck } from "react-icons/hi2";
 import { GrAscend, GrDescend } from "react-icons/gr";
+import { FcAlphabeticalSortingAz } from "react-icons/fc";
+import { FcAlphabeticalSortingZa } from "react-icons/fc";
+import { TbChartBarPopular } from "react-icons/tb";
 
 export interface SelectProps {
   value: string;
@@ -171,11 +174,14 @@ const CustomSelect = ({
             role="option"
             aria-selected={value === o.value}
             key={o.value}
-            className={`${i === activeIndex && nav === true ? "bg-blue-500/20 shadow-sm shadow-zinc-800" : "bg-none"} flex flex-row gap-7 items-center justify-between hover:text-blue-800 focus:border-2 focus:border-gray-200`}
+            className={`${i === activeIndex && nav === true ? "bg-blue-500/20 shadow-sm shadow-zinc-800" : "bg-none"} flex flex-row gap-7 hover:cursor-pointer items-center justify-between hover:text-blue-800`}
           >
-            <div className="font-cause h-8.5 ml-5 hover:cursor-pointer text-sm flex flex-row items-center gap-3 sm: max-sm:text-xs sm: max-sm:h-8">
+            <div className="font-cause h-8.5 ml-5 text-sm flex flex-row items-center gap-3 sm: max-sm:text-xs sm: max-sm:h-8">
               {o.slug.includes("asc") && <GrAscend className="h-4 w-4" />}
               {o.slug.includes("dsc") && <GrDescend className="h-4 w-4" />}
+              {o.slug.includes("az") && <FcAlphabeticalSortingAz className="h-4 w-4" />}
+              {o.slug.includes("za") && <FcAlphabeticalSortingZa className="h-4 w-4" />}
+              {o.slug.includes("known") && <TbChartBarPopular className="h-4 w-4" />}
               {o.label}
             </div>
             <div className="flex items-center mr-3">

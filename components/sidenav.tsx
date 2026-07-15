@@ -202,7 +202,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
                 height={50}
               />
               <h3
-                className={`${genre === slug ? "text-blue-500" : ""} sm: max-sm:text-xs text-sm md:active:text-xs transition-all duration-300 cursor-pointer font-grotesk`}
+                className={`${genre === slug ? "text-blue-500" : ""} sm: max-sm:text-xs text-sm md:active:text-xs transition-all duration-100 cursor-pointer font-grotesk`}
               >
                 {name}
               </h3>

@@ -6,7 +6,7 @@ const ThemeToggle = () => {
     const {theme, toggle} = useTheme()
 
   return (
-    <button title="ThemeToggle" onClick={toggle} >{theme === 'dark' ? 
+    <button title="ThemeToggle" onClick={toggle} className="border-2 border-transparent focus-visible:outline-0 focus-visible:border-2 focus-visible:border-blue-500 focus-visible:rounded-xl" >{theme === 'dark' ? 
         (<div className="flex flex-row items-center justify-between w-19 border p-1 border-gray-500 cursor-pointer rounded-xl group">
             <CiLight className="text-xl transition-transform duration-500 group-hover:rotate-180"/>
             <span className="font-grotesk text-md mr-1">Light</span>

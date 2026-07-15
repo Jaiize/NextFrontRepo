@@ -102,7 +102,6 @@ export default function RootLayout({
 
   return (
     <html
-      id={'master'}
       lang="en"
       suppressHydrationWarning
       className={`${geistSans.variable} ${supermercado_one.variable} ${roboto_condensed.variable} ${cause.variable} ${geistMono.variable} ${playfair_display.variable} ${montserrat.variable}  ${inter.variable} ${schibsted_grotesk.variable} h-full antialiased`}
@@ -111,7 +110,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" href="/favicon.ico"/>
         <link rel="icon" href="/faviconsvg.svg"/>
-        <link rel="icon" sizes="96x96" href="/favicon-96x96.png"/>
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png"/>
         <link rel="manifest" href="/keakstein.webmanifest.json"/>
         <meta name="theme-color" content="ffffff"/>
       </head>

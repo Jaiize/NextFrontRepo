@@ -33,15 +33,15 @@ const CardDetail = () => {
    */
 
   const options = [
-    { value: "popularity", label: "Popularity", slug: "" },
+    { value: "popularity", label: "Popularity", slug: "known" },
     { value: "created", label: "Created", slug: "asc" },
     { value: "-created", label: "Created", slug: "dsc" },
     { value: "released", label: "Release Date", slug: "asc" },
     { value: "-released", label: "Release Date", slug: "dsc" },
     { value: "metacritic", label: "Metacritic", slug: "asc" },
     { value: "-metacritic", label: "Metacritic", slug: "dsc" },
-    { value: "name", label: "Name", slug: "asc" },
-    { value: "-name", label: "Name", slug: "dsc" },
+    { value: "name", label: "Name", slug: 'az' },
+    { value: "-name", label: "Name", slug: 'za' },
     { value: "rating", label: "Rating", slug: "asc" },
     { value: "-rating", label: "Rating", slug: "dsc" },
   ];
@@ -53,8 +53,10 @@ const CardDetail = () => {
   useEffect(() => {
     if (order.includes("-name")) {
       setDebounceSearch("z");
+      setOrder('')
     } else if (order.includes("name")) {
       setDebounceSearch("a");
+      setOrder('')
     } else {
       searchGames({ pageNum: page, orderBy: order, gen: genre });
     }
@@ -143,7 +145,7 @@ const CardDetail = () => {
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     searchGames({
-      pageNum: page,
+      pageNum: newPage,
       search: debounceSearch,
       gen: genre,
       orderBy: order,
@@ -203,7 +205,7 @@ const CardDetail = () => {
           {/* Wrapper for search bar */}
           <div className="flex justify-center w-full my-5">
             <div
-              className={`flex flex-row items-center w-[30%] ${theme === "light" ? "bg-gray-300" : "bg-[#323232]"} h-10 rounded-2xl sm: max-sm:w-[65%] sm: max-sm:h-9 transition-all duration-300`}
+              className={`flex flex-row items-center w-[30%] ${theme === "light" ? "bg-gray-300" : "bg-[#323232]"} h-10 rounded-2xl sm: max-sm:w-[65%] sm: max-sm:h-9 transition-all duration-200 lg:outline-2 lg:outline-transparent lg:focus-within:outline-offset-1 lg:focus-within:outline-2 lg:focus-within:outline-blue-400`}
             >
               <BiSearch
                 className="text-2xl ml-3 cursor-pointer sm: max-sm:text-xl"
@@ -225,7 +227,7 @@ const CardDetail = () => {
                 fill="none"
                 viewBox="0 0 24 24"
                 onClick={() => setSearch("")}
-                className={`w-4 h-4 mr-3 transition-opacity duration-300 ${search && search.length > 0 ? "opacity-100 pointer-events-auto hover:cursor-pointer" : "opacity-0 pointer-events-none"}`}
+                className={`w-4 h-4 mr-3 transition-opacity duration-200 ${search && search.length > 0 ? "opacity-100 pointer-events-auto hover:cursor-pointer" : "opacity-0 pointer-events-none"}`}
               >
                 {/* <path d="M4 4 L21 21 M21 4 L4 21" /> */}
                 <path d="M4 4 l17 17 M21 4 l-17 17" />

@@ -16,26 +16,30 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
   const {theme} = useTheme()
 
   
-  useEffect(() => {
+  useEffect(() => {    
     const pullOne = async () => {
-      const { id } = await params;
-      const res = await fetch(`${BASE_URL}/api/games/one/${id}`);
-      const fetched = await res.json();
-      const game = (fetched as RawgClickGames);
-      setGame(game)
+      try {
+        const { id } = await params;
+        const res = await fetch(`${BASE_URL}/api/games/one/${id}`);
+        const fetched = await res.json();
+        const game = (fetched as RawgClickGames);
+        setGame(game)
+      } catch (e) {
+        console.error(e)
+      }
     }
     pullOne();
-    
+
   }, [params])
 
   const {background_image, name, slug, background_image_additional, description_raw, platforms, genres, stores, rating, released} = game;
 
-  const interfc = `${ description_raw && (description_raw.length > 1400 && description_raw.length < 1550) ? 'h-220 sm: max-sm:h-170' : description_raw && (description_raw.length > 1560 && description_raw.length < 2000) ? 'h-220 sm: max-sm:h-200' : description_raw && description_raw.length > 2000 ? 'h-220 sm: max-sm:h-220' : 'h-170 sm: max-sm:h-120'}`
+  const bg_height = `${ description_raw && (description_raw.length > 1400 && description_raw.length < 1550) ? 'h-220 sm: max-sm:h-170' : description_raw && (description_raw.length > 1560 && description_raw.length < 2000) ? 'h-220 sm: max-sm:h-200' : description_raw && description_raw.length > 2000 ? 'h-220 sm: max-sm:h-220' : 'h-170 sm: max-sm:h-120'}`
   
 
   return (
     <>
-      <div className={`flex flex-col items-center relative justify-center overflow-hidden ${interfc}`}>
+      <div className={`flex flex-col items-center relative justify-center overflow-hidden ${bg_height}`}>
         {background_image && 
           <Image loading="eager" alt={name || slug} width={1920} height={1080} src={background_image_additional || '/Nocontent.jpg'} className={`w-full absolute top-0 left-0 h-full ${theme === 'dark' ? 'opacity-45' : 'opacity-80'} aspect-video object-cover`}/>
         }
@@ -114,12 +118,15 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       </div>
       {/* Stats  */}
       <div className="w-1/2 flex flex-col space-y-10 mt-10 justify-between h-auto m-10 sm: max-sm:w-auto sm: max-sm:space-y-5">
-        <div className="flex flex-row justify-between">
-          <span className="font-play text-lg">Rating:</span>
-            <span className="text-lg text-white-600 font-grotesk">
-              <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
-            {rating}</span>
-        </div>
+      {/* Check before pushing */}
+        {background_image && 
+          <div className="flex flex-row justify-between">
+            <span className="font-play text-lg">Rating:</span>
+              <span className="text-lg text-white-600 font-grotesk">
+                <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
+              {rating}</span>
+          </div>
+        }
         {genres && 
           <div className="flex flex-row justify-between">
             <span className="text-lg font-play">Genre:</span>

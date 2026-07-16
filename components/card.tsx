@@ -165,18 +165,22 @@ const Card = ({
                   </div>)
                 }
                 <hr className="my-1 text-zinc-500" />
-                <div className="flex flex-row justify-between my-1.5">
-                  <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default `}>Purchase from:</span>
-                  <div className="flex flex-row">
-                    {stores && stores.some((p) => p.store.slug.includes("steam")) && (
-                      <FaSteam className="text-white-500 mx-0.5" />
-                    )}
-                    {stores && stores.some((p) =>
-                      p.store.slug.includes("epic-games"),
-                    ) && <SiEpicgames className="text-white-500 mx-0.5" />}
-                  </div>
-                </div>
-                <hr className="my-1 text-zinc-500" />
+                {stores && (stores.some((p) => p.store.slug.includes("steam")) || stores.some((p) => p.store.slug.includes("epic-games"))) &&
+                  <>
+                    <div className="flex flex-row justify-between my-1.5">
+                      <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default `}>Purchase from:</span>
+                      <div className="flex flex-row items-center">
+                        {stores && stores.some((p) => p.store.slug.includes("steam")) && (
+                          <FaSteam className="text-white-500 mx-0.5" />
+                        )}
+                        {stores && stores.some((p) =>
+                          p.store.slug.includes("epic-games"),
+                        ) && <SiEpicgames className="text-white-500 mx-0.5" />}
+                      </div>
+                    </div>
+                    <hr className="my-1 text-zinc-500" />
+                  </>
+                }
                 <div className="flex flex-row justify-between">
                   <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default`}>
                     Release:

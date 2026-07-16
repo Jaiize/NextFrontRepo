@@ -17,7 +17,7 @@ const NavBar = () => {
   useEffect(() => {
     const controller = new AbortController();
     if(typeof window !== 'undefined'){
-      window.addEventListener('scrollend', handleHeightReduction, {signal: controller.signal})
+      window.addEventListener('scroll', handleHeightReduction, {signal: controller.signal})
     }
     return () => controller.abort();
   }, [])

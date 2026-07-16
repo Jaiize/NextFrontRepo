@@ -131,7 +131,7 @@ const Card = ({
             </p>
           </Link>
           <div className="flex flex-row justify-between mt-1">
-            <span className={`${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} text-sm font-rob cursor-default`}>Rating:</span>
+            <span className={`${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} text-sm font-rob cursor-default`}>Rating:</span>
             <span className="cursor-default text-xs text-white-600">
               <FaStar
                 size={10}
@@ -168,7 +168,7 @@ const Card = ({
                 {stores && (stores.some((p) => p.store.slug.includes("steam")) || stores.some((p) => p.store.slug.includes("epic-games"))) &&
                   <>
                     <div className="flex flex-row justify-between my-1.5">
-                      <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default `}>Purchase from:</span>
+                      <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default `}>Available on:</span>
                       <div className="flex flex-row items-center">
                         {stores && stores.some((p) => p.store.slug.includes("steam")) && (
                           <FaSteam className="text-white-500 mx-0.5" />

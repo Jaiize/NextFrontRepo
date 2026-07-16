@@ -174,14 +174,12 @@ const CardDetail = () => {
             setSideNav((s) => !s);
           }}
           stroke="currentColor"
-          strokeLinecap="round"
           strokeWidth={2}
-          strokeLinejoin="round"
           viewBox="0 0 24 24"
           fill="none"
           className={`w-8 h-8 m-3 cursor-pointer sticky top-17 ${sideNav ? "sm: max-sm:static" : ""}`}
         >
-          <path d="M0 3 H24 M0 12 H24 M0 21 H24" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M0 3 H24 M0 12 H24 M0 21 H24" />
         </svg>
         <div
           className={`${sideNav ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0 top-0 pointer-events-none absolute z-0"} transition-all duration-300`}

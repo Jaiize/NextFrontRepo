@@ -1,5 +1,8 @@
 @import "tailwindcss";
 /* @import "tw-animate-css"; */
+/* @tailwind-base
+@tailwind-component
+@tailwind-utility */
 
 .light {
   --background: #f4f4f4;

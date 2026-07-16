@@ -126,7 +126,7 @@ const Card = ({
               ) && <BsNintendoSwitch className="text-white-500" />}
           </div>
           <Link href={`/carousel/${id}`} className={`${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}>
-            <p className="font-rob line-clamp-3 text-sm hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5">
+            <p className="font-rob line-clamp-1 text-sm hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5">
               {name}
             </p>
           </Link>

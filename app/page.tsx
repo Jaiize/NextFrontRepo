@@ -85,7 +85,7 @@ const CardDetail = () => {
         setGames(RAWG);
         setLoading(false);
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     };
     pull();
@@ -179,7 +179,11 @@ const CardDetail = () => {
           fill="none"
           className={`w-8 h-8 m-3 cursor-pointer sticky top-17 ${sideNav ? "sm: max-sm:static" : ""}`}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M0 3 H24 M0 12 H24 M0 21 H24" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M0 3 H24 M0 12 H24 M0 21 H24"
+          />
         </svg>
         <div
           className={`${sideNav ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0 top-0 pointer-events-none absolute z-0"} transition-all duration-300`}
@@ -199,11 +203,17 @@ const CardDetail = () => {
             Find Your favourite Games
           </div>
           {/* Wrapper for search bar */}
-          <Searchbar debounceSearch={debounceSearch} page={page} search={search} searchGames={searchGames} setSearch={setSearch}/>
+          <Searchbar
+            debounceSearch={debounceSearch}
+            page={page}
+            search={search}
+            searchGames={searchGames}
+            setSearch={setSearch}
+          />
         </div>
         {/* Wrapper for sorting */}
         <div
-          className="flex flex-row items-center justify-between shadow-sm hover:shadow-mauve-600 transition-shadow duration-300 gap-1 w-fit mx-5 bg-zinc-900/45 h-10 px-3 rounded-xl 
+          className="flex flex-row items-center justify-between shadow-sm hover:shadow-mauve-600 transition-shadow duration-300 gap-1 w-fit ml-3 sm: max-sm:ml-5 bg-zinc-900/45 h-10 px-3 rounded-xl 
           sm: max-sm:w-fit sm: max-sm:pl-3"
         >
           <div className="font-grotesk text-sm w-fit mr-1.5 sm: max-sm:text-xs sm: max-sm:mr-0 hover:cursor-default">
@@ -228,33 +238,31 @@ const CardDetail = () => {
               </li>
             ))}
         </ul>
-        <div className="flex flex-row justify-evenly w-full my-10">
-          <div
-            className={`flex flex-row rounded-xl transition-all duration-300  cursor-pointer ${page <= 1 ? "hover:shadow-none" : "hover:shadow-xs shadow-gray-800"}`}
+        <div className="flex flex-row items-center justify-evenly w-full my-10">
+          <button
+            className={`flex flex-row items-center justify-between disabled:opacity-20 rounded-xl h-10 transition-all duration-300 pretty-focus ${page <= 1 ? "hover:shadow-none" : "hover:shadow-xs shadow-gray-800 cursor-pointer"}`}
+            onClick={() => handlePageChange(page - 1)}
+            disabled={loading || page <= 1}
+            type="button"
           >
             {page >= 2 && (
-              <GrLinkPrevious className="text-white flex flex-row self-center ml-2" />
+              <GrLinkPrevious className="text-white ml-2" />
             )}
-            <button
-              className="font-cause text-sm h-10 w-28 disabled:opacity-20"
-              onClick={() => handlePageChange(page - 1)}
-              disabled={loading || page <= 1}
-              type="button"
-            >
+            <div className="font-cause text-sm w-28">
               Previous page
-            </button>
-          </div>
-          <div className="flex flex-row rounded-xl transition-all duration-300 hover:shadow-xs shadow-gray-800">
-            <button
-              className="font-cause text-sm h-10 w-23 hover:cursor-pointer"
-              onClick={() => handlePageChange(page + 1)}
-              disabled={loading}
-              type="button"
-            >
+            </div>
+          </button>
+          <button
+            className="flex flex-row justify-between h-10 items-center rounded-xl transition-shadow duration-300 hover:shadow-xs shadow-gray-800 pretty-focus"
+            onClick={() => handlePageChange(page + 1)}
+            disabled={loading}
+            type="button"
+          >
+            <div className="font-cause text-sm h-fit w-23 hover:cursor-pointer">
               Next page
-            </button>
-            <GrLinkNext className="text-white flex flex-row self-center mr-2" />
-          </div>
+            </div>
+            <GrLinkNext className="text-white mr-2" />
+          </button>
         </div>
       </div>
     </section>

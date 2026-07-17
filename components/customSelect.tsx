@@ -124,7 +124,7 @@ const CustomSelect = ({
         aria-haspopup="listbox"
         aria-controls="dropdown-listbox"
         aria-activedescendant={show ? `option-${activeIndex}` : undefined}
-        className="flex items-center justify-between w-full gap-1.5 hover:cursor-pointer"
+        className="flex items-center justify-between w-full gap-1.5 hover:cursor-pointer pretty-focus"
         onClick={() => setShow((s) => !s)}
       >
         {selectedOPt ? (

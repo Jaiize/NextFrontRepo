@@ -125,7 +125,7 @@ const Card = ({
                 p.platform.slug.includes("nintendo-switch"),
               ) && <BsNintendoSwitch className="text-white-500" />}
           </div>
-          <Link href={`/carousel/${id}`} className={`${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}>
+          <Link href={`/carousel/${id}`} className={`pretty-focus ${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}>
             <p className="font-rob line-clamp-1 text-sm hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5">
               {name}
             </p>
@@ -197,7 +197,7 @@ const Card = ({
             )}
             { show && <div className={`flex flex-row text-[11px] font-sans cursor-default ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} justify-center mt-1.5`}>Click photo to view detail</div> }
             <div className={`${theme === 'dark' ? 'text-blue-300' : 'text-black'} flex flex-row items-center justify-center text-[11px] py-3 cursor-pointer`}>
-              <button type="button" className="underline cursor-pointer" onClick={() => setShow((s) => !s)}>
+              <button type="button" className="underline cursor-pointer pretty-focus" onClick={() => setShow((s) => !s)}>
                 {show ? "Show less" : "Show More"}
               </button>
             </div>

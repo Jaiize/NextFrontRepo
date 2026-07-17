@@ -1,8 +1,16 @@
 @import "tailwindcss";
 /* @import "tw-animate-css"; */
-/* @tailwind-base
-@tailwind-component
-@tailwind-utility */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .pretty-focus:focus-visible {
+    outline: 2px solid blue;
+    outline-offset: 1px;
+    border-radius: 5px;
+  }
+}
 
 .light {
   --background: #f4f4f4;

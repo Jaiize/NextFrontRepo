@@ -162,7 +162,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
     <button
       type="button"
       ref={butRef}
-      className="flex flex-col items-center w-30 justify-start m-3 sticky top-17"
+      className="flex flex-col items-center w-30 justify-start m-3 sticky top-17 pretty-focus"
       role="combobox"
       aria-expanded={genre}
       aria-controls="dropdown-listbox"

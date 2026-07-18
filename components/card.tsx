@@ -195,7 +195,7 @@ const Card = ({
                 </div>
               </>
             )}
-            { show && <div className={`flex flex-row text-[11px] font-sans cursor-default ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} justify-center mt-1.5`}>Click photo to view detail</div> }
+            { show && <div className={`flex flex-row text-[11px] font-sans cursor-default ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} justify-center mt-1.5`}>Click image to view details</div> }
             <div className={`${theme === 'dark' ? 'text-blue-300' : 'text-black'} flex flex-row items-center justify-center text-[11px] py-3 cursor-pointer`}>
               <button type="button" className="underline cursor-pointer pretty-focus" onClick={() => setShow((s) => !s)}>
                 {show ? "Show less" : "Show More"}

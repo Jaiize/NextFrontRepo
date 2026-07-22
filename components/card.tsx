@@ -143,7 +143,7 @@ const Card = ({
           {/* Shrink filler for card below a currently opened card in small screens */}
           {show && <span className="sm: max-sm:h-12.25 sm: max-sm:z-0 sm: max-sm:pointer-events-none"/>}
           <section
-            className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6] shadow-none"} transition-shadow duration-300 
+            className={`${theme === 'dark' && show ? 'bg-[#151414]' : theme === 'light' && show ? 'bg-[#bab6b6] shadow-none' : ''} transition-shadow duration-300 
             ${show ? "absolute sm: max-sm:top-[85%] top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
           >
             {show && (

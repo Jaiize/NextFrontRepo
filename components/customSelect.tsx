@@ -121,6 +121,7 @@ const CustomSelect = ({
         ref={buttonref}
         role="combobox"
         aria-expanded={show}
+        aria-pressed={show}
         aria-haspopup="listbox"
         aria-controls="dropdown-listbox"
         aria-activedescendant={show ? `option-${activeIndex}` : undefined}
@@ -176,7 +177,7 @@ const CustomSelect = ({
             key={o.value}
             className={`${i === activeIndex && nav === true ? "bg-blue-500/20 shadow-sm shadow-zinc-800" : "bg-none"} flex flex-row gap-7 hover:cursor-pointer items-center justify-between hover:text-blue-800`}
           >
-            <div className="font-cause h-8.5 ml-5 text-sm flex flex-row items-center gap-3 sm: max-sm:text-xs sm: max-sm:h-8">
+            <div className="font-grotesk h-8.5 ml-5 text-sm flex flex-row items-center gap-3 sm: max-sm:text-xs sm: max-sm:h-8">
               {o.slug.includes("asc") && <GrAscend className="h-4 w-4" />}
               {o.slug.includes("dsc") && <GrDescend className="h-4 w-4" />}
               {o.slug.includes("az") && <FcAlphabeticalSortingAz className="h-4 w-4" />}

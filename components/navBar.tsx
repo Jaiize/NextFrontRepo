@@ -23,7 +23,7 @@ const NavBar = () => {
   }, [])
   
   return (
-    <nav className={`${shrink ? 'h-10' : 'h-13'} transition-all duration-300 ease-in-out w-full flex flex-row items-center justify-between gap-3 px-2 bg-[#343434]/30 sticky top-0 z-50`}>
+    <nav className={`${shrink ? 'h-10' : 'h-13'} transition-all duration-300 ease-in-out w-full flex flex-row items-center justify-between gap-3 px-2 backdrop-blur-sm bg-[#343434]/30 sticky top-0 z-50`}>
       <Link href="/" className="font-grotesk border-2 border-transparent focus-visible:outline-0 focus-visible:border-2 focus-visible:border-blue-500 focus-visible:rounded-xl">
         <div className="flex flex-row cursor-pointer items-center w-fit p-1">
           <IoHome className="text-xl" />

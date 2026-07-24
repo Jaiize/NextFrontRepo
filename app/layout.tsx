@@ -114,12 +114,14 @@ export default function RootLayout({
         <link rel="manifest" href="/keakstein.webmanifest.json"/>
         <meta name="theme-color" content="ffffff"/>
       </head>
-      <body className="min-h-full flex flex-col">
-        <Providers >
+      <body className="min-h-screen flex flex-col">
+        <Providers>
           <NavBar/>
-          <Scroller>
-            {children}
-          </Scroller>
+          <main className="overflow-x-hidden">
+            <Scroller>
+              {children}
+            </Scroller>
+          </main>
         </Providers>
       </body>
     </html>

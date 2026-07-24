@@ -163,7 +163,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
             </div>}
           </div>
         <div className="w-1/2 flex flex-col space-y-10 h-auto sm: max-sm:w-full sm: max-sm:space-y-5">
-          {movies_count && 
+          {movies_count >= 1 && 
               <div className="flex flex-row justify-between">
                 <span className="font-play text-lg">Movies Count:</span>
                   <span className="text-lg text-white-600 font-grotesk">{movies_count}</span>

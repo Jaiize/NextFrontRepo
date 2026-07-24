@@ -1,13 +1,16 @@
 // import plugin from 'tailwindcss/plugin'
+// import type { Config } from 'tailwindcss'
 
-// export default module.exports = {
+// const config: Config = {
 //     content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
 //     theme: {
-//         extend: { screens: { 'xxs': '320px', 'xs': '360px' }}
+//         screens: { 'xs': '320px', ...require('tailwindcss/defaultTheme').screens},
+//         extend: {}
 //     },
 //     plugins: [
 //         plugin(function({matchUtilities, theme}){
-//             matchUtilities({},{variants: ['responsive', 'hover', 'active', 'focus']})
+//             matchUtilities({},{variants: ['responsive', 'hover', 'active', 'focus', 'group-hover', 'dark']})
 //         })
 //     ]
 // }
+// export default config

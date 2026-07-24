@@ -170,8 +170,14 @@ const Card = ({
                     <div className="flex flex-row justify-between my-1.5">
                       <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default `}>Available on:</span>
                       <div className="flex flex-row items-center">
+                        {stores && stores.some((p) => p.store.slug.includes("playstation")) && (
+                          <FaPlaystation className="text-white-500 mx-1"/>
+                        )}
+                        {stores && stores.some((p) => p.store.slug.includes("xbox")) && (
+                           <FaXbox className="text-white-500 mx-0.5" />
+                        )}
                         {stores && stores.some((p) => p.store.slug.includes("steam")) && (
-                          <FaSteam className="text-white-500 mx-0.5" />
+                          <FaSteam className="text-white-500 mx-1" />
                         )}
                         {stores && stores.some((p) =>
                           p.store.slug.includes("epic-games"),

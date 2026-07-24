@@ -167,7 +167,7 @@ const CardDetail = () => {
       {/* Wrapper for Sidenav and svg */}
       <div
         onKeyDown={handleKeyDown}
-        className={`${!sideNav ? "sm: max-sm:focus-within:border-0 focus-within:border-2 focus-within:rounded-lg focus-within:border-blue-600" : ""} border-2 border-transparent ${sideNav ? "flex sm: max-sm:absolute sm: max-sm:z-20 sm: max-sm:bg-zinc-700/85 sm: max-sm:w-fit sm: max-sm:rounded-br-lg" : "absolute"}`}
+        className={`${!sideNav ? "sm: max-sm:focus-within:border-0 focus-within:border-2 focus-within:rounded-lg focus-within:border-blue-600" : ""} border-2 border-transparent ${sideNav ? "flex md: max-md:absolute md: max-md:z-20 md: max-md:bg-zinc-700/85 md: max-md:w-fit md: max-md:rounded-br-lg" : "absolute"}`}
       >
         <svg
           onClick={() => {
@@ -177,7 +177,7 @@ const CardDetail = () => {
           strokeWidth={2}
           viewBox="0 0 24 24"
           fill="none"
-          className={`w-8 h-8 m-3 cursor-pointer sticky top-17 ${sideNav ? "sm: max-sm:static" : ""}`}
+          className={`w-8 h-8 m-3 cursor-pointer sticky top-17 ${sideNav ? "md: max-sm:static" : ""}`}
         >
           <path
             strokeLinecap="round"
@@ -199,7 +199,7 @@ const CardDetail = () => {
       {/* Wrapper for title and search bar and main grid */}
       <div>
         <div className="flex flex-col justify-center w-full mb-5">
-          <div className="font-play text-center w-full h-10 text-3xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text sm: max-sm:mt-15 sm: max-sm:px-1">
+          <div className="font-play text-center w-full h-10 text-3xl sm: max-sm:text-2xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text sm: max-sm:mt-15 sm: max-sm:px-1">
             Find Your favourite Games
           </div>
           {/* Wrapper for search bar */}
@@ -228,7 +228,7 @@ const CardDetail = () => {
         </div>
         {/* Grid view */}
         <ul
-          className={`grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ${sideNav ? "2xl:grid-cols-5" : "2xl:grid-cols-6"} gap-3 p-2`}
+          className={`grid grid-cols-1 sm:grid-cols-2 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ${sideNav ? "2xl:grid-cols-5" : "2xl:grid-cols-6"} gap-3 p-2`}
         >
           {games &&
             games.length > 0 &&

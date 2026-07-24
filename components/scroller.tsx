@@ -9,7 +9,7 @@ const Scroller = ({ children }: { children: React.ReactNode }) => {
     if (typeof window !== "undefined") {
       let t: NodeJS.Timeout
       const handleScroll = () => {
-        // Prevents re-writing path's scroll posn. as the first-view state/posn When client navigates backward
+        // Prevents re-writing scroll posn. as the init-view state/posn When client navigates backward
         t = setTimeout(() => {
           const path = window.location.pathname;
           const xy = (window.pageXOffset.toString() + "," + window.pageYOffset.toString());

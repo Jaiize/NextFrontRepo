@@ -32,9 +32,13 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
 
   }, [params])
 
-  const {background_image, name, slug, background_image_additional, description_raw, platforms, genres, stores, rating, released} = game;
+  const {background_image, name, slug, background_image_additional, description_raw, platforms, 
+    genres, stores, rating, released, added, movies_count, metacritic, achievements_count, esrb_rating} = game;
 
-  const bg_height = `${ description_raw && (description_raw.length > 1400 && description_raw.length < 1550) ? 'h-220 sm: max-sm:h-170' : description_raw && (description_raw.length > 1560 && description_raw.length < 2000) ? 'h-220 sm: max-sm:h-200' : description_raw && description_raw.length > 2000 ? 'h-220 sm: max-sm:h-220' : 'h-170 sm: max-sm:h-120'}`
+  const bg_height = `${ description_raw && (description_raw.length > 1400 && description_raw.length < 1550) ? 
+    'h-220 sm: max-sm:h-170' : description_raw && (description_raw.length > 1560 && description_raw.length < 2000) ? 
+    'h-170 sm: max-sm:h-205' : description_raw && description_raw.length > 2000 ? 
+    'h-180 sm: max-sm:h-220 md: max-md:h-220 md:h-200' : 'h-170 sm: max-sm:h-138'}`
   
 
   return (
@@ -43,8 +47,9 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
         {background_image && 
           <Image loading="eager" alt={name || slug} width={1920} height={1080} src={background_image_additional || '/Nocontent.jpg'} className={`w-full absolute top-0 left-0 h-full ${theme === 'dark' ? 'opacity-45' : 'opacity-80'} aspect-video object-cover`}/>
         }
-        <div className={`font-rob text-7xl w-full absolute top-20 flex flex-row justify-center sm: max-sm:top-5 sm: max-sm:text-2xl sm: max-sm:px-3`}>{name}</div>
-        <div className={`w-1/2 absolute h-50 top-50 flex flex-row justify-center font-grotesk z-30 sm: max-sm:w-[80%] sm: max-sm:top-20 sm: max-sm:text-xs`} >
+        {/* add inset-x-0 md: max-md:text-2xl */}
+        <div className={`font-rob 2xl:text-7xl xl:text-6xl lg:text-5xl md:text-4xl text-3xl ${name && name.length > 35 ? 'sm: max-sm:text-[16px]' : 'sm: max-sm:text-2xl'} w-full absolute top-10 lg:top-20 flex flex-row justify-center sm: max-sm:top-5 sm: max-sm:px-3`}>{name}</div>
+        <div className={`w-[80%] absolute h-50 top-30 lg:top-50 flex flex-row justify-center font-grotesk z-30 sm: max-sm:top-20 sm: max-sm:text-xs`} >
           {description_raw && description_raw}
         </div>
         {background_image && 
@@ -117,40 +122,73 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
         </div>
       </div>
       {/* Stats  */}
-      <div className="w-1/2 flex flex-col space-y-10 mt-10 justify-between h-auto m-10 sm: max-sm:w-auto sm: max-sm:space-y-5">
-      {/* Check before pushing */}
-        {background_image && 
-          <div className="flex flex-row justify-between">
-            <span className="font-play text-lg">Rating:</span>
-              <span className="text-lg text-white-600 font-grotesk">
-                <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
-              {rating}</span>
-          </div>
-        }
-        {genres && 
-          <div className="flex flex-row justify-between">
-            <span className="text-lg font-play">Genre:</span>
-            <div className="flex flex-col items-end">
-              {genres &&
-                genres.map((g) => (
-                  <span key={g.id} className="text-md font-grotesk">
-                    {g.name}
-                  </span>
-                ))}
+      <div className="w-auto flex flex-row sm: max-sm:flex-col gap-10 h-auto m-10">
+        <div className="w-1/2 flex flex-col space-y-10 h-auto sm: max-sm:w-full sm: max-sm:space-y-5">
+          {background_image && 
+            <div className="flex flex-row justify-between">
+              <span className="font-play text-lg">Rating:</span>
+                <span className="text-lg text-white-600 font-grotesk">
+                  <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
+                {rating}</span>
             </div>
-          </div>}
-        {released && 
-          <div className="flex flex-row justify-between">
-              <span className="text-lg justify-start font-play">Release:</span>
-              <span className="text-gray-400 justify-end text-md font-grotesk">
-                {new Date(released).toLocaleDateString("en-US", {
-                  month: "short",
-                  year: "numeric",
-                  day: "2-digit",
-                })}
-              </span>
-          </div>}
+          }
+          {added && 
+            <div className="flex flex-row justify-between">
+              <span className="font-play text-lg">Added:</span>
+                <span className="text-lg text-white-600 font-grotesk">{added}</span>
+            </div>
+          }
+          {genres && 
+            <div className="flex flex-row justify-between">
+              <span className="text-lg font-play">Genre:</span>
+              <div className="flex flex-col items-end">
+                {genres &&
+                  genres.map((g) => (
+                    <span key={g.id} className="text-md font-grotesk">
+                      {g.name}
+                    </span>
+                  ))}
+              </div>
+            </div>}
+          {released && 
+            <div className="flex flex-row justify-between">
+                <span className="text-lg justify-start font-play">Release:</span>
+                <span className="text-gray-400 justify-end text-md font-grotesk">
+                  {new Date(released).toLocaleDateString("en-US", {
+                    month: "short",
+                    year: "numeric",
+                    day: "2-digit",
+                  })}
+                </span>
+            </div>}
+          </div>
+        <div className="w-1/2 flex flex-col space-y-10 h-auto sm: max-sm:w-full sm: max-sm:space-y-5">
+          {movies_count && 
+              <div className="flex flex-row justify-between">
+                <span className="font-play text-lg">Movies Count:</span>
+                  <span className="text-lg text-white-600 font-grotesk">{movies_count}</span>
+              </div>
+          }
+          {metacritic && 
+              <div className="flex flex-row justify-between">
+                <span className="font-play text-lg">Metacritic:</span>
+                  <span className="text-lg text-white-600 font-grotesk">{metacritic}</span>
+              </div>
+          }
+          {achievements_count && 
+              <div className="flex flex-row justify-between">
+                <span className="font-play text-lg">Achievements Count:</span>
+                  <span className="text-lg text-white-600 font-grotesk">{achievements_count}</span>
+              </div>
+          }
+          {esrb_rating && 
+              <div className="flex flex-row justify-between">
+                <span className="font-play text-lg">ESRB Rating:</span>
+                  <span className="text-lg text-white-600 font-grotesk">{esrb_rating.name}</span>
+              </div>
+          }
         </div>
+      </div>
       {/* Requirements  */}
       {platforms && platforms.some((r) => r.requirements?.minimum) &&
         <div className="flex flex-col justify-start m-10 space-y-1.5 sm: max-sm:space-y-0">
@@ -162,7 +200,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       {/* Stores  */}
       {stores && stores.some((p) => (
         p.store.slug.includes('playstation') || p.store.slug.includes('xbox')) || p.store.slug.includes('steam') || p.store.slug.includes('epic-games')) &&
-        <section className="w-1/2 sm: max-sm:w-full">
+        <section className="w-full">
           <div className="flex flex-col mx-10 items-start justify-start w-fit text-lg font-mont p-3 rounded-t-2xl bg-[#323232]/20 sm: max-sm:text-xs">
             {stores && 'Purchase From'}
           </div>

@@ -17,7 +17,7 @@ const Searchbar = ({ search, searchGames, setSearch, page, debounceSearch }: Sea
   return (
     <div className="flex justify-center w-full my-5">
       <div
-        className={`flex flex-row items-center w-[30%] ${theme === "light" ? "bg-gray-300" : "bg-[#323232]"} h-10 rounded-2xl sm: max-sm:w-[65%] sm: max-sm:h-9 transition-all duration-200 lg:outline-2 lg:outline-transparent lg:focus-within:outline-offset-1 lg:focus-within:outline-2 lg:focus-within:outline-blue-400`}
+        className={`flex flex-row items-center w-[30%] ${theme === "light" ? "bg-gray-300" : "bg-[#323232]"} h-10 rounded-2xl sm: max-sm:w-[65%] sm: max-sm:h-9 transition-all duration-200 md:outline-2 md:outline-transparent md:focus-within:outline-offset-1 md:focus-within:outline-2 md:focus-within:outline-blue-400`}
       >
         <BiSearch
           className="text-2xl ml-3 cursor-pointer sm: max-sm:text-xl"

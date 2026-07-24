@@ -117,11 +117,9 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <Providers>
           <NavBar/>
-          <main className="overflow-x-hidden">
             <Scroller>
               {children}
             </Scroller>
-          </main>
         </Providers>
       </body>
     </html>

@@ -8,7 +8,7 @@ interface SideNavGenre {
 }
 
 interface SideNavProps {
-  setGenre: (val: string) => void;
+  setGenre: React.Dispatch<React.SetStateAction<string>>;
   genre: string;
   setSideNav: (set: boolean) => void;
   sideNav: boolean;
@@ -148,7 +148,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
         case "Enter":
           e.preventDefault();
           if (sideNav) {
-            setGenre(Genre[activeIndex].slug);
+            setGenre(prev => (prev === Genre[activeIndex].slug ? '' : Genre[activeIndex].slug));
             setSideNav(false);
             setScreen(false);
             butRef.current?.focus();
@@ -162,7 +162,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
     <button
       type="button"
       ref={butRef}
-      className="flex flex-col items-center w-30 justify-start m-3 sticky top-17 pretty-focus"
+      className="flex flex-col items-center w-30 justify-start m-3 pretty-focus md:sticky md:top-17"
       role="combobox"
       aria-expanded={sideNav}
       aria-pressed={sideNav}

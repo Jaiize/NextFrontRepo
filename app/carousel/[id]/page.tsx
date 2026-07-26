@@ -123,7 +123,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       </div>
       {/* Stats  */}
       <div className="w-auto flex flex-row sm: max-sm:flex-col gap-10 h-auto m-10">
-        <div className="w-1/2 flex flex-col items-center justify-center space-y-10 h-auto sm: max-sm:w-full sm: max-sm:space-y-5">
+        <div className="w-1/2 flex flex-col justify-center space-y-10 h-auto sm: max-sm:w-full sm: max-sm:space-y-5">
           {background_image && 
             <div className="flex flex-row justify-between items-center">
               <span className="font-play text-lg">Rating:</span>

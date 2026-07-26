@@ -153,7 +153,7 @@ const Card = ({
                     <hr className="mb-1 text-zinc-500" />
                     <div className="flex flex-row justify-between">
                       <span className={`text-sm font-rob cursor-default ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'}`}>Genre:</span>
-                      <div className="flex flex-col items-end">
+                      <div className="flex flex-col items-end justify-center">
                         {genres &&
                           genres.map((g) => (
                             <span key={g.id} className="text-xs cursor-default font-grotesk">
@@ -174,14 +174,14 @@ const Card = ({
                           <FaPlaystation className="text-white-500 mx-1"/>
                         )}
                         {stores && stores.some((p) => p.store.slug.includes("xbox")) && (
-                           <FaXbox className="text-white-500 mx-0.5" />
+                           <FaXbox className="text-white-500 mx-1" />
                         )}
                         {stores && stores.some((p) => p.store.slug.includes("steam")) && (
                           <FaSteam className="text-white-500 mx-1" />
                         )}
                         {stores && stores.some((p) =>
                           p.store.slug.includes("epic-games"),
-                        ) && <SiEpicgames className="text-white-500 mx-0.5" />}
+                        ) && <SiEpicgames className="text-white-500 ml-1" />}
                       </div>
                     </div>
                     <hr className="my-1 text-zinc-500" />

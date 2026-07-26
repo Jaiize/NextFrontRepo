@@ -123,9 +123,9 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       </div>
       {/* Stats  */}
       <div className="w-auto flex flex-row sm: max-sm:flex-col gap-10 h-auto m-10">
-        <div className="w-1/2 flex flex-col space-y-10 h-auto sm: max-sm:w-full sm: max-sm:space-y-5">
+        <div className="w-1/2 flex flex-col items-center justify-center space-y-10 h-auto sm: max-sm:w-full sm: max-sm:space-y-5">
           {background_image && 
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between items-center">
               <span className="font-play text-lg">Rating:</span>
                 <span className="text-lg text-white-600 font-grotesk">
                   <FaStar  className="text-yellow-300 inline mx-1.5 text-sm mb-1"/>
@@ -133,13 +133,13 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
             </div>
           }
           {added && 
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between items-center">
               <span className="font-play text-lg">Added:</span>
                 <span className="text-lg text-white-600 font-grotesk">{added}</span>
             </div>
           }
           {genres && 
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row items-center justify-between">
               <span className="text-lg font-play">Genre:</span>
               <div className="flex flex-col items-end">
                 {genres &&
@@ -151,7 +151,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
               </div>
             </div>}
           {released && 
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between items-center">
                 <span className="text-lg justify-start font-play">Release:</span>
                 <span className="text-gray-400 justify-end text-md font-grotesk">
                   {new Date(released).toLocaleDateString("en-US", {
@@ -164,25 +164,25 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
           </div>
         <div className="w-1/2 flex flex-col space-y-10 h-auto sm: max-sm:w-full sm: max-sm:space-y-5">
           {movies_count >= 1 && 
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-row justify-between items-center">
                 <span className="font-play text-lg">Movies Count:</span>
                   <span className="text-lg text-white-600 font-grotesk">{movies_count}</span>
               </div>
           }
-          {metacritic && 
-              <div className="flex flex-row justify-between">
+          {metacritic >= 1 && 
+              <div className="flex flex-row justify-between items-center">
                 <span className="font-play text-lg">Metacritic:</span>
                   <span className="text-lg text-white-600 font-grotesk">{metacritic}</span>
               </div>
           }
-          {achievements_count && 
-              <div className="flex flex-row justify-between">
+          {achievements_count >= 1 && 
+              <div className="flex flex-row justify-between items-center">
                 <span className="font-play text-lg">Achievements Count:</span>
                   <span className="text-lg text-white-600 font-grotesk">{achievements_count}</span>
               </div>
           }
           {esrb_rating && 
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-row justify-between items-center">
                 <span className="font-play text-lg">ESRB Rating:</span>
                   <span className="text-lg text-white-600 font-grotesk">{esrb_rating.name}</span>
               </div>

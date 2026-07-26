@@ -141,7 +141,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
           {genres && 
             <div className="flex flex-row items-center justify-between">
               <span className="text-lg font-play">Genre:</span>
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col items-end justify-center">
                 {genres &&
                   genres.map((g) => (
                     <span key={g.id} className="text-md font-grotesk">

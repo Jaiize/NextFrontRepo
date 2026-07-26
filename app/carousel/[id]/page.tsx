@@ -139,7 +139,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
             </div>
           }
           {genres && 
-            <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row justify-between">
               <span className="text-lg font-play">Genre:</span>
               <div className="flex flex-col items-end">
                 {genres &&

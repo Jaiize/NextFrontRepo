@@ -80,7 +80,7 @@ const Card = ({
   return (
     <div ref={divRef} className={`my-2 relative`}>
       <div
-        className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6]"} shadow-md flex flex-col transition-all rounded-[10px] duration-300 hover:shadow-gray-900 ${show ? "rounded-b-none shadow-none" : ""}`}
+        className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6]"} shadow-md flex flex-col transition-all rounded-[10px] duration-150 hover:shadow-gray-900 ${show ? "rounded-b-none shadow-none" : ""}`}
       >
         <div className="rounded-t-[10px] overflow-hidden">
           <Link href={`/carousel/${id}`} className={`${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}>

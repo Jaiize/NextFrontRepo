@@ -80,17 +80,20 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
   };
 
   const handleMobClickOutside = (e: TouchEvent) => {
-    if (butRef.current && !butRef.current.contains(e.target as Node)) {
-      if (sideNav) {
-        setTimeout(() => {
-          setSideNav(false);
-        }, 10);
+    if (typeof window !== 'undefined') {
+      if (butRef.current && !butRef.current.contains(e.target as Node) && window.innerWidth < 1024) {
+        if (sideNav) {
+          setTimeout(() => {
+            setSideNav(false);
+          }, 10);
+        }
       }
+
     }
   };
 
   const turnOffIndicator = (e: MouseEvent) => {
-     if (butRef.current && !butRef.current.contains(e.target as Node)) {
+    if (butRef.current && !butRef.current.contains(e.target as Node)) {
       setScreen(false);
     }
   }

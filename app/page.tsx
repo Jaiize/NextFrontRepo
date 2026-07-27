@@ -199,7 +199,7 @@ const CardDetail = () => {
         </div>
       </aside>
       {/* Wrapper for title and search bar and main grid */}
-      <main className="overflow-x-hidden">
+      <main className="overflow-hidden">
         <div className="flex flex-col justify-center w-full mb-5">
           <div className="font-play text-center w-full h-10 text-3xl sm: max-sm:text-2xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text sm: max-sm:mt-15 sm: max-sm:px-1">
             Find Your favourite Games
@@ -230,12 +230,12 @@ const CardDetail = () => {
         </div>
         {/* Grid view */}
         <ul
-          className={`grid grid-cols-1 sm:grid-cols-2 justify-items-center md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ${sideNav ? "2xl:grid-cols-5" : "2xl:grid-cols-6"} gap-3 p-2`}
+          className={`grid grid-cols-1 sm:grid-cols-2 justify-items-center ${sideNav ? "2xl:grid-cols-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "2xl:grid-cols-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"} gap-3 p-2`}
         >
           {games &&
             games.length > 0 &&
             games.map((g) => (
-              <li key={g.id} className="sm: max-sm:px-3">
+              <li key={g.id} className="sm: max-sm:px-2.5">
                 <Card {...g} isOpen={sideNav} />
               </li>
             ))}

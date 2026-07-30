@@ -136,10 +136,10 @@ const Card = ({
           </Link>
           <div className="flex flex-row justify-between mt-1">
             <span className={`${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} text-sm font-rob cursor-default`}>Rating:</span>
-            <span className="cursor-default text-xs text-white-600">
+            <span className="flex items-center cursor-default text-xs text-white-600">
               <FaStar
-                size={10}
-                className="text-yellow-300 inline mx-1 pb-0.5"
+                size={12}
+                className="text-yellow-300 mx-1 mb-0.5"
               />
               {rating}
             </span>

@@ -12,9 +12,10 @@ interface SideNavProps {
   genre: string;
   setSideNav: (set: boolean) => void;
   sideNav: boolean;
+  masterRef: React.RefObject<HTMLElement | null>
 }
 
-const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
+const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavProps) => {
   const [screen, setScreen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const butRef = useRef<HTMLButtonElement | null>(null);
@@ -72,16 +73,17 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
     },
   ];
 
+  // Half-displayed sidenavbar goes back into hiding after a touch or selection
   const handleMobileSelect = () => {
     const touch = navigator.maxTouchPoints > 0;
     if (touch) {
       setSideNav(false);
     }
   };
-
+  // Handles mobile click outside for half-displayed sidenavbar => half-displayed sidenavbar is solely design for touch devices
   const handleMobClickOutside = (e: TouchEvent) => {
     if (typeof window !== 'undefined') {
-      if (butRef.current && !butRef.current.contains(e.target as Node) && window.innerWidth < 1024) {
+      if (masterRef.current && !masterRef.current.contains(e.target as Node) && window.innerWidth < 1024) {
         if (sideNav) {
           setTimeout(() => {
             setSideNav(false);
@@ -92,6 +94,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav }: SideNavProps) => {
     }
   };
 
+  // To turn off highlight for half-displayed sidenavbar items / properties
   const turnOffIndicator = (e: MouseEvent) => {
     if (butRef.current && !butRef.current.contains(e.target as Node)) {
       setScreen(false);

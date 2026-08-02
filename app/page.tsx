@@ -7,6 +7,7 @@ import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
 import CustomSelect from "@/components/customSelect";
 import SideNav from "@/components/sidenav";
 import Searchbar from "@/components/searchbar";
+import ScrollTop from "@/components/scrollTop";
 
 export interface searchProps {
   pageNum: number;
@@ -31,6 +32,7 @@ const CardDetail = () => {
   const [page, setPage] = useState(1);
   const [debounceSearch, setDebounceSearch] = useState("");
   const [order, setOrder] = useState("");
+  const ref = useRef<HTMLElement | null>(null)
 
   /** ------------------------------------
    * Array of object options to order from
@@ -165,7 +167,7 @@ const CardDetail = () => {
   return (
     <section className={`${sideNav ? "md:flex sm:" : ""}`}>
       {/* Wrapper for Sidenav and svg */}
-      <aside
+      <aside ref={ref}
         onKeyDown={handleKeyDown}
         className={`${!sideNav ? "max-sm:focus-within:border-2 max-sm:focus-within:border-transparent focus-within:border-2 focus-within:rounded-lg focus-within:border-blue-600" : ""}
          border-2 border-transparent ${sideNav ? "flex flex-row max-md:absolute max-md:z-30 max-md:bg-zinc-700/30 max-md:backdrop-blur-sm max-md:w-full" :
@@ -195,6 +197,7 @@ const CardDetail = () => {
             genre={genre}
             setSideNav={setSideNav}
             sideNav={sideNav}
+            masterRef={ref}
           />
         </div>
       </aside>
@@ -267,6 +270,7 @@ const CardDetail = () => {
           </button>
         </div>
       </main>
+      <ScrollTop />
     </section>
   );
 };

@@ -269,8 +269,8 @@ const CardDetail = () => {
             <GrLinkNext className="text-white mr-2" />
           </button>
         </div>
+        <ScrollTop />
       </main>
-      <ScrollTop />
     </section>
   );
 };

@@ -6,8 +6,10 @@ const ScrollTop = () => {
   const [release, setRelease] = useState(false);
   const handlePopOut = (e: Event) => {
     if (typeof document !== "undefined") {
-      const scrollTop = document.documentElement.scrollTop;
-      const height = document.body.scrollHeight;
+      const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, 
+        document.body.offsetHeight, document.documentElement.offsetHeight, document.body.clientHeight, 
+        document.documentElement.clientHeight);
+      const scrollTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
       if (scrollTop >= Math.round(height / 2)) {
         setRelease(true);
         return;

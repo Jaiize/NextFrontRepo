@@ -38,7 +38,7 @@ const ScrollTop = () => {
   }, []);
   return (
     <div
-      className={`fixed h-9 w-9 bottom-5 transition-all duration-200 ${release ? "opacity-100 right-5 pointer-events-auto cursor-pointer z-30" : "pointer-events-none right-0 opacity-0 scale-50"}`}
+      className={`fixed h-9 w-9 transition-all duration-200 ${release ? "opacity-100 right-5 bottom-5 pointer-events-auto cursor-pointer z-30" : "pointer-events-none right-0 bottom-0 opacity-0 scale-50"}`}
       onClick={() => handleClick()}
     >
       <FaArrowAltCircleUp className="h-full w-full" />

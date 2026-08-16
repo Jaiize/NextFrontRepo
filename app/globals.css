@@ -19,6 +19,7 @@
   100% {background-position: 0% 100%;}
 }
 
+/* --background: #e3e1e1;  Alternative for light */
 .light {
   --background: #f4f4f4;
   --foreground: #171717;

@@ -154,7 +154,7 @@ const CardDetail = () => {
     });
   };
 
-  // Parent side nav helper for keyboard navigation
+  // Parent sidenav helper for keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!sideNav && (e.key === " " || e.key === "Enter")) {
       e.preventDefault();

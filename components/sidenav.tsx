@@ -80,10 +80,10 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
       setSideNav(false);
     }
   };
-  // Handles mobile click outside for half-displayed sidenavbar => half-displayed sidenavbar is solely design for touch devices
+  // Handles mobile click outside for half-displayed sidenavbar (PC version) NB: It's almost useless for now. (< 800 was < 1240 before)
   const handleMobClickOutside = (e: TouchEvent) => {
     if (typeof window !== 'undefined') {
-      if (masterRef.current && !masterRef.current.contains(e.target as Node) && window.innerWidth < 1024) {
+      if (masterRef.current && !masterRef.current.contains(e.target as Node) && window.innerWidth < 800) {
         if (sideNav) {
           setTimeout(() => {
             setSideNav(false);

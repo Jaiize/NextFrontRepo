@@ -28,9 +28,8 @@ export type CardProps = {
   genres: RawgGenre[];
   platforms: RawgPlatform[];
   stores: Store[];
-  isOpen: boolean
+  isOpen: boolean;
 };
-
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -47,14 +46,12 @@ const Card = ({
   platforms,
   stores,
   id,
-  isOpen
+  isOpen,
 }: CardProps) => {
   const [show, setShow] = useState(false);
   const divRef = useRef<HTMLDivElement | null>(null);
-  const {theme} = useTheme();
+  const { theme } = useTheme();
 
-
-  
   // Close opened card when outside click is detected
   useEffect(() => {
     // (div && e.target !== div)
@@ -73,22 +70,28 @@ const Card = ({
   }, [show]);
 
   // Available Stores
-  const isAvailable = stores && (stores.some((p) => p.store.slug.includes("steam")) || stores.some((p) => p.store.slug.includes("epic-games")) || 
-  stores.some((p) => p.store.slug.includes("playstation")) || stores.some((p) => p.store.slug.includes("xbox")));
+  const isAvailable =
+    stores &&
+    (stores.some((p) => p.store.slug.includes("steam")) ||
+      stores.some((p) => p.store.slug.includes("epic-games")) ||
+      stores.some((p) => p.store.slug.includes("playstation")) ||
+      stores.some((p) => p.store.slug.includes("xbox")));
 
-  
   return (
-    <div ref={divRef} className={`my-2 relative`}>
+    <div ref={divRef} className={`relative`}>
       <div
-        className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6]"} shadow-md flex flex-col transition-all rounded-[10px] duration-150 hover:shadow-gray-900 ${show ? "rounded-b-none shadow-none" : ""}`}
+        className={`${theme === "dark" ? "bg-[#151414]" : "bg-[#bab6b6]"} shadow-md flex flex-col transition-shadow rounded-[10px] duration-200 hover:shadow-gray-900 ${show ? "rounded-b-none shadow-none" : ""}`}
       >
         <div className="rounded-t-[10px] overflow-hidden">
-          <Link href={`/carousel/${id}`} className={`${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}>
+          <Link
+            href={`/carousel/${id}`}
+            className={`${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}
+          >
             <Image
               className="min-w-full h-48 aspect-auto cursor-pointer object-cover"
               title={name}
               alt={name}
-              src={background_image || '/Nocontent.jpg'}
+              src={background_image || "/Nocontent.jpg"}
               width={1280}
               height={720}
               loading="eager"
@@ -129,86 +132,142 @@ const Card = ({
                 p.platform.slug.includes("nintendo-switch"),
               ) && <BsNintendoSwitch className="text-white-500" />}
           </div>
-          <Link href={`/carousel/${id}`} className={`pretty-focus ${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}>
-            <p className={`font-rob ${show ? "line-clamp-none" : "line-clamp-1"} text-sm hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5`}>
+          <Link
+            href={`/carousel/${id}`}
+            className={`pretty-focus ${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}
+          >
+            <p
+              className={`font-rob ${show ? "line-clamp-none" : "line-clamp-1"} text-sm hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5`}
+            >
               {name}
             </p>
           </Link>
           <div className="flex flex-row justify-between mt-1">
-            <span className={`${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} text-sm font-rob cursor-default`}>Rating:</span>
+            <span
+              className={`${theme === "dark" ? "text-zinc-500" : "text-zinc-900"} text-sm font-rob cursor-default`}
+            >
+              Rating:
+            </span>
             <span className="flex items-center cursor-default text-xs text-white-600">
-              <FaStar
-                size={12}
-                className="text-yellow-300 mx-1 mb-0.5"
-              />
+              <FaStar size={12} className="text-yellow-300 mx-1 mb-0.5" />
               {rating}
             </span>
           </div>
           {/* Shrink filler for card below a currently opened card in small screens */}
-          {show && <span className="sm: max-sm:h-12.25 sm: max-sm:z-0 sm: max-sm:pointer-events-none"/>}
+          {show && (
+            <span className="max-sm:h-13 max-sm:z-0 max-sm:pointer-events-none" />
+          )}
           <section
-            className={`${theme === 'dark' && show ? 'bg-[#151414]' : theme === 'light' && show ? 'bg-[#bab6b6] shadow-none' : ''} transition-shadow duration-300 
+            className={`${theme === "dark" && show ? "bg-[#151414]" : theme === "light" && show ? "bg-[#bab6b6] shadow-none" : ""} transition-shadow duration-300 
             ${show ? "absolute sm: max-sm:top-[85%] top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
           >
             {show && (
               <>
-                { genres.length > 0 && 
-                  (<div>
+                {genres.length > 0 && (
+                  <div>
                     <hr className="mb-1 text-zinc-500" />
                     <div className="flex flex-row justify-between">
-                      <span className={`text-sm font-rob cursor-default ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'}`}>Genre:</span>
+                      <span
+                        className={`text-sm font-rob cursor-default ${theme === "dark" ? "text-zinc-500" : "text-zinc-900"}`}
+                      >
+                        Genre:
+                      </span>
                       <div className="flex flex-col items-end justify-center">
                         {genres &&
                           genres.map((g) => (
-                            <span key={g.id} className="text-xs cursor-default font-grotesk">
+                            <span
+                              key={g.id}
+                              className="text-xs cursor-default font-grotesk"
+                            >
                               {g.name}
                             </span>
                           ))}
                       </div>
                     </div>
-                  </div>)
-                }
+                  </div>
+                )}
                 <hr className="my-1 text-zinc-500" />
-                {stores && isAvailable &&
+                {stores && isAvailable && (
                   <>
                     <div className="flex flex-row justify-between my-1.5">
-                      <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default `}>Store:</span>
+                      <span
+                        className={`text-sm font-rob ${theme === "dark" ? "text-zinc-500" : "text-zinc-900"} cursor-default `}
+                      >
+                        Store:
+                      </span>
                       <div className="flex flex-row items-center">
-                        {stores && stores.some((p) => p.store.slug.includes("playstation")) && (
-                          <FaPlaystation className="text-white-500 mx-1"/>
-                        )}
-                        {stores && stores.some((p) => p.store.slug.includes("xbox")) && (
-                           <FaXbox className="text-white-500 mx-1" />
-                        )}
-                        {stores && stores.some((p) => p.store.slug.includes("steam")) && (
-                          <FaSteam className="text-white-500 mx-1" />
-                        )}
-                        {stores && stores.some((p) =>
-                          p.store.slug.includes("epic-games"),
-                        ) && <SiEpicgames className="text-white-500 ml-1" />}
+                        {stores &&
+                          stores.some((p) =>
+                            p.store.slug.includes("playstation"),
+                          ) && (
+                            <FaPlaystation className={`text-white-500 ml-1.5`} />
+                          )}
+                        {stores &&
+                          stores.some((p) => p.store.slug.includes("xbox")) && (
+                            <FaXbox className="text-white-500 ml-1.5" />
+                          )}
+                        {stores &&
+                          stores.some((p) =>
+                            p.store.slug.includes("steam"),
+                          ) && <FaSteam className="text-white-500 ml-1.5" />}
+                        {stores &&
+                          stores.some((p) =>
+                            p.store.slug.includes("epic-games"),
+                          ) && (
+                            <SiEpicgames className="text-white-500 ml-1.5" />
+                          )}
                       </div>
                     </div>
                     <hr className="my-1 text-zinc-500" />
                   </>
-                }
+                )}
                 <div className="flex flex-row justify-between">
-                  <span className={`text-sm font-rob ${theme === 'dark' ? 'text-zinc-500' : 'text-zinc-900'} cursor-default`}>
+                  <span
+                    className={`text-sm font-rob ${theme === "dark" ? "text-zinc-500" : "text-zinc-900"} cursor-default`}
+                  >
                     Release:
                   </span>
-                  <span className={`text-xs font-rob ${theme === 'dark' ? 'text-zinc-300' : 'text-zinc-900'} cursor-default`}>
+                  <span
+                    className={`text-xs font-rob ${theme === "dark" ? "text-zinc-300" : "text-zinc-900"} cursor-default`}
+                  >
                     {new Date(released).toLocaleDateString("en-US", {
                       month: "short",
                       year: "numeric",
-                      day: "2-digit", 
+                      day: "2-digit",
                     })}
                   </span>
                 </div>
               </>
             )}
-            { show && <div className={`flex flex-row text-[11px] font-sans cursor-default ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-900'} justify-center mt-1.5`}>Click image to view details</div> }
-            <div className={`${theme === 'dark' ? 'text-blue-300' : 'text-black'} flex flex-row items-center justify-center text-[11px] py-3 cursor-pointer`}>
-              <button type="button" className="underline cursor-pointer pretty-focus" onClick={() => setShow((s) => !s)}>
-                {show ? "Show less" : "Show More"}
+            {show && (
+              <div
+                className={`flex flex-row text-[11px] font-sans cursor-default ${theme === "dark" ? "text-zinc-400" : "text-zinc-900"} justify-center mt-1.5`}
+              >
+                Click image to view details
+              </div>
+            )}
+            <div
+              className={`${theme === "dark" ? "text-blue-300" : "text-black"} flex flex-row items-center justify-center w-full text-[11px] py-3`}
+            >
+              <button
+                type="button"
+                className="flex flex-row items-center justify-between w-20 cursor-pointer pretty-focus"
+                onClick={() => setShow((s) => !s)}
+              >
+                <div className="flex flex-row">
+                  {show ? "Show less" : "Show More"}
+                </div>
+                <svg
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth={2}
+                  strokeLinejoin="round"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className={`transition-transform duration-300 ease-in-out w-5 h-5 ${show ? "rotate-180" : ""}`}
+                >
+                  <path d="M19 9 l-7 7 l-7 -7" />
+                </svg>
               </button>
             </div>
           </section>

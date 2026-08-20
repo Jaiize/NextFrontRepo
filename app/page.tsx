@@ -32,7 +32,7 @@ const CardDetail = () => {
   const [page, setPage] = useState(1);
   const [debounceSearch, setDebounceSearch] = useState("");
   const [order, setOrder] = useState("");
-  const ref = useRef<HTMLElement | null>(null)
+  const ref = useRef<HTMLElement | null>(null);
 
   /** ------------------------------------
    * Array of object options to order from
@@ -90,7 +90,17 @@ const CardDetail = () => {
         console.error(e);
       }
     };
-    pull();
+
+    const searched = localStorage.getItem("searched");
+    if (searched) {
+      setTimeout(() => {
+        setSearch(searched);
+        searchGames({ pageNum: page, search: debounceSearch });
+        return;
+      }, 500)
+    } else {
+      pull();
+    }
   }, []);
 
   // searcGames method ------------------------------------------------------------------------------------------------------------
@@ -118,7 +128,6 @@ const CardDetail = () => {
       const res = await fetch(`${BASE_URL}/api/games/?${params}`);
       const fetched = await res.json();
       const rawg = (fetched as RawgResponse).results;
-      // console.log("Here...", rawg)
 
       if (rawg && rawg.length > 0) {
         setGames(rawg);
@@ -138,7 +147,20 @@ const CardDetail = () => {
 
   useEffect(() => {
     searchGames({ pageNum: page, search: debounceSearch });
+    localStorage.setItem("searched", debounceSearch);
   }, [debounceSearch]);
+
+   /**  ------------------------------------------------------------------------------------------------------------------------------------------------
+   *  clean up search
+   */
+
+  const cleanUpSearch = () => {
+    setSearch("");
+    const searched = localStorage.set("searched");
+    if (searched) {
+      localStorage.removeItem("searched");
+    }
+  };
 
   /** ------------------------------------------------------------------------------------------------------------------------------------------------
    * Handles previous and next page
@@ -167,11 +189,15 @@ const CardDetail = () => {
   return (
     <section className={`${sideNav ? "md:flex sm:" : ""}`}>
       {/* Wrapper for Sidenav and svg */}
-      <aside ref={ref}
+      <aside
+        ref={ref}
         onKeyDown={handleKeyDown}
         className={`${!sideNav ? "max-sm:focus-within:border-2 max-sm:focus-within:border-transparent focus-within:border-2 focus-within:rounded-lg focus-within:border-blue-600" : ""}
-         border-2 border-transparent ${sideNav ? "flex flex-row max-md:absolute max-md:z-30 max-md:bg-zinc-700/30 max-md:backdrop-blur-sm max-md:w-full" :
-           "absolute"}`}
+         border-2 border-transparent ${
+           sideNav
+             ? "flex flex-row max-md:absolute max-md:z-30 max-md:bg-zinc-700/30 max-md:backdrop-blur-sm max-md:w-full"
+             : "absolute"
+         }`}
       >
         <svg
           onClick={() => {
@@ -214,12 +240,13 @@ const CardDetail = () => {
             search={search}
             searchGames={searchGames}
             setSearch={setSearch}
+            cleanUpSearch={cleanUpSearch}
           />
         </div>
         {/* Wrapper for sorting */}
         <div
-          className="flex flex-row items-center justify-between shadow-sm hover:shadow-mauve-600 transition-shadow duration-300 gap-1 w-fit ml-3 sm: max-sm:ml-5 bg-zinc-900/45 h-10 px-3 rounded-xl 
-          sm: max-sm:w-fit sm: max-sm:pl-3"
+          className="flex flex-row items-center justify-between shadow-sm hover:shadow-mauve-600 transition-shadow duration-300 gap-1 w-fit ml-3 max-sm:ml-3.5 bg-zinc-900/45 h-10 px-3 rounded-xl 
+          max-sm:w-fit max-sm:pl-3"
         >
           <div className="font-grotesk text-sm w-fit mr-1.5 sm: max-sm:text-xs sm: max-sm:mr-0 hover:cursor-default">
             Order by:
@@ -233,12 +260,12 @@ const CardDetail = () => {
         </div>
         {/* Grid view */}
         <ul
-          className={`grid grid-cols-1 sm:grid-cols-2 justify-items-center ${sideNav ? "2xl:grid-cols-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "2xl:grid-cols-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"} gap-3 p-2`}
+          className={`grid grid-cols-1 sm:grid-cols-2 justify-items-center ${sideNav ? "2xl:grid-cols-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "2xl:grid-cols-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"} gap-2.5 p-2`}
         >
           {games &&
             games.length > 0 &&
             games.map((g) => (
-              <li key={g.id} className="sm: max-sm:px-2.5">
+              <li key={g.id} className="max-sm:px-1">
                 <Card {...g} isOpen={sideNav} />
               </li>
             ))}
@@ -250,12 +277,8 @@ const CardDetail = () => {
             disabled={loading || page <= 1}
             type="button"
           >
-            {page >= 2 && (
-              <GrLinkPrevious className="text-white ml-2" />
-            )}
-            <div className="font-cause text-sm w-28">
-              Previous page
-            </div>
+            {page >= 2 && <GrLinkPrevious className="text-white ml-2" />}
+            <div className="font-cause text-sm w-28">Previous page</div>
           </button>
           <button
             className="flex flex-row justify-between h-10 items-center rounded-xl transition-shadow duration-300 hover:shadow-xs shadow-gray-800 pretty-focus"

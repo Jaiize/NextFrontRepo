@@ -52,15 +52,6 @@ const Searchbar = ({
     }
   }
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const { signal } = controller
-    if(typeof window !== 'undefined'){
-      window.addEventListener('touchend', scrollForSearch, { signal })
-    }
-    return () => controller.abort();
-  }, [])
-  
 
   return (
     <div className="flex justify-center w-full my-5">
@@ -77,6 +68,7 @@ const Searchbar = ({
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search for latest games"
           type="search"
+          onTouchEnd={() => scrollForSearch()}
         />
         <svg
           stroke="currentColor"

@@ -230,7 +230,7 @@ const CardDetail = () => {
       {/* Wrapper for title and search bar and main grid */}
       <main className="overflow-hidden">
         <div className="flex flex-col justify-center w-full mb-5">
-          <div className="font-play text-center w-full h-10 text-3xl sm: max-sm:text-2xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text sm: max-sm:mt-15 sm: max-sm:px-1">
+          <div className="font-play text-center w-full h-10 text-3xl max-sm:text-2xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text max-sm:mt-15 max-sm:px-1">
             Find Your favourite Games
           </div>
           {/* Wrapper for search bar */}
@@ -248,7 +248,7 @@ const CardDetail = () => {
           className="flex flex-row items-center justify-between shadow-sm hover:shadow-mauve-600 transition-shadow duration-300 gap-1 w-fit ml-3 max-sm:ml-3.5 bg-zinc-900/45 h-10 px-3 rounded-xl 
           max-sm:w-fit max-sm:pl-3"
         >
-          <div className="font-grotesk text-sm w-fit mr-1.5 sm: max-sm:text-xs sm: max-sm:mr-0 hover:cursor-default">
+          <div className="font-grotesk text-sm w-fit mr-1.5 max-sm:text-xs max-sm:mr-0 hover:cursor-default">
             Order by:
           </div>
           <CustomSelect

@@ -63,7 +63,7 @@ const Searchbar = ({
           onClick={() => searchGames({ pageNum: page, search: debounceSearch })}
         />
         <input
-          className="font-grotesk text-sm w-full ml-2.5 h-full focus:outline-0 sm: max-sm:ml-2 sm: max-sm:text-xs"
+          className="font-grotesk text-sm w-full ml-2.5 h-full focus:outline-0 transition-none max-sm:ml-2 max-sm:text-xs"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search for latest games"

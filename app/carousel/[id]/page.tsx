@@ -58,7 +58,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       </div>
 
       {/* Platforms */}
-      <div className="w-fit flex flex-col items-start justify-start space-y-5 mx-10 mt-10 h-auto">
+      <div className="w-fit flex flex-col items-start justify-start space-y-5 mx-5 mt-10 h-auto">
         {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
         <div className="font-play text-xl sm: max-sm:text-md">
           { platforms && 'Platforms:'}
@@ -122,7 +122,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
         </div>
       </div>
       {/* Stats  */}
-      <div className="w-auto flex flex-row sm: max-sm:flex-col gap-10 h-auto m-10">
+      <div className="w-auto flex flex-row sm: max-sm:flex-col gap-10 h-auto my-10 mx-5">
         <div className="w-1/2 flex flex-col justify-center space-y-10 h-auto sm: max-sm:w-full sm: max-sm:space-y-5">
           {background_image && 
             <div className="flex flex-row justify-between items-center">
@@ -191,7 +191,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       </div>
       {/* Requirements  */}
       {platforms && platforms.some((r) => r.requirements?.minimum) &&
-        <div className="flex flex-col justify-start m-10 space-y-1.5 sm: max-sm:space-y-0">
+        <div className="flex flex-col justify-start my-10 mx-5 space-y-1.5 max-sm:space-y-0">
           {platforms && platforms.some((r) => r.requirements?.minimum) && <span className="text-xl justify-start font-play mb-3 sm: max-sm:text-sm">PC Requirement:</span>}
           {platforms && platforms.map((r, i) => <span key={i} className="text-zinc-500 text-lg font-black sm: max-sm:text-xs">{r.requirements?.minimum}</span>)}
           {platforms && platforms.map((r, i) => <span key={i} className="text-zinc-500 text-lg font-black sm: max-sm:text-xs">{r.requirements?.recommended}</span>)}
@@ -201,10 +201,10 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       {stores && stores.some((p) => (
         p.store.slug.includes('playstation') || p.store.slug.includes('xbox')) || p.store.slug.includes('steam') || p.store.slug.includes('epic-games')) &&
         <section className="w-full">
-          <div className="flex flex-col mx-10 items-start justify-start w-fit text-lg font-mont p-3 rounded-t-2xl bg-[#323232]/20 sm: max-sm:text-xs">
+          <div className="flex flex-col mx-5 items-start justify-start w-fit text-lg font-mont p-3 rounded-t-2xl bg-[#323232]/20 sm: max-sm:text-xs">
             {stores && 'Purchase From'}
           </div>
-          <div className="w-fit flex flex-row flex-wrap gap-3 items-start justify-start space-y-1 mx-10 h-auto border border-gray-600 p-4 mb-2 rounded-b-3xl rounded-se-3xl sm: max-sm:w-auto">
+          <div className="w-fit flex flex-row flex-wrap gap-3 items-start justify-start space-y-1 mx-5 h-auto border border-gray-600 p-4 mb-2 rounded-b-3xl rounded-se-3xl max-sm:w-auto">
             {stores && stores.some((p) => (
               p.store.slug.includes('playstation') 
             )) && 

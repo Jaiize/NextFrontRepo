@@ -1,4 +1,5 @@
 "use client";
+
 import Card from "@/components/card";
 import { RawgGame, RawgResponse } from "@/rawg.games.type";
 import React, { useEffect, useRef, useState } from "react";
@@ -24,6 +25,7 @@ if (!BASE_URL) {
 }
 
 const CardDetail = () => {
+
   const [games, setGames] = useState<RawgGame[]>([]);
   const [loading, setLoading] = useState(false);
   const [sideNav, setSideNav] = useState(false);
@@ -33,6 +35,21 @@ const CardDetail = () => {
   const [debounceSearch, setDebounceSearch] = useState("");
   const [order, setOrder] = useState("");
   const ref = useRef<HTMLElement | null>(null);
+
+  /** ------------------------------------
+   * Fill up hook
+   */
+  useEffect(() => {
+    const searched = localStorage.getItem("searched");
+    const localPage = localStorage.getItem("page")
+    const localGenre = localStorage.getItem("genre")
+    const localOrder = localStorage.getItem("order")
+    if (searched) setSearch(searched)
+    if (localGenre) setGenre(localGenre)
+    if (localPage) setPage(Number(localPage))
+    if (localOrder) setOrder(localOrder)
+  }, [])
+
 
   /** ------------------------------------
    * Array of object options to order from
@@ -63,6 +80,7 @@ const CardDetail = () => {
       setDebounceSearch("a");
     } else {
       searchGames({ pageNum: page, orderBy: order, gen: genre });
+      if (order) localStorage.setItem("order", order)
     }
   }, [order]);
 
@@ -71,6 +89,7 @@ const CardDetail = () => {
    */
   useEffect(() => {
     searchGames({ pageNum: page, gen: genre, orderBy: order });
+    if (genre) localStorage.setItem("genre", genre)
   }, [genre]);
 
   /** ------------------------------------------------------------------------------------------------------------
@@ -88,19 +107,12 @@ const CardDetail = () => {
         setLoading(false);
       } catch (e) {
         console.error(e);
+        setLoading(false);
       }
     };
 
-    const searched = localStorage.getItem("searched");
-    if (searched) {
-      setTimeout(() => {
-        setSearch(searched);
-        searchGames({ pageNum: page, search: debounceSearch });
-        return;
-      }, 500)
-    } else {
-      pull();
-    }
+    pull();
+
   }, []);
 
   // searcGames method ------------------------------------------------------------------------------------------------------------
@@ -147,7 +159,7 @@ const CardDetail = () => {
 
   useEffect(() => {
     searchGames({ pageNum: page, search: debounceSearch });
-    localStorage.setItem("searched", debounceSearch);
+    if(debounceSearch) localStorage.setItem("searched", debounceSearch);
   }, [debounceSearch]);
 
    /**  ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -156,10 +168,8 @@ const CardDetail = () => {
 
   const cleanUpSearch = () => {
     setSearch("");
-    const searched = localStorage.set("searched");
-    if (searched) {
-      localStorage.removeItem("searched");
-    }
+    localStorage.setItem("page", "");
+    localStorage.setItem("searched", "");
   };
 
   /** ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -168,6 +178,7 @@ const CardDetail = () => {
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
+    localStorage.setItem("page", newPage.toString())
     searchGames({
       pageNum: newPage,
       search: debounceSearch,
@@ -230,7 +241,7 @@ const CardDetail = () => {
       {/* Wrapper for title and search bar and main grid */}
       <main className="overflow-hidden">
         <div className="flex flex-col justify-center w-full mb-5">
-          <div className="font-play text-center w-full h-10 text-3xl max-sm:text-2xl my-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text max-sm:mt-15 max-sm:px-1">
+          <div className="font-play text-center w-full h-10 text-3xl max-sm:text-2xl mt-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text max-sm:mt-15 max-sm:px-1">
             Find Your favourite Games
           </div>
           {/* Wrapper for search bar */}

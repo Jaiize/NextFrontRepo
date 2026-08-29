@@ -64,7 +64,7 @@ const CustomSelect = ({
     }
   }, [show, value, options]);
 
-    const cleanOrder = (): string => {
+  const clearOrder = (): string => {
     localStorage.setItem("order", "");
     return ""
   }
@@ -109,7 +109,7 @@ const CustomSelect = ({
       case "Enter":
         e.preventDefault();
         if (show) {
-          onChange((v) => v === options[activeIndex].value ? cleanOrder() : options[activeIndex].value);
+          onChange((v) => v === options[activeIndex].value ? clearOrder() : options[activeIndex].value);
           setShow(false);
           setNav(false);
           buttonref.current?.focus();
@@ -173,7 +173,7 @@ const CustomSelect = ({
             }}
             id={`option-${i}`}
             onClick={() => {
-              onChange((v) => v === o.value ? cleanOrder() : o.value);
+              onChange((v) => v === o.value ? clearOrder() : o.value);
               setShow(false);
               buttonref.current?.focus();
             }}

@@ -37,7 +37,7 @@ const CardDetail = () => {
   const ref = useRef<HTMLElement | null>(null);
 
   /** ------------------------------------
-   * Fill up hook
+   * Fill-up hook
    */
   useEffect(() => {
     const searched = localStorage.getItem("searched");
@@ -159,7 +159,7 @@ const CardDetail = () => {
 
   useEffect(() => {
     searchGames({ pageNum: page, search: debounceSearch });
-    if(debounceSearch) localStorage.setItem("searched", debounceSearch);
+    if(debounceSearch && debounceSearch !== "a" && debounceSearch !== "z") localStorage.setItem("searched", debounceSearch);
   }, [debounceSearch]);
 
    /**  ------------------------------------------------------------------------------------------------------------------------------------------------

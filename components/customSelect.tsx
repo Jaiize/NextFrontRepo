@@ -10,7 +10,7 @@ import { TbChartBarPopular } from "react-icons/tb";
 export interface SelectProps {
   value: string;
   options: { value: string; label: string; slug: string }[];
-  onChange: (val: string) => void;
+  onChange: (val: string | ((val: string) => string)) => void;
   placeholder: string;
 }
 
@@ -64,6 +64,11 @@ const CustomSelect = ({
     }
   }, [show, value, options]);
 
+    const cleanOrder = (): string => {
+    localStorage.setItem("order", "");
+    return ""
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (
       !show &&
@@ -104,7 +109,7 @@ const CustomSelect = ({
       case "Enter":
         e.preventDefault();
         if (show) {
-          onChange(options[activeIndex].value);
+          onChange((v) => v === options[activeIndex].value ? cleanOrder() : options[activeIndex].value);
           setShow(false);
           setNav(false);
           buttonref.current?.focus();
@@ -168,7 +173,7 @@ const CustomSelect = ({
             }}
             id={`option-${i}`}
             onClick={() => {
-              onChange(o.value);
+              onChange((v) => v === o.value ? cleanOrder() : o.value);
               setShow(false);
               buttonref.current?.focus();
             }}

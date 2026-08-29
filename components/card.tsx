@@ -90,7 +90,7 @@ const Card = ({
             <Image
               className="min-w-full h-48 aspect-auto cursor-pointer object-cover"
               title={name}
-              alt={name}
+              alt={`${name} cover art`}
               src={background_image || "/Nocontent.jpg"}
               width={1280}
               height={720}
@@ -102,35 +102,35 @@ const Card = ({
         <div
           className={`h-1/2 flex flex-col justify-center ${show ? "px-4 pt-4 pb-2" : "p-4"}`}
         >
-          <div className="flex flex-row gap-2 mb-2">
+          <div className="flex flex-row gap-2 mb-2" aria-label="Platforms">
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("pc")) && (
-                <FaWindows className="text-white-500" />
+                <FaWindows aria-label="Available on windows" className="text-white-500" />
               )}
             {platforms &&
               platforms.some((p) =>
                 p.platform.slug.includes("playstation"),
-              ) && <FaPlaystation className="text-blue-500" />}
+              ) && <FaPlaystation aria-label="Available on PlayStation" className="text-blue-500" />}
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("xbox")) && (
-                <FaXbox className="text-green-500" />
+                <FaXbox aria-label="Available on Xbox" className="text-green-500" />
               )}
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("linux")) && (
-                <FaLinux className="text-amber-300" />
+                <FaLinux aria-label="Available on Linux" className="text-amber-300" />
               )}
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("macos")) && (
-                <FaApple className="text-white-500" />
+                <FaApple aria-label="Available on MacOS" className="text-white-500" />
               )}
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("android")) && (
-                <DiAndroid className="text-green-500" />
+                <DiAndroid aria-label="Available on Android" className="text-green-500" />
               )}
             {platforms &&
               platforms.some((p) =>
                 p.platform.slug.includes("nintendo-switch"),
-              ) && <BsNintendoSwitch className="text-white-500" />}
+              ) && <BsNintendoSwitch aria-label="Available on Nintendo-switch" className="text-white-500" />}
           </div>
           <Link
             href={`/carousel/${id}`}
@@ -200,21 +200,21 @@ const Card = ({
                           stores.some((p) =>
                             p.store.slug.includes("playstation"),
                           ) && (
-                            <FaPlaystation className={`text-white-500 ml-1.5`} />
+                            <FaPlaystation aria-label="Available on PlayStation store" className={`text-white-500 ml-1.5`} />
                           )}
                         {stores &&
                           stores.some((p) => p.store.slug.includes("xbox")) && (
-                            <FaXbox className="text-white-500 ml-1.5" />
+                            <FaXbox aria-label="Available on Xbox store" className="text-white-500 ml-1.5" />
                           )}
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("steam"),
-                          ) && <FaSteam className="text-white-500 ml-1.5" />}
+                          ) && <FaSteam aria-label="Available on Steam store" className="text-white-500 ml-1.5" />}
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("epic-games"),
                           ) && (
-                            <SiEpicgames className="text-white-500 ml-1.5" />
+                            <SiEpicgames aria-label="Available on Epic-Games" className="text-white-500 ml-1.5" />
                           )}
                       </div>
                     </div>

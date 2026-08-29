@@ -119,6 +119,11 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
       document.removeEventListener("touchend", handleMobClickOutside);
   }, [sideNav]);
 
+  const cleanGenre = (): string => {
+    localStorage.setItem("genre", "");
+    return ""
+  }
+
   // On Keydown
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (sideNav && butRef.current) {
@@ -154,7 +159,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
         case "Enter":
           e.preventDefault();
           if (sideNav) {
-            setGenre(prev => (prev === Genre[activeIndex].slug ? '' : Genre[activeIndex].slug));
+            setGenre(prev => (prev === Genre[activeIndex].slug ? cleanGenre() : Genre[activeIndex].slug));
             setSideNav(false);
             setScreen(false);
             butRef.current?.focus();
@@ -195,7 +200,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
               aria-selected={genre === slug}
               key={name}
               onClick={() => {
-                setGenre(prev => (prev === slug ? "" : slug));
+                setGenre(prev => (prev === slug ? cleanGenre() : slug));
                 handleMobileSelect();
               }}
             >

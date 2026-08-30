@@ -41,9 +41,11 @@ const CardDetail = () => {
    */
   useEffect(() => {
     const searched = localStorage.getItem("searched");
-    const localPage = localStorage.getItem("page")
     const localGenre = localStorage.getItem("genre")
     const localOrder = localStorage.getItem("order")
+    const localPage = localStorage.getItem("page")
+    
+    if (!localPage) localStorage.setItem("page", page.toString())
     if (searched) setSearch(searched)
     if (localGenre) setGenre(localGenre)
     if (localPage) setPage(Number(localPage))
@@ -97,6 +99,11 @@ const CardDetail = () => {
    */
 
   useEffect(() => {
+
+    const searched = localStorage.getItem("searched");
+    const localGenre = localStorage.getItem("genre")
+    const localOrder = localStorage.getItem("order")
+
     const pull = async () => {
       try {
         setLoading(true);
@@ -110,8 +117,10 @@ const CardDetail = () => {
         setLoading(false);
       }
     };
-
-    pull();
+    
+    if ((!searched) && (!localGenre) && (!localOrder)) {
+      pull();
+    }
 
   }, []);
 

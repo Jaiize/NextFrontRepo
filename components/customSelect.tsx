@@ -69,6 +69,12 @@ const CustomSelect = ({
     return ""
   }
 
+  // For later use in setting up Order
+  const setUpOrder = (ord: string): string => {
+    localStorage.setItem("order", ord);
+    return ord
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (
       !show &&
@@ -109,7 +115,7 @@ const CustomSelect = ({
       case "Enter":
         e.preventDefault();
         if (show) {
-          onChange((v) => v === options[activeIndex].value ? clearOrder() : options[activeIndex].value);
+          onChange((v) => v === options[activeIndex].value ? clearOrder() : setUpOrder(options[activeIndex].value));
           setShow(false);
           setNav(false);
           buttonref.current?.focus();
@@ -173,7 +179,7 @@ const CustomSelect = ({
             }}
             id={`option-${i}`}
             onClick={() => {
-              onChange((v) => v === o.value ? clearOrder() : o.value);
+              onChange((v) => v === o.value ? clearOrder() : setUpOrder(o.value));
               setShow(false);
               buttonref.current?.focus();
             }}

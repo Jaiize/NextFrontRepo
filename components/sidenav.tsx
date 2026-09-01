@@ -94,7 +94,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
     }
   };
 
-  // To turn off highlight for half-displayed sidenavbar items / properties
+  // To turn off highlight for half-displayed side-navbar items / properties
   const turnOffIndicator = (e: MouseEvent) => {
     if (butRef.current && !butRef.current.contains(e.target as Node)) {
       setScreen(false);
@@ -122,6 +122,12 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
   const clearGenre = (): string => {
     localStorage.setItem("genre", "");
     return ""
+  }
+  
+  // For later use in setting up Genre
+  const setUpGenre = (g: string): string => {
+    localStorage.setItem("genre", g);
+    return g
   }
 
   // On Keydown
@@ -159,7 +165,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
         case "Enter":
           e.preventDefault();
           if (sideNav) {
-            setGenre(prev => (prev === Genre[activeIndex].slug ? clearGenre() : Genre[activeIndex].slug));
+            setGenre(prev => (prev === Genre[activeIndex].slug ? clearGenre() : setUpGenre(Genre[activeIndex].slug)));
             setSideNav(false);
             setScreen(false);
             butRef.current?.focus();
@@ -200,7 +206,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
               aria-selected={genre === slug}
               key={name}
               onClick={() => {
-                setGenre(prev => (prev === slug ? clearGenre() : slug));
+                setGenre(prev => (prev === slug ? clearGenre() : setUpGenre(slug)));
                 handleMobileSelect();
               }}
             >

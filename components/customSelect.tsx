@@ -69,7 +69,7 @@ const CustomSelect = ({
     return ""
   }
 
-  // For later use in setting up Order
+  // Use for setting up Order
   const setUpOrder = (ord: string): string => {
     localStorage.setItem("order", ord);
     return ord

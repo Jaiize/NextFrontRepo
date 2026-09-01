@@ -33,28 +33,6 @@ const Searchbar = ({
     }
   }
 
-  // const temp = (e: any) => {
-  //   setSearch("");
-  //   console.log("Seen...", e.persisted)
-  //   const searched = localStorage.getItem("searched");
-  //   if (searched) {
-  //     localStorage.removeItem("searched");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const controller = new AbortController();
-  //   const { signal } = controller;
-
-  //   if(typeof window !== 'undefined'){
-  //     // window.addEventListener("pageshow", cleanUpSearch, { signal })
-  //     window.addEventListener("loadstart", temp, { signal })
-  //   }
-
-  //   return () => controller.abort();
-
-  // }, [])
-
 
   return (
     <div className="flex justify-center w-full my-5">

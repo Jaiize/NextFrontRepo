@@ -108,6 +108,7 @@ const CardDetail = () => {
     const pull = async () => {
       try {
         setLoading(true);
+        
         const params = new URLSearchParams({
           page: localPage!.toString(),
           page_size: "40",
@@ -265,8 +266,10 @@ const CardDetail = () => {
       {/* Wrapper for title and search bar and main grid */}
       <main className="overflow-hidden">
         <div className="flex flex-col justify-center w-full mb-5">
-          <div className="font-play text-center w-full h-10 text-3xl max-sm:text-2xl mt-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text max-sm:mt-15 max-sm:px-1">
-            Find Your favourite Games
+          <div className="flex flex-row justify-center w-full">
+            <div className={`font-play max-sm:mt-15 max-sm:px-1 h-10 text-3xl max-sm:text-2xl mt-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text`}>
+              Find Your favourite Games
+            </div>
           </div>
           {/* Wrapper for search bar */}
           <Searchbar

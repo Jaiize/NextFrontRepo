@@ -124,7 +124,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
     return ""
   }
   
-  // For later use in setting up Genre
+  // Use for setting up Genre
   const setUpGenre = (g: string): string => {
     localStorage.setItem("genre", g);
     return g

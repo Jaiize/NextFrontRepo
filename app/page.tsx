@@ -25,7 +25,6 @@ if (!BASE_URL) {
 }
 
 const CardDetail = () => {
-
   const [games, setGames] = useState<RawgGame[]>([]);
   const [loading, setLoading] = useState(false);
   const [sideNav, setSideNav] = useState(false);
@@ -35,23 +34,27 @@ const CardDetail = () => {
   const [debounceSearch, setDebounceSearch] = useState("");
   const [order, setOrder] = useState("");
   const ref = useRef<HTMLElement | null>(null);
+  /**
+   * Purpose is to cancel or abort previous request (this is specifically for page refresh where all dependencies in useEffect get value parse to them
+   * Implemented in searchGames() method
+   * */
+  const conRef = useRef<AbortController | null>(null);
 
   /** ------------------------------------
    * Fill-up hook
    */
   useEffect(() => {
     const searched = localStorage.getItem("searched");
-    const localGenre = localStorage.getItem("genre")
-    const localOrder = localStorage.getItem("order")
-    const localPage = localStorage.getItem("page")
-    
-    if (!localPage) localStorage.setItem("page", page.toString())
-    if (searched) setSearch(searched)
-    if (localGenre) setGenre(localGenre)
-    if (localPage) setPage(Number(localPage))
-    if (localOrder) setOrder(localOrder)
-  }, [])
+    const localGenre = localStorage.getItem("genre");
+    const localOrder = localStorage.getItem("order");
+    const localPage = localStorage.getItem("page");
 
+    if (!localPage) localStorage.setItem("page", page.toString());
+    if (searched) setSearch(searched);
+    if (localGenre) setGenre(localGenre);
+    if (localPage) setPage(Number(localPage));
+    if (localOrder) setOrder(localOrder);
+  }, []);
 
   /** ------------------------------------
    * Array of object options to order from
@@ -82,7 +85,6 @@ const CardDetail = () => {
       setDebounceSearch("a");
     } else {
       searchGames({ pageNum: page, orderBy: order, gen: genre });
-      if (order) localStorage.setItem("order", order)
     }
   }, [order]);
 
@@ -91,7 +93,6 @@ const CardDetail = () => {
    */
   useEffect(() => {
     searchGames({ pageNum: page, gen: genre, orderBy: order });
-    if (genre) localStorage.setItem("genre", genre)
   }, [genre]);
 
   /** ------------------------------------------------------------------------------------------------------------
@@ -99,15 +100,20 @@ const CardDetail = () => {
    */
 
   useEffect(() => {
-
     const searched = localStorage.getItem("searched");
-    const localGenre = localStorage.getItem("genre")
-    const localOrder = localStorage.getItem("order")
+    const localGenre = localStorage.getItem("genre");
+    const localOrder = localStorage.getItem("order");
+    const localPage = localStorage.getItem("page");
 
     const pull = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${BASE_URL}/api/games/`);
+        const params = new URLSearchParams({
+          page: localPage!.toString(),
+          page_size: "40",
+        });
+
+        const res = await fetch(`${BASE_URL}/api/games/?${params}`);
         const fetched = await res.json();
         const RAWG = (fetched as RawgResponse).results;
         setGames(RAWG);
@@ -117,11 +123,10 @@ const CardDetail = () => {
         setLoading(false);
       }
     };
-    
-    if ((!searched) && (!localGenre) && (!localOrder)) {
+
+    if (!searched && !localGenre && !localOrder) {
       pull();
     }
-
   }, []);
 
   // searcGames method ------------------------------------------------------------------------------------------------------------
@@ -134,11 +139,16 @@ const CardDetail = () => {
     gen,
   }: searchProps) => {
     setLoading(true);
+    conRef.current?.abort();
+
     try {
       const params = new URLSearchParams({
         page: pageNum.toString(),
         page_size: pageSize || "40",
       });
+
+      conRef.current = new AbortController();
+      const { signal } = conRef.current;
 
       if (search) params.append("search", search);
 
@@ -146,14 +156,18 @@ const CardDetail = () => {
 
       if (gen) params.append("genres", gen);
 
-      const res = await fetch(`${BASE_URL}/api/games/?${params}`);
+      const res = await fetch(`${BASE_URL}/api/games/?${params}`, { signal });
       const fetched = await res.json();
       const rawg = (fetched as RawgResponse).results;
 
       if (rawg && rawg.length > 0) {
         setGames(rawg);
       }
-    } catch (e) {
+    } catch (e: any) {
+      // To ignore operation was aborted error in devIndicators
+      if (e.name == "AbortError") {
+        return;
+      }
       console.error(e);
     } finally {
       setLoading(false);
@@ -168,10 +182,11 @@ const CardDetail = () => {
 
   useEffect(() => {
     searchGames({ pageNum: page, search: debounceSearch });
-    if(debounceSearch && debounceSearch !== "a" && debounceSearch !== "z") localStorage.setItem("searched", debounceSearch);
+    if (debounceSearch && debounceSearch !== "a" && debounceSearch !== "z")
+      localStorage.setItem("searched", debounceSearch);
   }, [debounceSearch]);
 
-   /**  ------------------------------------------------------------------------------------------------------------------------------------------------
+  /**  ------------------------------------------------------------------------------------------------------------------------------------------------
    *  clean up search
    */
 
@@ -187,7 +202,7 @@ const CardDetail = () => {
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    localStorage.setItem("page", newPage.toString())
+    localStorage.setItem("page", newPage.toString());
     searchGames({
       pageNum: newPage,
       search: debounceSearch,

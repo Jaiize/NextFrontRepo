@@ -195,7 +195,7 @@ const Card = ({
                       >
                         Store:
                       </span>
-                      <div className="flex flex-row items-center">
+                      <div className={`flex flex-row items-center`}>
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("playstation"),

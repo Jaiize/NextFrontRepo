@@ -200,7 +200,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
         {Genre &&
           Genre.map(({ img, name, slug }, i) => (
             <div
-              className={`${screen && activeIndex === i ? "bg-gray-500" : "bg-transparent"} flex flex-row gap-3 w-full h-10 py-3 pr-3 rounded-md mb-2 items-center justify-start hover:text-blue-500`}
+              className={`${screen && activeIndex === i ? "bg-gray-500" : "bg-transparent"} flex flex-row gap-3 w-full h-10 py-3 pr-3 rounded-l-xl rounded-lg mb-2 items-center justify-start hover:text-blue-500`}
               id={`option-${i}`}
               role="option"
               aria-selected={genre === slug}
@@ -211,7 +211,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
               }}
             >
               <Image
-                className="w-12 h-10 rounded-md my-3 object-cover"
+                className="w-12 h-10 rounded-xl my-3 object-cover aspect-square"
                 title={name}
                 alt={name}
                 src={img || "/Nocontent.jpg"}

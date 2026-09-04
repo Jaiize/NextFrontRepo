@@ -24,7 +24,7 @@ if (!BASE_URL) {
   throw new Error("BASE_URL cannot be fetched from environment variable");
 }
 
-const CardDetail = () => {
+const LandingPage = () => {
   const [games, setGames] = useState<RawgGame[]>([]);
   const [loading, setLoading] = useState(false);
   const [sideNav, setSideNav] = useState(false);
@@ -34,6 +34,7 @@ const CardDetail = () => {
   const [debounceSearch, setDebounceSearch] = useState("");
   const [order, setOrder] = useState("");
   const ref = useRef<HTMLElement | null>(null);
+
   /**
    * Purpose is to cancel or abort previous request (this is specifically for page refresh where all dependencies in useEffect get value parse to them
    * Implemented in searchGames() method
@@ -107,6 +108,7 @@ const CardDetail = () => {
 
     const pull = async () => {
       try {
+
         setLoading(true);
         
         const params = new URLSearchParams({
@@ -119,8 +121,9 @@ const CardDetail = () => {
         const RAWG = (fetched as RawgResponse).results;
         setGames(RAWG);
         setLoading(false);
-      } catch (e) {
-        console.error(e);
+
+      } catch (e: any) {
+        console.error(e.message);
         setLoading(false);
       }
     };
@@ -169,7 +172,7 @@ const CardDetail = () => {
       if (e.name == "AbortError") {
         return;
       }
-      console.error(e);
+      console.error(e.message);
     } finally {
       setLoading(false);
     }
@@ -336,4 +339,4 @@ const CardDetail = () => {
   );
 };
 
-export default CardDetail;
+export default LandingPage;

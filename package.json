@@ -1,6 +1,6 @@
 {
   "name": "Keakstein_GameHub",
-  "version": "2.2.7",
+  "version": "2.2.9",
   "private": true,
   "scripts": {
     "dev": "next dev",

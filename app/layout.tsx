@@ -71,10 +71,10 @@ const supermercado_one = Supermercado_One({
 export const metadata: Metadata = {
   title: "Discover Games",
   description: "Discover and look up new and trending games",
-  metadataBase: new URL('https://keakstein.vercel.app'),
+  metadataBase: new URL("https://keakstein.vercel.app"),
   openGraph: {
     title: "Discover new and trending Games",
-    description: "Discover and look up new and trending games",
+    description: "Discover and look up games from pool of games",
     type: "website",
     siteName: "Keakstein",
     images: [
@@ -82,16 +82,25 @@ export const metadata: Metadata = {
         url: "/page-for-meta.png",
         width: 1600,
         height: 900,
-        alt: "Find your favourite games and more"
-      }
-    ]
+        alt: "Find your favourite games and more",
+        type: "image/png"
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Keakstein - GameGrid",
-    description: "Discover and look up new and trending games",
-    images: ["/page-for-meta.png"],
-  }
+    description: "Discover and look up games from pool of games",
+    images: [
+      {
+        url: "/page-for-meta.png",
+        width: 1600,
+        height: 900,
+        alt: "Find your favourite games and more",
+        type: "image/png"
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -99,7 +108,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html
       lang="en"
@@ -107,19 +115,30 @@ export default function RootLayout({
       className={`${geistSans.variable} ${supermercado_one.variable} ${roboto_condensed.variable} ${cause.variable} ${geistMono.variable} ${playfair_display.variable} ${montserrat.variable}  ${inter.variable} ${schibsted_grotesk.variable} h-full antialiased`}
     >
       <head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" href="/favicon.ico"/>
-        <link rel="icon" href="/faviconsvg.svg"/>
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png"/>
-        <link rel="manifest" href="/keakstein.webmanifest.json"/>
-        <meta name="theme-color" content="ffffff"/>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/faviconsvg.svg" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="96x96"
+          href="/favicon-96x96.png"
+        />
+        <link rel="manifest" href="/keakstein.webmanifest.json" />
+        <meta property="og:title" content="Keakstein" />
+        <meta property="og:image" content="https://keakstein.vercel.app/page-for-meta.png" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:image" content="https://keakstein.vercel.app/page-for-meta.png" />
+        <meta name="theme-color" content="ffffff" />
       </head>
       <body className="min-h-screen flex flex-col">
         <Providers>
-          <NavBar/>
-            <Scroller>
-              {children}
-            </Scroller>
+          <NavBar />
+          <Scroller>{children}</Scroller>
         </Providers>
       </body>
     </html>

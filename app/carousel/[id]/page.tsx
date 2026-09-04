@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BsNintendoSwitch } from "react-icons/bs";
+import { DiAndroid } from "react-icons/di";
 import { FaApple, FaLinux, FaPlaystation, FaStar, FaSteam, FaWindows, FaXbox } from "react-icons/fa6";
 import { SiEpicgames, SiPlaystation2, SiPlaystation3, SiPlaystation4, SiPlaystation5 } from "react-icons/si";
 
@@ -125,6 +126,14 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
             <BsNintendoSwitch aria-label="Nintendo Switch Icon" className="text-5xl max-sm:text-4xl"/>
           </div>
           }
+          {/* {platforms && platforms.some((p) => (
+            p.platform.slug.includes('android') 
+          )) && 
+          <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-13">
+            <span aria-label="Available on Android" className="text-lg font-extrabold max-sm:text-sm">Android</span>
+            <DiAndroid aria-label="Android icon" className="text-green-500 text-5xl max-sm:text-4xl" />
+          </div>
+          } */}
         </div>
       </div>
       {/* Stats  */}

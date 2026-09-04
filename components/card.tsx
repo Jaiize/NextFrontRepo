@@ -85,7 +85,7 @@ const Card = ({
         <div className="rounded-t-[10px] overflow-hidden">
           <Link
             href={`/carousel/${id}`}
-            className={`${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}
+            className={`${isOpen ? "max-sm:pointer-events-none" : "max-sm:pointer-events-auto"}`}
           >
             <Image
               className="min-w-full h-48 aspect-auto cursor-pointer object-cover"
@@ -134,10 +134,10 @@ const Card = ({
           </div>
           <Link
             href={`/carousel/${id}`}
-            className={`pretty-focus ${isOpen ? "sm: max-sm:pointer-events-none" : "sm: max-sm:pointer-events-auto"}`}
+            className={`pretty-focus ${isOpen ? "max-sm:pointer-events-none" : "max-sm:pointer-events-auto"}`}
           >
             <p
-              className={`font-rob ${show ? "line-clamp-none" : "line-clamp-1"} text-sm hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5`}
+              className={`font-rob ${show ? "line-clamp-none max-sm:line-clamp-1" : "line-clamp-1"} max-sm:text-sm text-md hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5`}
             >
               {name}
             </p>
@@ -159,7 +159,7 @@ const Card = ({
           )}
           <section
             className={`${theme === "dark" && show ? "bg-[#151414]" : theme === "light" && show ? "bg-[#bab6b6] shadow-none" : ""} transition-shadow duration-300 
-            ${show ? "absolute sm: max-sm:top-[85%] top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
+            ${show ? "absolute max-sm:top-[85%] top-full z-20 w-full left-0 right-0 px-4 pb-4 shadow-md hover:shadow-gray-900 rounded-b-[10px]" : "relative z-10"}`}
           >
             {show && (
               <>

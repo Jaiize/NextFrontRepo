@@ -37,7 +37,7 @@ const Searchbar = ({
   return (
     <div className="flex justify-center w-full my-5">
       <div
-        className={`flex flex-row items-center w-[35%] ${theme === "light" ? "bg-gray-300" : "bg-[#323232]"} h-10 rounded-2xl max-sm:w-[65%] max-sm:h-9 transition-normal duration-200 md:outline-2 md:outline-transparent md:focus-within:outline-offset-1 md:focus-within:outline-2 md:focus-within:outline-blue-400`}
+        className={`flex flex-row items-center w-[35%] ${theme === "light" ? "bg-gray-300" : "bg-[#323232]"} h-10 rounded-2xl max-sm:w-[65%] max-sm:h-9 md:transition-normal md:duration-200 md:outline-2 md:outline-transparent md:focus-within:outline-offset-1 md:focus-within:outline-2 md:focus-within:outline-blue-400`}
       >
         <BiSearch
           className="text-2xl ml-3 cursor-pointer sm: max-sm:text-xl"

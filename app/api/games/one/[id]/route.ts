@@ -19,6 +19,7 @@ export async function GET(
     // cacheLife('minutes')
     const res = await fetch(
       `https://api.rawg.io/api/games/${id}?key=${API_KEY}`,
+      { next: { revalidate: 3600 } }
     );
     if (!res.ok) {
       const er = res.text();

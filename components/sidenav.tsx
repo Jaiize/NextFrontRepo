@@ -179,7 +179,7 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
     <button
       type="button"
       ref={butRef}
-      className="flex flex-col items-center w-30 justify-start m-3 pretty-focus md:sticky md:top-17"
+      className="flex flex-col items-center w-30 justify-start m-3 pretty-focus md:sticky md:top-16.5"
       role="combobox"
       aria-expanded={sideNav}
       aria-pressed={sideNav}

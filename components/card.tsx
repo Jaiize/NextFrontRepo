@@ -17,7 +17,6 @@ import { BsNintendoSwitch } from "react-icons/bs";
 import { SiEpicgames } from "react-icons/si";
 import Link from "next/link";
 import useTheme from "next-theme";
-import SideNav from "./sidenav";
 
 export type CardProps = {
   background_image: string;
@@ -113,11 +112,11 @@ const Card = ({
               ) && <FaPlaystation aria-label="Available on PlayStation" className="text-blue-500" />}
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("xbox")) && (
-                <FaXbox aria-label="Available on Xbox" className="text-green-500" />
+                <FaXbox aria-label="Available on Xbox" className={`${theme === "dark" ? "text-green-500" : "text-green-700"}`} />
               )}
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("linux")) && (
-                <FaLinux aria-label="Available on Linux" className="text-amber-300" />
+                <FaLinux aria-label="Available on Linux" className={`${theme === "dark" ? "text-amber-300" : "text-amber-800"}`} />
               )}
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("macos")) && (
@@ -134,10 +133,10 @@ const Card = ({
           </div>
           <Link
             href={`/carousel/${id}`}
-            className={`pretty-focus ${isOpen ? "max-sm:pointer-events-none" : "max-sm:pointer-events-auto"}`}
+            className={`flex flex-row justify-start items-center pretty-focus w-fit`}
           >
             <p
-              className={`font-rob ${show ? "line-clamp-none max-sm:line-clamp-1" : "line-clamp-1"} max-sm:text-sm text-md hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5`}
+              className={`font-rob ${show ? "line-clamp-none max-sm:line-clamp-1" : "line-clamp-1"} ${isOpen ? "max-sm:pointer-events-none" : "max-sm:pointer-events-auto"} max-sm:text-sm text-md hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5`}
             >
               {name}
             </p>

@@ -108,9 +108,8 @@ const LandingPage = () => {
 
     const pull = async () => {
       try {
-
         setLoading(true);
-        
+
         const params = new URLSearchParams({
           page: localPage!.toString(),
           page_size: "40",
@@ -121,7 +120,6 @@ const LandingPage = () => {
         const RAWG = (fetched as RawgResponse).results;
         setGames(RAWG);
         setLoading(false);
-
       } catch (e: any) {
         console.error(e.message);
         setLoading(false);
@@ -196,7 +194,7 @@ const LandingPage = () => {
 
   const cleanUpSearch = () => {
     setSearch("");
-    localStorage.setItem("page", "");
+    localStorage.setItem("page", "1");
     localStorage.setItem("searched", "");
   };
 
@@ -246,7 +244,7 @@ const LandingPage = () => {
           strokeWidth={2}
           viewBox="0 0 24 24"
           fill="none"
-          className={`w-8 h-8 m-3 cursor-pointer ${sideNav ? "md:sticky md:top-17" : ""}`}
+          className={`w-8 h-8 m-3 cursor-pointer ${sideNav ? "md:sticky md:top-16.5" : ""}`}
         >
           <path
             strokeLinecap="round"
@@ -270,7 +268,9 @@ const LandingPage = () => {
       <main className="overflow-hidden">
         <div className="flex flex-col justify-center w-full mb-5">
           <div className="flex flex-row justify-center w-full">
-            <div className={`font-play max-sm:mt-15 max-sm:px-1 h-10 text-3xl max-sm:text-2xl mt-10 mb-2 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text`}>
+            <div
+              className={`font-play max-sm:mt-15 max-sm:px-1 h-10 text-3xl max-sm:text-2xl mt-10 mb-2 max-sm:mb-0 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text`}
+            >
               Find Your favourite Games
             </div>
           </div>
@@ -301,7 +301,7 @@ const LandingPage = () => {
         </div>
         {/* Grid view */}
         <ul
-          className={`grid grid-cols-1 sm:grid-cols-2 justify-items-center ${sideNav ? "2xl:grid-cols-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "2xl:grid-cols-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"} gap-2.5 p-2`}
+          className={`min-h-screen grid grid-cols-1 sm:grid-cols-2 justify-items-center ${sideNav ? "2xl:grid-cols-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "2xl:grid-cols-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"} gap-2.5 p-2`}
         >
           {games &&
             games.length > 0 &&

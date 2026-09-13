@@ -49,7 +49,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
           <Image loading="eager" alt={name || slug} width={1920} height={1080} src={background_image_additional || '/Nocontent.jpg'} className={`w-full absolute top-0 left-0 h-full ${theme === 'dark' ? 'opacity-45' : 'opacity-80'} aspect-video object-cover`}/>
         }
         {/* add inset-x-0 max-md:text-2xl */}
-        <div className={`font-rob 2xl:text-7xl xl:text-6xl lg:text-5xl md:text-4xl text-3xl ${name && name.length > 35 ? 'max-sm:text-[16px]' : 'max-sm:text-2xl'} w-full absolute top-10 lg:top-20 flex flex-row justify-center max-sm:top-5 max-sm:px-3`}>{name}</div>
+        <div className={`font-rob 2xl:text-7xl xl:text-6xl lg:text-5xl md:text-4xl text-3xl ${(name && name.length > 33 && name && name.length < 37) ? 'max-sm:text-[20px]' : (name && name.length >= 37) ? 'max-sm:text-[16px]' : 'max-sm:text-2xl'} w-full absolute top-10 lg:top-20 flex flex-row justify-center max-sm:top-5 max-sm:px-3`}>{name}</div>
         <div className={`w-[80%] absolute h-50 top-30 lg:top-50 flex flex-row justify-center font-grotesk z-30 max-sm:top-20 max-sm:text-xs`} >
           {description_raw && description_raw}
         </div>
@@ -61,10 +61,11 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
       {/* Platforms */}
       <div className="w-fit flex flex-col items-start justify-start space-y-5 mx-3 mt-10 h-auto" aria-label="Platforms">
         {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
+        {/* {name && <div className="text-blue-600 font-cause text-2xl">{name.length}</div>} */}
         <div className="font-play text-xl max-sm:text-md">
           { platforms && 'Platforms:'}
         </div>
-        <div className="flex flex-row items-center justify-start gap-4 flex-wrap ">
+        <div className="flex flex-row items-center justify-start gap-4 flex-wrap">
           { platforms && platforms.some((p) => (
             p.platform.slug.includes('pc') 
           )) && 
@@ -75,21 +76,41 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
           {platforms && platforms.some((p) => (
             p.platform.slug.includes('playstation') 
           )) && 
-          <div className="bg-[#232121]/20 rounded-2xl w-auto px-3 h-auto flex flex-col items-start justify-center max-sm:h-20">
+          <div className="bg-[#232121]/20 rounded-2xl w-auto px-3 h-auto flex flex-col flex-wrap items-start justify-center max-sm:h-20">
             <span aria-label="Available on PlayStation" className="text-lg mt-2 font-extrabold max-sm:text-sm">Playstation</span>
-            <div className="flex flex-row items-center gap-5">
+            <div className="flex flex-row items-center gap-3">
               {platforms && platforms.some((p) => (
                 p.platform.slug.includes('playstation5') 
-              )) && <SiPlaystation5 aria-label="PlayStation Icon" className="text-blue-500 text-5xl max-sm:text-4xl"/>}
+              )) &&
+                <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
+                  <FaPlaystation className="text-blue-600"/>
+                  <SiPlaystation5 aria-label="PlayStation Icon" className="text-blue-500 text-5xl max-sm:text-4xl"/>
+                </div>
+              }
               {platforms && platforms.some((p) => (
                 p.platform.slug.includes('playstation4') 
-              )) && <SiPlaystation4 aria-label="PlayStation Icon" className="text-blue-500 text-5xl max-sm:text-4xl"/>}
+              )) && 
+                <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
+                  <FaPlaystation className="text-blue-600"/>
+                  <SiPlaystation4 aria-label="PlayStation Icon" className="text-blue-500 text-5xl max-sm:text-4xl"/>
+                </div>
+              }
               {platforms && platforms.some((p) => (
                 p.platform.slug.includes('playstation3') 
-              )) && <SiPlaystation3 aria-label="PlayStation Icon" className="text-blue-500 text-5xl max-sm:text-4xl"/>}
+              )) && 
+                <div className="flex flex-row w-fit items-center gap-2 border border-zinc-400 rounded-md h-6 px-1 my-3">
+                  <FaPlaystation className="text-blue-600"/>
+                  <SiPlaystation3 aria-label="PlayStation Icon" className="text-blue-500 text-5xl max-sm:text-4xl"/>
+                </div>
+              }
               {platforms && platforms.some((p) => (
                 p.platform.slug.includes('playstation2') 
-              )) && <SiPlaystation2 aria-label="PlayStation Icon" className="text-blue-500 text-5xl max-sm:text-4xl"/>}
+              )) &&
+                <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
+                  <FaPlaystation className="text-blue-600"/>
+                  <SiPlaystation2 aria-label="PlayStation Icon" className="text-blue-500 text-6xl max-sm:text-5xl"/>
+                </div>
+              }
             </div>
 
           </div>
@@ -126,14 +147,14 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
             <BsNintendoSwitch aria-label="Nintendo Switch Icon" className="text-5xl max-sm:text-4xl"/>
           </div>
           }
-          {/* {platforms && platforms.some((p) => (
+          {platforms && platforms.some((p) => (
             p.platform.slug.includes('android') 
           )) && 
           <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-13">
             <span aria-label="Available on Android" className="text-lg font-extrabold max-sm:text-sm">Android</span>
             <DiAndroid aria-label="Android icon" className="text-green-500 text-5xl max-sm:text-4xl" />
           </div>
-          } */}
+          }
         </div>
       </div>
       {/* Stats  */}

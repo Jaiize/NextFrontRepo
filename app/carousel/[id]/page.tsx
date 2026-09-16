@@ -98,7 +98,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
               {platforms && platforms.some((p) => (
                 p.platform.slug.includes('playstation3') 
               )) && 
-                <div className="flex flex-row w-fit items-center gap-2 border border-zinc-400 rounded-md h-6 px-1 my-3">
+                <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
                   <FaPlaystation className="text-blue-600"/>
                   <SiPlaystation3 aria-label="PlayStation Icon" className="text-blue-500 text-5xl max-sm:text-4xl"/>
                 </div>
@@ -263,7 +263,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
             <Link href={`https://www.xbox.com/en-us/Search/Results?q=${name}`} target="_blank" aria-label="Xbox store link">
               <div className="bg-[#232121]/20 rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3">
                 <span aria-label="Available on Xbox store" className="text-lg font-extrabold max-sm:text-sm">Xbox Store</span>
-                <FaXbox aria-label="Xbox store Icon" className="text-green-500 text-5xl max-sm:text-4xl" />
+                <FaXbox aria-label="Xbox store Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-5xl max-sm:text-4xl`} />
               </div>                  
             </Link>
             }

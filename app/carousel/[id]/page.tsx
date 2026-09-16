@@ -120,7 +120,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
           )) && 
           <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
             <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox</span>
-            <FaXbox aria-label="Xbox Icon" className="text-green-500 text-5xl max-sm:text-4xl" />
+            <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-5xl max-sm:text-4xl`} />
           </div>                  
           }
           {platforms && platforms.some((p) => (
@@ -128,7 +128,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
           )) && 
             <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
             <span aria-label="Available on Linux" className="text-lg font-extrabold max-sm:text-sm">Linux</span>
-            <FaLinux aria-label="Linux Icon" className="text-amber-300 text-5xl max-sm:text-4xl"/>
+            <FaLinux aria-label="Linux Icon" className={`${theme === "dark" ? "text-amber-300" : "text-amber-800"} text-5xl max-sm:text-4xl`}/>
           </div>                  
           }
           {platforms && platforms.some((p) => (
@@ -152,7 +152,7 @@ const GameDetail = ({ params }: { params: Promise<{id: string}>} ) => {
           )) && 
           <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-13">
             <span aria-label="Available on Android" className="text-lg font-extrabold max-sm:text-sm">Android</span>
-            <DiAndroid aria-label="Android icon" className="text-green-500 text-5xl max-sm:text-4xl" />
+            <DiAndroid aria-label="Android icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-5xl max-sm:text-4xl`} />
           </div>
           }
         </div>

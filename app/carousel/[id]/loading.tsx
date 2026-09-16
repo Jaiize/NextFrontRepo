@@ -2,10 +2,9 @@ import Skeleton from '@/components/skeleton'
 
 const CarouselSkeleton = () => {
   return (
-    // <section className='min-h-screen min-w-screen'>
-    <section className='w-0 h-0'>
+    <section className='min-h-screen min-w-screen'>
         <div className='min-w-full h-1/2 flex flex-col items-center relative justify-center overflow-hidden'>
-            <Skeleton className='min-w-full h-full aspect-video object-cover absolute' />
+            <Skeleton className='min-w-full h-full top-0 left-0 aspect-video object-cover absolute' />
         </div>
 
         <div className='flex flex-col mx-3'>

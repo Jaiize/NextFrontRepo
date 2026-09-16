@@ -124,7 +124,7 @@ const Card = ({
               )}
             {platforms &&
               platforms.some((p) => p.platform.slug.includes("android")) && (
-                <DiAndroid aria-label="Available on Android" className="text-green-500" />
+                <DiAndroid aria-label="Available on Android" className={`${theme === "dark" ? "text-green-500" : "text-green-700"}`} />
               )}
             {platforms &&
               platforms.some((p) =>

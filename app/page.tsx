@@ -75,6 +75,52 @@ const LandingPage = () => {
     { value: "-rating", label: "Rating", slug: "dsc" },
   ];
 
+   // searcGames method ------------------------------------------------------------------------------------------------------------
+
+  const searchGames = async ({
+    pageNum,
+    orderBy,
+    pageSize,
+    search,
+    gen,
+  }: searchProps) => {
+    setLoading(true);
+    conRef.current?.abort();
+
+    try {
+      const params = new URLSearchParams({
+        page: pageNum.toString(),
+        page_size: pageSize || "40",
+      });
+
+      conRef.current = new AbortController();
+      const { signal } = conRef.current;
+
+      if (search) params.append("search", search);
+
+      if (orderBy) params.append("ordering", orderBy);
+
+      if (gen) params.append("genres", gen);
+
+      const res = await fetch(`${BASE_URL}/api/games/?${params}`, { signal });
+      const fetched = await res.json();
+      const rawg = (fetched as RawgResponse).results;
+
+      if (rawg && rawg.length > 0) {
+        setGames(rawg);
+      }
+    } catch (e) {
+      // To ignore operation was aborted error in devIndicators
+      if (e.name == "AbortError") {
+        return;
+      }
+      console.error(e instanceof Error ? e.message : 'An error has occurred while fetching your searched games');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   /** ------------------------------------------------------------------------------------------------------------
    * Order Effect and init view Effect
    */
@@ -120,8 +166,8 @@ const LandingPage = () => {
         const RAWG = (fetched as RawgResponse).results;
         setGames(RAWG);
         setLoading(false);
-      } catch (e: any) {
-        console.error(e.message);
+      } catch (e) {
+        console.error(e instanceof Error ? e.message : 'A serious error has occurred while fetching your games data');
         setLoading(false);
       }
     };
@@ -131,51 +177,7 @@ const LandingPage = () => {
     }
   }, []);
 
-  // searcGames method ------------------------------------------------------------------------------------------------------------
-
-  const searchGames = async ({
-    pageNum,
-    orderBy,
-    pageSize,
-    search,
-    gen,
-  }: searchProps) => {
-    setLoading(true);
-    conRef.current?.abort();
-
-    try {
-      const params = new URLSearchParams({
-        page: pageNum.toString(),
-        page_size: pageSize || "40",
-      });
-
-      conRef.current = new AbortController();
-      const { signal } = conRef.current;
-
-      if (search) params.append("search", search);
-
-      if (orderBy) params.append("ordering", orderBy);
-
-      if (gen) params.append("genres", gen);
-
-      const res = await fetch(`${BASE_URL}/api/games/?${params}`, { signal });
-      const fetched = await res.json();
-      const rawg = (fetched as RawgResponse).results;
-
-      if (rawg && rawg.length > 0) {
-        setGames(rawg);
-      }
-    } catch (e: any) {
-      // To ignore operation was aborted error in devIndicators
-      if (e.name == "AbortError") {
-        return;
-      }
-      console.error(e.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+ 
   /**  ------------------------------------------------------------------------------------------------------------------------------------------------
    *  Debounce => search
    */

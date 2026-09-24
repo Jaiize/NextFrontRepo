@@ -1,3 +1,4 @@
+
 export interface RawgResponse {
   count: number;
   next: string | null;
@@ -22,6 +23,17 @@ export interface Store {
     games_count: number;
     image_background: string;
   };
+}
+
+export interface RawgScreenshotsResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Screenshots[];
+}
+export interface Screenshots {
+  image: string; 
+  hidden: boolean; 
 }
 
 export interface RawgGenre {

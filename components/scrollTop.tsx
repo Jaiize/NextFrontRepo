@@ -31,11 +31,14 @@ const ScrollTop = () => {
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;
+
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", handlePopOut, { signal });
     }
     return () => controller.abort();
+
   }, []);
+
   return (
     <div
       className={`fixed h-9 w-9 transition-all duration-200 ${release ? "opacity-100 right-5 bottom-5 pointer-events-auto cursor-pointer z-30" : "pointer-events-none right-0 bottom-0 opacity-0 scale-50"}`}

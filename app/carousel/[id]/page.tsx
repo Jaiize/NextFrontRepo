@@ -482,7 +482,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             onMouseLeave={handleMouseUp}
             onTouchMove={handleMouseMove}
             onMouseMove={handleMouseMove}
-            className="w-750px relative h-full flex flex-row items-center gap-5 overflow-hidden"
+            className={`w-${(shots.length * 100) + 150}px relative h-full flex flex-row items-center gap-5 overflow-hidden`}
           >
             {shots &&
               shots.map((g, i) => (
@@ -494,7 +494,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   width={1920}
                   height={1080}
                   src={g.image || "/Nocontent.jpg"}
-                  className="min-w-100 max-sm:min-w-80 h-full bg-amber-950 rounded-xl aspect-video object-cover"
+                  className="min-w-100 max-sm:min-w-80 h-full rounded-xl aspect-video object-cover"
                 />
               ))}
           </div>

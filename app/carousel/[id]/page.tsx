@@ -94,6 +94,21 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   };
 
+  const mobileUp = () => {
+    if (typeof document !== "undefined" && !popOut) {
+      document.body.style.overflowY = "visible";
+    }
+  };
+
+  const mobileMove = () => {
+    if (
+      typeof document !== "undefined" &&
+      shotRef.current!.scrollLeft !== scrollLeft
+    ) {
+      document.body.style.overflowY = "hidden";
+    }
+  };
+
   const handleMouseMove = (
     e: MouseEvent | React.MouseEvent | React.TouchEvent,
   ) => {
@@ -106,19 +121,26 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   };
 
+  // Gives Screenshot projector the clicked image to display first
   const execute = (idx: number) => {
-    if(shotRef.current!.scrollLeft !== scrollLeft) return
+    // Ensures Screenshot projector knows the diffrence between scroll / move from a click
+    if (shotRef.current!.scrollLeft !== scrollLeft) return;
     setIndex(idx);
     setPopOut(true);
   };
 
-  useEffect(() => {
-    if(typeof document !== 'undefined' && popOut){
-      document.body.style.overflowY = 'hidden'      
-    } else if(!popOut) {
-      document.body.style.overflowY = 'visible' 
+  // Makes Screenshots projector Stable
+  const makeImageViewerStable = (pop: boolean) => {
+    if (typeof document !== "undefined" && pop) {
+      document.body.style.overflowY = "hidden";
+    } else if (!pop) {
+      document.body.style.overflowY = "visible";
     }
-  }, [popOut])
+  };
+
+  useEffect(() => {
+    makeImageViewerStable(popOut);
+  }, [popOut]);
 
   const {
     background_image,
@@ -388,7 +410,9 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           {released && (
             <div className="flex flex-row justify-between items-center">
               <span className="text-lg justify-start font-play">Release:</span>
-              <span className={`${theme === 'dark' ? 'text-gray-400' : 'text-black'} justify-end text-md font-grotesk`}>
+              <span
+                className={`${theme === "dark" ? "text-gray-400" : "text-black"} justify-end text-md font-grotesk`}
+              >
                 {new Date(released).toLocaleDateString("en-US", {
                   month: "short",
                   year: "numeric",
@@ -477,12 +501,19 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             ref={shotRef}
             onTouchStart={handleMouseDown}
             onMouseDown={handleMouseDown}
-            onTouchEnd={handleMouseUp}
+            onTouchEnd={() => {
+              handleMouseUp()
+              mobileUp()
+            }
+          }
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
-            onTouchMove={handleMouseMove}
+            onTouchMove={(e) => {
+              handleMouseMove(e)
+              mobileMove()
+            }}
             onMouseMove={handleMouseMove}
-            className={`w-${(shots.length * 100) + 150}px relative h-full flex flex-row items-center gap-5 overflow-hidden`}
+            className={`w-${shots.length * 100 + 150}px relative h-full flex flex-row items-center gap-5 overflow-hidden`}
           >
             {shots &&
               shots.map((g, i) => (

@@ -112,10 +112,15 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   const handleMouseMove = (
     e: MouseEvent | React.MouseEvent | React.TouchEvent,
   ) => {
-    if (toMove && shotRef.current) {
+    if (toMove && shotRef.current && typeof window !== 'undefined') {
+      let walk: number;
       e.preventDefault();
       const x = "touches" in e ? e.touches[0].pageX : e.pageX;
-      const walk = (x - (shotRef.current.scrollLeft || 0) - clientX) * 0.5;
+      if (window.innerWidth < 1035){
+        walk = (x - (shotRef.current.scrollLeft || 0) - clientX) * 0.8;
+      }else{
+        walk = (x - (shotRef.current.scrollLeft || 0) - clientX) * 0.5;
+      }
       shotRef.current.scrollLeft = scrollLeft - walk;
       shotRef.current.style.cursor = "grabbing";
     }
@@ -496,7 +501,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
 
       {/* Screenshots */}
       {shots && (
-        <div className={`w-auto h-60 max-sm:h-50 mx-5 mb-6`}>
+        <div className={`w-auto h-60 max-sm:h-50 mx-3 mb-6`}>
           <div
             ref={shotRef}
             onTouchStart={handleMouseDown}

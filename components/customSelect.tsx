@@ -132,7 +132,6 @@ const CustomSelect = ({
         ref={buttonref}
         role="combobox"
         aria-expanded={show}
-        aria-pressed={show}
         aria-haspopup="listbox"
         aria-controls="dropdown-listbox"
         aria-activedescendant={show ? `option-${activeIndex}` : undefined}
@@ -169,8 +168,8 @@ const CustomSelect = ({
         ref={listref}
         role="listbox"
         id="dropdown-listbox"
-        className={`${theme === "dark" ? "bg-zinc-900" : "bg-zinc-500"} absolute z-20 w-50 top-8 -left-20 sm: max-sm:-left-18 transition-all duration-300 
-          shadow-md shadow-zinc-900 rounded-md py-2 sm: max-sm:w-47 ${show ? "opacity-100 translate-y-0 pointer-events-auto" : "translate-y-3 pointer-events-none opacity-0"}`}
+        className={`${theme === "dark" ? "bg-zinc-900" : "bg-zinc-500"} absolute z-20 w-50 top-8 -left-20 sm: max-sm:-left-18 origin-top transition-all duration-300 
+          shadow-md shadow-zinc-900 rounded-md py-2 sm: max-sm:w-47 ${show ? "opacity-100 pointer-events-auto" : "scale-y-0 scale-x-100 pointer-events-none opacity-0"}`}
       >
         {options.map((o, i) => (
           <div

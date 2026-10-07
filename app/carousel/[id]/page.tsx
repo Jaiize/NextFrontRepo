@@ -128,7 +128,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
 
   // Gives Screenshot projector the clicked image to display first
   const execute = (idx: number) => {
-    // Ensures Screenshot projector knows the diffrence between scroll / move from a click
+    // Ensures Screenshot projector knows the diffrence between (scroll / move) from a click
     if (shotRef.current!.scrollLeft !== scrollLeft) return;
     setIndex(idx);
     setPopOut(true);
@@ -518,7 +518,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
               mobileMove()
             }}
             onMouseMove={handleMouseMove}
-            className={`w-${shots.length * 100 + 150}px relative h-full flex flex-row items-center gap-5 overflow-hidden`}
+            className={`w-${shots.length * 100 + 150}px relative h-full flex flex-row items-center gap-3 sm:gap-5 overflow-hidden`}
           >
             {shots &&
               shots.map((g, i) => (

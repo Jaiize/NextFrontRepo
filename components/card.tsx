@@ -194,7 +194,7 @@ const Card = ({
                       >
                         Store:
                       </span>
-                      <div className={`flex flex-row items-center`}>
+                      <div className={`flex flex-row items-center duration-300 ${show ? 'animate-in slide-in-from-right-30' : 'animate-out slide-out-to-right-5'}`}>
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("playstation"),

@@ -221,12 +221,12 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
         {/* {name && <div className="text-blue-600 font-cause text-2xl">{name.length}</div>} */}
         <div className="font-play text-xl max-sm:text-md">
-          {platforms && "Platforms:"}
+          {platforms && "Platforms"}
         </div>
         <div className="flex flex-row items-center justify-start gap-4 flex-wrap">
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("pc")) && (
-              <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-25 max-sm:h-13">
+              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-25 max-sm:h-13">
                 <span
                   aria-label="Available on windows"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -241,7 +241,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("playstation")) && (
-              <div className="bg-[#232121]/20 rounded-2xl w-auto px-3 h-auto flex flex-col flex-wrap items-start justify-center max-sm:h-20">
+              <div className="bg-[#323232]/25 rounded-2xl w-auto px-3 h-auto flex flex-col flex-wrap items-start justify-center max-sm:h-20">
                 <span
                   aria-label="Available on PlayStation"
                   className="text-lg mt-2 font-extrabold max-sm:text-sm"
@@ -302,7 +302,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("xbox")) && (
-              <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
+              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
                 <span
                   aria-label="Available on Xbox"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -317,7 +317,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("linux")) && (
-              <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
+              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
                 <span
                   aria-label="Available on Linux"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -332,7 +332,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("macos")) && (
-              <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
+              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
                 <span
                   aria-label="Available on MacOS"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -349,7 +349,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             platforms.some((p) =>
               p.platform.slug.includes("nintendo-switch"),
             ) && (
-              <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-13">
+              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-13">
                 <span
                   aria-label="Available on Nintendo Switch"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -364,7 +364,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("android")) && (
-              <div className="bg-[#232121]/20 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-13">
+              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-13">
                 <span
                   aria-label="Available on Android"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -380,8 +380,8 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
       </div>
       {/* Stats  */}
-      <div className="w-auto flex flex-row max-sm:flex-col gap-10 h-auto my-10 mx-3">
-        <div className="w-1/2 flex flex-col space-y-10 h-auto max-sm:w-full max-sm:space-y-5">
+      <div className="w-auto flex flex-row max-sm:flex-col gap-4 h-auto my-7 mx-3">
+        <div className="w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 bg-[#323232]/25 rounded-lg p-4">
           {background_image && (
             <div className="flex flex-row justify-between items-center">
               <span className="font-play text-lg">Rating:</span>
@@ -427,7 +427,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
           )}
         </div>
-        <div className="w-1/2 flex flex-col space-y-10 h-auto max-sm:w-full max-sm:space-y-5">
+        <div className="w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 bg-[#323232]/25 rounded-lg p-4">
           {movies_count >= 1 && (
             <div className="flex flex-row justify-between items-center">
               <span className="font-play text-lg">Movies Count:</span>
@@ -475,7 +475,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="flex flex-col justify-start my-5 mx-3 space-y-1.5 max-sm:space-y-0">
           {platforms && platforms.some((r) => r.requirements?.minimum) && (
             <span className="text-xl justify-start font-play mb-3 max-sm:text-sm">
-              PC Requirement:
+              PC Requirement
             </span>
           )}
           {platforms &&
@@ -518,7 +518,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
               mobileMove()
             }}
             onMouseMove={handleMouseMove}
-            className={`w-${shots.length * 100 + 150}px relative h-full flex flex-row items-center gap-3 sm:gap-5 overflow-hidden`}
+            className={`w-${shots.length * 100 + 150}px relative h-full flex flex-row items-center gap-3 overflow-hidden`}
           >
             {shots &&
               shots.map((g, i) => (
@@ -530,13 +530,15 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   width={1920}
                   height={1080}
                   src={g.image || "/Nocontent.jpg"}
-                  className="min-w-100 max-sm:min-w-80 h-full rounded-xl aspect-video object-cover"
+                  className={`min-w-100 max-sm:min-w-80 h-full aspect-video object-cover rounded-xl`}
                 />
               ))}
           </div>
         </div>
       )}
-
+      
+      {/* className={`min-w-100 max-sm:min-w-80 h-full aspect-video object-cover ${i == shots.length - 1 ? 'rounded-r-xl' : i == 0 ? 'rounded-l-xl' : 'rounded-none'}`} */}
+      
       {/* Stores  */}
       {stores &&
         stores.some(
@@ -558,7 +560,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                     target="_blank"
                     aria-label="Playstation store link"
                   >
-                    <div className="bg-[#232121]/20 rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md active:shadow-none hover:shadow-blue-600 flex flex-row gap-4 items-center justify-between max-sm:h-13">
+                    <div className="bg-[#323232]/25 rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md active:shadow-none hover:shadow-blue-600 flex flex-row gap-4 items-center justify-between max-sm:h-13">
                       <span
                         aria-label="Available on PlayStation store"
                         className="text-lg cursor-pointer font-rob max-sm:text-sm"
@@ -578,7 +580,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   target="_blank"
                   aria-label="Xbox store link"
                 >
-                  <div className="bg-[#232121]/20 rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3">
+                  <div className="bg-[#323232]/25 rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3">
                     <span
                       aria-label="Available on Xbox store"
                       className="text-lg font-extrabold max-sm:text-sm"
@@ -598,7 +600,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   target="_blank"
                   aria-label="Steam store link"
                 >
-                  <div className="bg-[#232121]/20 rounded-2xl cursor-pointer w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-400 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3">
+                  <div className="bg-[#323232]/25 rounded-2xl cursor-pointer w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-400 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3">
                     <span
                       aria-label="Available on Steam store"
                       className="text-lg font-extrabold max-sm:text-sm"
@@ -619,7 +621,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                     target="_blank"
                     aria-label="Epic-Games store link"
                   >
-                    <div className="bg-[#232121]/20 cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-2.5">
+                    <div className="bg-[#323232]/25 cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-2.5">
                       <span
                         aria-label="Available on Epic-Games store"
                         className="text-lg font-extrabold max-sm:text-sm"

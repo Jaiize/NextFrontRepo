@@ -215,7 +215,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
 
       {/* Platforms */}
       <div
-        className="w-fit flex flex-col items-start justify-start space-y-5 mx-3 mt-10 h-auto"
+        className="w-auto flex flex-col items-start justify-start space-y-5 mx-3 mt-10 h-auto border-l-3 max-sm:bg-[#323232]/10 border-blue-500 rounded-2xl p-5"
         aria-label="Platforms"
       >
         {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
@@ -225,23 +225,8 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
         <div className="flex flex-row items-center justify-start gap-4 flex-wrap">
           {platforms &&
-            platforms.some((p) => p.platform.slug.includes("pc")) && (
-              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-25 max-sm:h-13">
-                <span
-                  aria-label="Available on windows"
-                  className="text-lg font-extrabold max-sm:text-sm"
-                >
-                  PC
-                </span>
-                <FaWindows
-                  className="text-white-500 text-5xl max-sm:text-4xl"
-                  aria-label="Windows Icon"
-                />
-              </div>
-            )}
-          {platforms &&
             platforms.some((p) => p.platform.slug.includes("playstation")) && (
-              <div className="bg-[#323232]/25 rounded-2xl w-auto px-3 h-auto flex flex-col flex-wrap items-start justify-center max-sm:h-20">
+              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-3 h-auto flex flex-col flex-wrap items-start justify-center max-sm:h-20`}>
                 <span
                   aria-label="Available on PlayStation"
                   className="text-lg mt-2 font-extrabold max-sm:text-sm"
@@ -300,9 +285,24 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                 </div>
               </div>
             )}
+           {platforms &&
+            platforms.some((p) => p.platform.slug.includes("pc")) && (
+              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-25 max-sm:h-14`}>
+                <span
+                  aria-label="Available on windows"
+                  className="text-lg font-extrabold max-sm:text-sm"
+                >
+                  PC
+                </span>
+                <FaWindows
+                  className="text-white-500 text-5xl max-sm:text-4xl"
+                  aria-label="Windows Icon"
+                />
+              </div>
+            )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("xbox")) && (
-              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
+              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-14`}>
                 <span
                   aria-label="Available on Xbox"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -317,7 +317,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("linux")) && (
-              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
+              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-14`}>
                 <span
                   aria-label="Available on Linux"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -332,7 +332,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("macos")) && (
-              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-13">
+              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-14`}>
                 <span
                   aria-label="Available on MacOS"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -349,7 +349,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             platforms.some((p) =>
               p.platform.slug.includes("nintendo-switch"),
             ) && (
-              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-13">
+              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-14`}>
                 <span
                   aria-label="Available on Nintendo Switch"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -364,7 +364,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("android")) && (
-              <div className="bg-[#323232]/25 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-13">
+              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-14`}>
                 <span
                   aria-label="Available on Android"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -381,7 +381,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
       </div>
       {/* Stats  */}
       <div className="w-auto flex flex-row max-sm:flex-col gap-4 h-auto my-7 mx-3">
-        <div className="w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 bg-[#323232]/25 rounded-lg p-4">
+        <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-xl p-4`}>
           {background_image && (
             <div className="flex flex-row justify-between items-center">
               <span className="font-play text-lg">Rating:</span>
@@ -405,7 +405,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
               <div className="flex flex-col items-end">
                 {genres &&
                   genres.map((g) => (
-                    <span key={g.id} className="text-md font-grotesk">
+                    <span key={g.id} className="text-md font-mont">
                       {g.name}
                     </span>
                   ))}
@@ -427,7 +427,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
           )}
         </div>
-        <div className="w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 bg-[#323232]/25 rounded-lg p-4">
+        <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-xl p-4`}>
           {movies_count >= 1 && (
             <div className="flex flex-row justify-between items-center">
               <span className="font-play text-lg">Movies Count:</span>
@@ -549,7 +549,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             p.store.slug.includes("epic-games"),
         ) && (
           <section className="w-full">
-            <div className="flex flex-col mx-3 items-start justify-start w-fit text-lg font-mont p-3 rounded-t-2xl bg-[#323232]/20 max-sm:text-xs">
+            <div className={`flex flex-col mx-3 items-start justify-start w-fit text-lg font-mont p-3 rounded-t-2xl ${theme === "dark" ? 'bg-[#323232]/45' : 'bg-[#323232]/20'} max-sm:text-xs`}>
               {stores && "Purchase From"}
             </div>
             <div className="w-fit flex flex-row flex-wrap gap-3 items-start justify-start space-y-1 mx-3 h-auto border border-gray-600 p-4 mb-2 rounded-b-3xl rounded-se-3xl max-sm:w-auto">
@@ -560,7 +560,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                     target="_blank"
                     aria-label="Playstation store link"
                   >
-                    <div className="bg-[#323232]/25 rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md active:shadow-none hover:shadow-blue-600 flex flex-row gap-4 items-center justify-between max-sm:h-13">
+                    <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md active:shadow-none hover:shadow-blue-600 flex flex-row gap-4 items-center justify-between max-sm:h-13`}>
                       <span
                         aria-label="Available on PlayStation store"
                         className="text-lg cursor-pointer font-rob max-sm:text-sm"
@@ -580,7 +580,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   target="_blank"
                   aria-label="Xbox store link"
                 >
-                  <div className="bg-[#323232]/25 rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3">
+                  <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3`}>
                     <span
                       aria-label="Available on Xbox store"
                       className="text-lg font-extrabold max-sm:text-sm"
@@ -600,7 +600,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   target="_blank"
                   aria-label="Steam store link"
                 >
-                  <div className="bg-[#323232]/25 rounded-2xl cursor-pointer w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-400 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3">
+                  <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl cursor-pointer w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-400 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3`}>
                     <span
                       aria-label="Available on Steam store"
                       className="text-lg font-extrabold max-sm:text-sm"
@@ -621,7 +621,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                     target="_blank"
                     aria-label="Epic-Games store link"
                   >
-                    <div className="bg-[#323232]/25 cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-2.5">
+                    <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-2.5`}>
                       <span
                         aria-label="Available on Epic-Games store"
                         className="text-lg font-extrabold max-sm:text-sm"

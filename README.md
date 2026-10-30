@@ -8,7 +8,7 @@ Game App for displaying and finding out latest games, ratings most popular and p
 
 
 ## Tech Stack
-**Framework**: Next.js 16 App Router, React 19, TypeScript
+**Framework**: Next.js 16 App Router, React 19, TypeScript, React-icons, React-use, React-hot-toast
 **Styling**: Tailwind CSS
 **State**: React Query
 **API**: REST + GraphQL client

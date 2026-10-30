@@ -32,12 +32,11 @@ export async function download(url: string, filename: string) {
 
         window.URL.revokeObjectURL(blobUrl);
         anchor.remove();
-
     }
 
 } 
 
-export async function downloadLarge(url: string, filename: string, onProgress?: (data: { loading: number, total: number, percent: number })) {
+export async function downloadLarge(url: string, filename: string, onProgress?: (data: { loading: number, total: number, percent: number }) => void ): Promise<void> {
     const response = await fetch(`${BASE_URL}/api/games/download/${url}`); // make [url] in backend
     if (!response.ok) {
         console.error("Download Failed!")
@@ -51,7 +50,7 @@ export async function downloadLarge(url: string, filename: string, onProgress?: 
     const reader = response.body.getReader();
     const chunks: Uint8Array[] = []
     let loading = 0
-    let total = Number(response.headers.get('Content-Length') || 0)
+    const total = Number(response.headers.get('Content-Length') || 0)
 
     while(true){
         const { done, value } = await reader.read();

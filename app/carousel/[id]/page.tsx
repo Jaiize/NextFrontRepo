@@ -215,7 +215,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
 
       {/* Platforms */}
       <div
-        className="w-auto flex flex-col items-start justify-start space-y-5 mx-3 mt-10 h-auto border-l-3 max-sm:bg-[#323232]/10 border-blue-500 rounded-2xl p-5"
+        className="w-auto flex flex-col items-start justify-start space-y-5 mx-3 mt-10 h-auto border-l-3 max-sm:bg-linear-to-r from-[#323232]/10 via-[#323232]/5 to-[#323232]/0 border-blue-500 rounded-2xl p-5"
         aria-label="Platforms"
       >
         {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
@@ -302,17 +302,25 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("xbox")) && (
-              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-14`}>
-                <span
-                  aria-label="Available on Xbox"
-                  className="text-lg font-extrabold max-sm:text-sm"
-                >
-                  Xbox
-                </span>
-                <FaXbox
-                  aria-label="Xbox Icon"
-                  className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-5xl max-sm:text-4xl`}
-                />
+              <div className={`rounded-2xl w-auto h-15 flex flex-row gap-4 items-center justify-between`}>
+                {platforms.some((p) => p.platform.slug.includes("xbox-one")) && (
+                  <div className={`flex flex-row items-center justify-center gap-2 h-max border ${theme == 'dark' ? 'border-green-700' : 'border-green-500'} rounded-2xl p-2`}>
+                    <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox One</span>
+                    <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-4xl`} />
+                  </div>
+                )}
+                {platforms.some((p) => p.platform.slug.includes("xbox360")) && (
+                  <div className={`flex flex-row items-center justify-center gap-2 h-max border ${theme == 'dark' ? 'border-green-700' : 'border-green-500'} rounded-2xl p-2`}>
+                    <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox 360</span>
+                    <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-4xl`} />
+                  </div>
+                )}
+                {platforms.some((p) => p.platform.slug.includes("xbox-series-x")) && (
+                  <div className={`flex flex-row items-center justify-center gap-2 h-max border ${theme == 'dark' ? 'border-green-700' : 'border-green-500'} rounded-2xl p-2`}>
+                    <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox Series X</span>
+                    <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-4xl`} />
+                  </div>
+                )}
               </div>
             )}
           {platforms &&
@@ -401,7 +409,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {genres && (
             <div className="flex flex-row justify-between">
-              <span className="text-lg font-play">Genre:</span>
+              <span className="text-lg font-play">Genres:</span>
               <div className="flex flex-col items-end">
                 {genres &&
                   genres.map((g) => (

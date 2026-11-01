@@ -169,7 +169,7 @@ const Card = ({
                       <span
                         className={`text-sm font-rob cursor-default ${theme === "dark" ? "text-zinc-500" : "text-zinc-900"}`}
                       >
-                        Genre:
+                        Genres:
                       </span>
                       <div className="flex flex-col items-end justify-center">
                         {genres &&
@@ -192,7 +192,7 @@ const Card = ({
                       <span
                         className={`text-sm font-rob ${theme === "dark" ? "text-zinc-500" : "text-zinc-900"} cursor-default `}
                       >
-                        Store:
+                        Stores:
                       </span>
                       <div className={`flex flex-row items-center duration-500 ${show ? 'animate-in fade-in-0 slide-in-from-right-30' : 'animate-out fade-out-100 slide-out-to-right-5'}`}>
                         {stores &&

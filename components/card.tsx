@@ -15,6 +15,10 @@ import {
 import { DiAndroid } from "react-icons/di";
 import { BsNintendoSwitch } from "react-icons/bs";
 import { SiEpicgames } from "react-icons/si";
+import { BiLogoPlayStore } from "react-icons/bi";
+import { IoLogoAppleAppstore } from "react-icons/io5";
+import { SiGogdotcom } from "react-icons/si";
+import { TbDeviceNintendo } from "react-icons/tb";
 import Link from "next/link";
 import useTheme from "next-theme";
 
@@ -169,7 +173,7 @@ const Card = ({
                       <span
                         className={`text-sm font-rob cursor-default ${theme === "dark" ? "text-zinc-500" : "text-zinc-900"}`}
                       >
-                        Genres:
+                        {genres.length > 1 ? "Genres:" : "Genre:"}
                       </span>
                       <div className="flex flex-col items-end justify-center">
                         {genres &&
@@ -192,29 +196,50 @@ const Card = ({
                       <span
                         className={`text-sm font-rob ${theme === "dark" ? "text-zinc-500" : "text-zinc-900"} cursor-default `}
                       >
-                        Stores:
+                        {stores.length > 1 ? "Stores:" : "Store:"}
                       </span>
                       <div className={`flex flex-row items-center duration-500 ${show ? 'animate-in fade-in-0 slide-in-from-right-30' : 'animate-out fade-out-100 slide-out-to-right-5'}`}>
                         {stores &&
                           stores.some((p) =>
-                            p.store.slug.includes("playstation"),
+                            p.store.slug.includes("google-play"),
                           ) && (
-                            <FaPlaystation aria-label="Available on PlayStation store" className={`text-white-500 ml-1.5`} />
+                            <BiLogoPlayStore aria-label="Available on Google Play store" className={`text-white-500 ml-1.5 text-lg`} />
+                          )}
+                        {stores &&
+                          stores.some((p) =>
+                            p.store.slug.includes("playstation-store"),
+                          ) && (
+                            <FaPlaystation aria-label="Available on PlayStation store" className={`text-white-500 ml-1.5 text-lg`} />
                           )}
                         {stores &&
                           stores.some((p) => p.store.slug.includes("xbox")) && (
-                            <FaXbox aria-label="Available on Xbox store" className="text-white-500 ml-1.5" />
+                            <FaXbox aria-label="Available on Xbox store" className="text-white-500 ml-1.5 text-lg" />
+                          )}
+                        {stores &&
+                          stores.some((p) => p.store.slug.includes("nintendo")) && (
+                            <TbDeviceNintendo aria-label="Available on Xbox store" className="text-white-500 ml-1.5 text-lg" />
+                          )}
+                        {stores &&
+                          stores.some((p) => p.store.slug.includes("apple-appstore")) && (
+                            <IoLogoAppleAppstore aria-label="Available on App Store" className="text-white-500 ml-1.5 text-lg" />
                           )}
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("steam"),
-                          ) && <FaSteam aria-label="Available on Steam store" className="text-white-500 ml-1.5" />}
+                          ) && <FaSteam aria-label="Available on Steam store" className="text-white-500 ml-1.5 text-lg" />
+                        }
+                        {stores &&
+                          stores.some((p) =>
+                            p.store.slug.includes("gog"),
+                          ) && <SiGogdotcom aria-label="Available on Gogdotcom" className="text-white-500 ml-1.5 text-lg" />
+                        }
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("epic-games"),
                           ) && (
-                            <SiEpicgames aria-label="Available on Epic-Games" className="text-white-500 ml-1.5" />
-                          )}
+                            <SiEpicgames aria-label="Available on Epic-Games" className="text-white-500 ml-1.5 text-lg" />
+                          )
+                        }
                       </div>
                     </div>
                     <hr className="my-1 text-zinc-500" />

@@ -28,16 +28,27 @@ import {
   SiPlaystation4,
   SiPlaystation5,
 } from "react-icons/si";
+import { IoTriangleOutline } from "react-icons/io5";
+import { FaRegCircle, FaRegSquare } from "react-icons/fa"; 
+import { RxCross1 } from "react-icons/rx";
+import { PiDesktopTowerThin, PiDesktopThin } from "react-icons/pi";
+
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   const [game, setGame] = useState<RawgClickGames>({});
   const [toMove, setToMove] = useState(false);
+  const [info, setInfo] = useState(false);
   const [shots, setShots] = useState<Screenshots[]>([]);
   const [clientX, setClientX] = useState(0);
+  const [lastX, setLastX] = useState(0);
+  const lastTime = useRef(0);
+  const velocity = useRef(0);
+  const rafId = useRef(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [index, setIndex] = useState(0);
+  const platRef = useRef<HTMLDivElement | null>(null);
 
   const shotRef = useRef<HTMLDivElement | null>(null);
   const [popOut, setPopOut] = useState(false);
@@ -74,29 +85,70 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     pullShots();
   }, [params]);
 
-  const handleMouseDown = (
-    e: MouseEvent | React.MouseEvent | React.TouchEvent,
+  const handlePointerDown = (
+    e: React.PointerEvent,
   ) => {
     if (shotRef.current) {
       e.preventDefault();
+
       setToMove(true);
-      const x = "touches" in e ? e.touches[0].pageX : e.pageX;
+      cancelAnimationFrame(rafId.current)// Stops previous gliding
+      const x = e.pageX;
       setClientX(x - (shotRef.current.scrollLeft || 0));
+
+      setLastX(x - (shotRef.current.scrollLeft || 0));
+      velocity.current = 0
+      lastTime.current = performance.now()
+
       setScrollLeft(shotRef.current.scrollLeft || 0);
       shotRef.current.style.cursor = "pointer";
+      
     }
   };
 
-  const handleMouseUp = () => {
-    if (shotRef.current) {
-      setToMove(false);
-      shotRef.current.style.cursor = "pointer";
-    }
-  };
+  const momentum = () => {
+    const el = shotRef.current;
+    if(!el) return;
 
-  const mobileUp = () => {
-    if (typeof document !== "undefined" && !popOut) {
-      document.body.style.overflowY = "visible";
+    el.scrollLeft += velocity.current; // Start gliding when called
+    velocity.current *= 0.95; // Smooth stoppage (0.98 = glides more or slippery)
+    
+    // Stops when it's < 0.5
+    if(Math.abs(velocity.current) > 0.5){
+      rafId.current = requestAnimationFrame(momentum);
+    }
+  }
+
+  const handlePointerMove = (
+    e: React.PointerEvent,
+  ) => {
+    if (toMove && shotRef.current && typeof window !== 'undefined') {
+      let walk: number;
+
+      e.preventDefault();
+      shotRef.current.setPointerCapture(e.pointerId) // Transfered from onDown to OnMove
+      
+      const x = e.pageX;
+
+      if (window.innerWidth < 1035){
+        walk = (x - (shotRef.current.scrollLeft || 0) - clientX) * 0.8;
+      }else{
+        walk = (x - (shotRef.current.scrollLeft || 0) - clientX) * 0.5;
+      }
+
+      const xx = x - (shotRef.current.scrollLeft || 0);
+      const now = performance.now();
+      const dt = now - lastTime.current;
+
+      if(dt > 0){
+        velocity.current = -(xx - lastX) / dt * 16;
+      }
+
+      lastTime.current = now
+      setLastX(xx)
+
+      shotRef.current.scrollLeft = scrollLeft - walk;
+      shotRef.current.style.cursor = "grabbing";
     }
   };
 
@@ -109,30 +161,52 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   };
 
-  const handleMouseMove = (
-    e: MouseEvent | React.MouseEvent | React.TouchEvent,
-  ) => {
-    if (toMove && shotRef.current && typeof window !== 'undefined') {
-      let walk: number;
-      e.preventDefault();
-      const x = "touches" in e ? e.touches[0].pageX : e.pageX;
-      if (window.innerWidth < 1035){
-        walk = (x - (shotRef.current.scrollLeft || 0) - clientX) * 0.8;
-      }else{
-        walk = (x - (shotRef.current.scrollLeft || 0) - clientX) * 0.5;
-      }
-      shotRef.current.scrollLeft = scrollLeft - walk;
-      shotRef.current.style.cursor = "grabbing";
+  const handlePointerUp = () => {
+    if (shotRef.current) {
+      setToMove(false);
+      shotRef.current.style.cursor = "pointer";
+      rafId.current = requestAnimationFrame(momentum) // Start gliding
     }
   };
+
+  const mobileUp = () => {
+    if (typeof document !== "undefined" && !popOut) {
+      document.body.style.overflowY = "visible";
+    }
+  };
+
+  useEffect(() => cancelAnimationFrame(rafId.current), []) // Stops current mommentum
 
   // Gives Screenshot projector the clicked image to display first
   const execute = (idx: number) => {
     // Ensures Screenshot projector knows the diffrence between (scroll / move) from a click
+    // if the current scrollLeft is != the previous one
     if (shotRef.current!.scrollLeft !== scrollLeft) return;
     setIndex(idx);
     setPopOut(true);
   };
+
+  const bubbleUp = () => {
+    setInfo((i) => !i)
+  }
+
+  // Click outside hides bubble
+  useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller
+
+    const shutBubble = (p: MouseEvent) => {
+      if(platRef.current && !platRef.current.contains(p.target as Node)){
+        setInfo(false)
+      }
+    }
+
+    if (typeof document !== 'undefined') {
+      document.addEventListener("click", shutBubble, { signal })
+    }
+
+    return () => controller.abort();
+  }, [info])
 
   // Makes Screenshots projector Stable
   const makeImageViewerStable = (pop: boolean) => {
@@ -180,6 +254,8 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           : "h-170 max-sm:h-138"
   }`;
 
+  const dynamicBg = (`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'}`)
+
   return (
     <>
       <div
@@ -215,9 +291,18 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
 
       {/* Platforms */}
       <div
-        className="w-auto flex flex-col items-start justify-start space-y-5 mx-3 mt-10 h-auto border-l-3 max-sm:bg-linear-to-r from-[#323232]/10 via-[#323232]/5 to-[#323232]/0 border-blue-500 rounded-2xl p-5"
+        ref={platRef}
+        className="w-auto relative flex flex-col items-start justify-start space-y-5 mx-3 mt-10 h-auto border-l-3 max-sm:bg-linear-to-r from-[#323232]/10 via-[#323232]/5 to-[#323232]/0 border-blue-500 rounded-2xl p-5"
         aria-label="Platforms"
+        onClick={() => bubbleUp()}
       >
+        <div className={`absolute w-fit -top-5 left-10 origin-bottom-left duration-200 ${info ? 'opacity-100 pointer-events-auto scale-100' : 'opacity-0 pointer-events-none scale-0'}`}>
+          <div className={`flex flex-col`}>
+            <span className="h-7 w-fit text-xs ml-25 rounded-xl bg-zinc-600 pt-1.5 px-2 font-rob -mb-1">Supported Engines</span>
+            <span className="h-4 w-4 ml-20 rounded-full bg-zinc-600"></span>
+            <span className="h-2 w-2 rounded-sm ml-17 bg-zinc-600"></span>
+          </div>
+        </div>
         {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
         {/* {name && <div className="text-blue-600 font-cause text-2xl">{name.length}</div>} */}
         <div className="font-play text-xl max-sm:text-md">
@@ -226,50 +311,14 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="flex flex-row items-center justify-start gap-4 flex-wrap">
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("playstation")) && (
-              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-3 h-auto flex flex-col flex-wrap items-start justify-center max-sm:h-20`}>
-                <span
-                  aria-label="Available on PlayStation"
-                  className="text-lg mt-2 font-extrabold max-sm:text-sm"
-                >
-                  Playstation
-                </span>
-                <div className="flex flex-row items-center gap-3">
-                  {platforms &&
-                    platforms.some((p) =>
-                      p.platform.slug.includes("playstation5"),
-                    ) && (
-                      <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
-                        <FaPlaystation className="text-blue-600" />
-                        <SiPlaystation5
-                          aria-label="PlayStation Icon"
-                          className="text-blue-500 text-5xl max-sm:text-4xl"
-                        />
-                      </div>
-                    )}
-                  {platforms &&
-                    platforms.some((p) =>
-                      p.platform.slug.includes("playstation4"),
-                    ) && (
-                      <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
-                        <FaPlaystation className="text-blue-600" />
-                        <SiPlaystation4
-                          aria-label="PlayStation Icon"
-                          className="text-blue-500 text-5xl max-sm:text-4xl"
-                        />
-                      </div>
-                    )}
-                  {platforms &&
-                    platforms.some((p) =>
-                      p.platform.slug.includes("playstation3"),
-                    ) && (
-                      <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
-                        <FaPlaystation className="text-blue-600" />
-                        <SiPlaystation3
-                          aria-label="PlayStation Icon"
-                          className="text-blue-500 text-5xl max-sm:text-4xl"
-                        />
-                      </div>
-                    )}
+              <div className={`${dynamicBg} rounded-2xl w-auto px-3 h-auto flex flex-col items-start justify-center max-sm:h-20`}>
+                <div className={`flex flex-row h-4 w-fit mt-2.5 mb-0.5`}>
+                  <IoTriangleOutline className={`text-blue-600 text-xl max-sm:text-lg`}/>
+                  <FaRegCircle className={`text-blue-600 text-xl max-sm:text-lg`}/>
+                  <RxCross1 className={`text-blue-600 text-xl max-sm:text-lg`}/>
+                  <FaRegSquare className={`text-blue-600 text-xl max-sm:text-lg`}/>
+                </div>
+                <div className="flex flex-row flex-wrap items-center gap-3">
                   {platforms &&
                     platforms.some((p) =>
                       p.platform.slug.includes("playstation2"),
@@ -281,51 +330,68 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                           className="text-blue-500 text-6xl max-sm:text-5xl"
                         />
                       </div>
-                    )}
+                    )
+                  }
+                  {platforms &&
+                    platforms.some((p) =>
+                      p.platform.slug.includes("playstation3"),
+                    ) && (
+                      <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
+                        <FaPlaystation className="text-blue-600" />
+                        <SiPlaystation3
+                          aria-label="PlayStation Icon"
+                          className="text-blue-500 text-5xl max-sm:text-4xl"
+                        />
+                      </div>
+                    )
+                  }
+                  {platforms &&
+                    platforms.some((p) =>
+                      p.platform.slug.includes("playstation4"),
+                    ) && (
+                      <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
+                        <FaPlaystation className="text-blue-600" />
+                        <SiPlaystation4
+                          aria-label="PlayStation Icon"
+                          className="text-blue-500 text-5xl max-sm:text-4xl"
+                        />
+                      </div>
+                    )
+                  }
+                  {platforms &&
+                    platforms.some((p) =>
+                      p.platform.slug.includes("playstation5"),
+                    ) && (
+                      <div className="flex flex-row w-fit items-center gap-2 border border-zinc-500 rounded-md h-6 px-1 my-3">
+                        <FaPlaystation className="text-blue-600" />
+                        <SiPlaystation5
+                          aria-label="PlayStation Icon"
+                          className="text-blue-500 text-5xl max-sm:text-4xl"
+                        />
+                      </div>
+                    )
+                  }
                 </div>
               </div>
-            )}
-           {platforms &&
+            )
+          }
+          {platforms &&
             platforms.some((p) => p.platform.slug.includes("pc")) && (
-              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-25 max-sm:h-14`}>
-                <span
+              <div className={`border border-zinc-500 rounded-2xl w-auto px-3 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-25 max-sm:h-14`}>
+                <PiDesktopTowerThin
                   aria-label="Available on windows"
-                  className="text-lg font-extrabold max-sm:text-sm"
-                >
-                  PC
-                </span>
+                  className="text-5xl max-sm:text-4xl"
+                />
                 <FaWindows
                   className="text-white-500 text-5xl max-sm:text-4xl"
                   aria-label="Windows Icon"
                 />
               </div>
-            )}
-          {platforms &&
-            platforms.some((p) => p.platform.slug.includes("xbox")) && (
-              <div className={`rounded-2xl w-auto h-15 flex flex-row gap-4 items-center justify-between`}>
-                {platforms.some((p) => p.platform.slug.includes("xbox-one")) && (
-                  <div className={`flex flex-row items-center justify-center gap-2 h-max border ${theme == 'dark' ? 'border-green-700' : 'border-green-500'} rounded-2xl p-2`}>
-                    <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox One</span>
-                    <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-4xl`} />
-                  </div>
-                )}
-                {platforms.some((p) => p.platform.slug.includes("xbox360")) && (
-                  <div className={`flex flex-row items-center justify-center gap-2 h-max border ${theme == 'dark' ? 'border-green-700' : 'border-green-500'} rounded-2xl p-2`}>
-                    <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox 360</span>
-                    <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-4xl`} />
-                  </div>
-                )}
-                {platforms.some((p) => p.platform.slug.includes("xbox-series-x")) && (
-                  <div className={`flex flex-row items-center justify-center gap-2 h-max border ${theme == 'dark' ? 'border-green-700' : 'border-green-500'} rounded-2xl p-2`}>
-                    <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox Series X</span>
-                    <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-4xl`} />
-                  </div>
-                )}
-              </div>
-            )}
+            )
+          }
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("linux")) && (
-              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-14`}>
+              <div className={`${dynamicBg} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-14`}>
                 <span
                   aria-label="Available on Linux"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -337,27 +403,27 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   className={`${theme === "dark" ? "text-amber-300" : "text-amber-800"} text-5xl max-sm:text-4xl`}
                 />
               </div>
-            )}
+            )
+          }
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("macos")) && (
-              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-14`}>
-                <span
+              <div className={`border border-zinc-500 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-25 max-sm:h-14`}>
+                <PiDesktopThin
                   aria-label="Available on MacOS"
-                  className="text-lg font-extrabold max-sm:text-sm"
-                >
-                  MacOS
-                </span>
+                  className="text-5xl max-sm:text-4xl"
+                />
                 <FaApple
                   aria-label="MacOS Icon"
                   className="text-5xl max-sm:text-4xl"
                 />
               </div>
-            )}
+            )
+          }
           {platforms &&
             platforms.some((p) =>
               p.platform.slug.includes("nintendo-switch"),
             ) && (
-              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-14`}>
+              <div className={`${dynamicBg} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-14`}>
                 <span
                   aria-label="Available on Nintendo Switch"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -369,10 +435,11 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   className="text-5xl max-sm:text-4xl"
                 />
               </div>
-            )}
+            )
+          }
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("android")) && (
-              <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-14`}>
+              <div className={`${dynamicBg} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-14`}>
                 <span
                   aria-label="Available on Android"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -384,12 +451,37 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-5xl max-sm:text-4xl`}
                 />
               </div>
-            )}
+            )
+          }
+          {platforms &&
+            platforms.some((p) => p.platform.slug.includes("xbox")) && (
+              <div className={`rounded-2xl w-auto h-15 flex flex-row gap-4 items-center justify-between`}>
+                {platforms.some((p) => p.platform.slug.includes("xbox360")) && (
+                  <div className={`flex flex-row items-center justify-center gap-2 h-max border ${theme == 'dark' ? 'border-green-700' : 'border-green-500'} rounded-2xl p-2`}>
+                    <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox 360</span>
+                    <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-4xl`} />
+                  </div>
+                )}
+                {platforms.some((p) => p.platform.slug.includes("xbox-one")) && (
+                  <div className={`flex flex-row items-center justify-center gap-2 h-max border ${theme == 'dark' ? 'border-green-700' : 'border-green-500'} rounded-2xl p-2`}>
+                    <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox One</span>
+                    <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-4xl`} />
+                  </div>
+                )}
+                {platforms.some((p) => p.platform.slug.includes("xbox-series-x")) && (
+                  <div className={`flex flex-row items-center justify-center gap-2 h-max border ${theme == 'dark' ? 'border-green-700' : 'border-green-500'} rounded-2xl p-2`}>
+                    <span aria-label="Available on Xbox" className="text-lg font-extrabold max-sm:text-sm">Xbox Series X</span>
+                    <FaXbox aria-label="Xbox Icon" className={`${theme === "dark" ? "text-green-500" : "text-green-700"} text-4xl`} />
+                  </div>
+                )}
+              </div>
+            )
+          }
         </div>
       </div>
       {/* Stats  */}
       <div className="w-auto flex flex-row max-sm:flex-col gap-4 h-auto my-7 mx-3">
-        <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-xl p-4`}>
+        <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${dynamicBg} rounded-xl p-4`}>
           {background_image && (
             <div className="flex flex-row justify-between items-center">
               <span className="font-play text-lg">Rating:</span>
@@ -409,14 +501,15 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {genres && (
             <div className="flex flex-row justify-between">
-              <span className="text-lg font-play">Genres:</span>
+              <span className="text-lg font-play">{genres.length > 1 ? "Genres:" : "Genre:"}</span>
               <div className="flex flex-col items-end">
                 {genres &&
                   genres.map((g) => (
                     <span key={g.id} className="text-md font-mont">
                       {g.name}
                     </span>
-                  ))}
+                  ))
+                }
               </div>
             </div>
           )}
@@ -435,7 +528,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
           )}
         </div>
-        <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-xl p-4`}>
+        <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${dynamicBg} rounded-xl p-4`}>
           {movies_count >= 1 && (
             <div className="flex flex-row justify-between items-center">
               <span className="font-play text-lg">Movies Count:</span>
@@ -512,20 +605,12 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         <div className={`w-auto h-60 max-sm:h-50 mx-3 mb-6`}>
           <div
             ref={shotRef}
-            onTouchStart={handleMouseDown}
-            onMouseDown={handleMouseDown}
-            onTouchEnd={() => {
-              handleMouseUp()
-              mobileUp()
-            }
-          }
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onTouchMove={(e) => {
-              handleMouseMove(e)
-              mobileMove()
-            }}
-            onMouseMove={handleMouseMove}
+            onTouchEnd={() => mobileUp()}
+            onTouchMove={() => mobileMove()}
+            onPointerUp={() => handlePointerUp()}
+            onPointerLeave={() => handlePointerUp()}
+            onPointerMove={(e) => handlePointerMove(e)}
+            onPointerDown={(e) => handlePointerDown(e)}
             className={`w-${shots.length * 100 + 150}px relative h-full flex flex-row items-center gap-3 overflow-hidden`}
           >
             {shots &&
@@ -568,7 +653,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                     target="_blank"
                     aria-label="Playstation store link"
                   >
-                    <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md active:shadow-none hover:shadow-blue-600 flex flex-row gap-4 items-center justify-between max-sm:h-13`}>
+                    <div className={`${dynamicBg} rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 shadow-md active:shadow-none hover:shadow-blue-600 flex flex-row gap-4 items-center justify-between max-sm:h-13`}>
                       <span
                         aria-label="Available on PlayStation store"
                         className="text-lg cursor-pointer font-rob max-sm:text-sm"
@@ -588,7 +673,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   target="_blank"
                   aria-label="Xbox store link"
                 >
-                  <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3`}>
+                  <div className={`${dynamicBg} rounded-2xl w-auto cursor-pointer px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-green-800 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3`}>
                     <span
                       aria-label="Available on Xbox store"
                       className="text-lg font-extrabold max-sm:text-sm"
@@ -608,7 +693,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   target="_blank"
                   aria-label="Steam store link"
                 >
-                  <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} rounded-2xl cursor-pointer w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-400 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3`}>
+                  <div className={`${dynamicBg} rounded-2xl cursor-pointer w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-400 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-3`}>
                     <span
                       aria-label="Available on Steam store"
                       className="text-lg font-extrabold max-sm:text-sm"
@@ -629,7 +714,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                     target="_blank"
                     aria-label="Epic-Games store link"
                   >
-                    <div className={`${theme === "dark" ? 'bg-[#323232]/55' : 'bg-[#323232]/25'} cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-2.5`}>
+                    <div className={`${dynamicBg} cursor-pointer rounded-2xl w-auto px-4 h-18 transition-shadow duration-300 active:shadow-none shadow-md hover:shadow-gray-600 flex flex-row gap-4 items-center justify-between max-sm:h-13 max-sm:px-2.5`}>
                       <span
                         aria-label="Available on Epic-Games store"
                         className="text-lg font-extrabold max-sm:text-sm"

@@ -298,9 +298,9 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
       >
         <div className={`absolute w-fit -top-5 left-10 origin-bottom-left duration-200 ${info ? 'opacity-100 pointer-events-auto scale-100' : 'opacity-0 pointer-events-none scale-0'}`}>
           <div className={`flex flex-col`}>
-            <span className="h-7 w-fit text-xs ml-25 rounded-xl bg-zinc-600 pt-1.5 px-2 font-rob -mb-1">Supported Engines</span>
-            <span className="h-4 w-4 ml-20 rounded-full bg-zinc-600"></span>
-            <span className="h-2 w-2 rounded-sm ml-17 bg-zinc-600"></span>
+            <span className={`${dynamicBg} h-7 w-fit text-xs ml-25 rounded-xl pt-1.5 px-2 font-rob -mb-1`}>Supported Engines</span>
+            <span className={`h-4 w-4 ml-20 rounded-full ${dynamicBg}`}></span>
+            <span className={`h-2 w-2 rounded-sm ml-17 ${dynamicBg}`}></span>
           </div>
         </div>
         {/* {description_raw && <div className="text-blue-600 font-cause text-2xl">{description_raw.length}</div>} */}
@@ -313,10 +313,10 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             platforms.some((p) => p.platform.slug.includes("playstation")) && (
               <div className={`${dynamicBg} rounded-2xl w-auto px-3 h-auto flex flex-col items-start justify-center max-sm:h-20`}>
                 <div className={`flex flex-row h-4 w-fit mt-2.5 mb-0.5`}>
-                  <IoTriangleOutline className={`text-blue-600 text-xl max-sm:text-lg`}/>
-                  <FaRegCircle className={`text-blue-600 text-xl max-sm:text-lg`}/>
-                  <RxCross1 className={`text-blue-600 text-xl max-sm:text-lg`}/>
-                  <FaRegSquare className={`text-blue-600 text-xl max-sm:text-lg`}/>
+                  <IoTriangleOutline className={`text-blue-600 text-xl max-sm:text-lg drop-shadow-lg drop-shadow-blue-500`}/>
+                  <FaRegCircle className={`text-blue-600 text-xl max-sm:text-lg drop-shadow-md drop-shadow-blue-500`}/>
+                  <RxCross1 className={`text-blue-600 text-xl max-sm:text-lg drop-shadow-lg drop-shadow-blue-500`}/>
+                  <FaRegSquare className={`text-blue-600 text-xl max-sm:text-lg drop-shadow-md drop-shadow-blue-500`}/>
                 </div>
                 <div className="flex flex-row flex-wrap items-center gap-3">
                   {platforms &&

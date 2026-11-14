@@ -182,7 +182,6 @@ const SideNav = ({ setGenre, genre, sideNav, setSideNav, masterRef }: SideNavPro
       className="flex flex-col items-center w-30 justify-start m-3 pretty-focus md:sticky md:top-16.5"
       role="combobox"
       aria-expanded={sideNav}
-      aria-pressed={sideNav}
       aria-controls="dropdown-listbox"
       aria-haspopup="listbox"
       aria-activedescendant={`option-${activeIndex}`}

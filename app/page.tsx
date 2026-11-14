@@ -9,6 +9,7 @@ import CustomSelect from "@/components/customSelect";
 import SideNav from "@/components/sidenav";
 import Searchbar from "@/components/searchbar";
 import ScrollTop from "@/components/scrollTop";
+import Cached from "@/lib/data/Rawgames";
 
 export interface searchProps {
   pageNum: number;
@@ -50,11 +51,15 @@ const LandingPage = () => {
     const localOrder = localStorage.getItem("order");
     const localPage = localStorage.getItem("page");
 
-    if (!localPage) localStorage.setItem("page", page.toString());
-    if (searched) setSearch(searched);
-    if (localGenre) setGenre(localGenre);
-    if (localPage) setPage(Number(localPage));
-    if (localOrder) setOrder(localOrder);
+    const feedThem = () => {
+      if (!localPage) localStorage.setItem("page", page.toString());
+      if (searched) setSearch(searched);
+      if (localGenre) setGenre(localGenre);
+      if (localPage) setPage(Number(localPage));
+      if (localOrder) setOrder(localOrder);
+    }
+    feedThem();
+
   }, []);
 
   /** ------------------------------------
@@ -126,20 +131,26 @@ const LandingPage = () => {
    */
 
   useEffect(() => {
-    if (order.includes("-name")) {
-      setDebounceSearch("z");
-    } else if (order.includes("name")) {
-      setDebounceSearch("a");
-    } else {
-      searchGames({ pageNum: page, orderBy: order, gen: genre });
+    const pullOrder = () => {
+      if (order.includes("-name")) {
+        setDebounceSearch("z");
+      } else if (order.includes("name")) {
+        setDebounceSearch("a");
+      } else {
+        searchGames({ pageNum: page, orderBy: order, gen: genre });
+      }
     }
+    pullOrder();
   }, [order]);
 
   /** ------------------------------------------------------------------------------------------------------------
    * Genres Effect
    */
   useEffect(() => {
-    searchGames({ pageNum: page, gen: genre, orderBy: order });
+    const pullGenre = () => {
+      searchGames({ pageNum: page, gen: genre, orderBy: order });
+    }
+    pullGenre();
   }, [genre]);
 
   /** ------------------------------------------------------------------------------------------------------------
@@ -167,6 +178,8 @@ const LandingPage = () => {
         setGames(RAWG);
         setLoading(false);
       } catch (e) {
+        // const tempGames = Cached as unknown
+        // setGames(tempGames as RawgGame[]);
         console.error(e instanceof Error ? e.message : 'A serious error has occurred while fetching your games data');
         setLoading(false);
       }
@@ -185,9 +198,12 @@ const LandingPage = () => {
   useDebounce(() => setDebounceSearch(search), 450, [search]);
 
   useEffect(() => {
-    searchGames({ pageNum: page, search: debounceSearch });
-    if (debounceSearch && debounceSearch !== "a" && debounceSearch !== "z")
-      localStorage.setItem("searched", debounceSearch);
+    const pullSearch = () => {
+      searchGames({ pageNum: page, search: debounceSearch });
+      if (debounceSearch && debounceSearch !== "a" && debounceSearch !== "z")
+        localStorage.setItem("searched", debounceSearch);
+    }
+    pullSearch();
   }, [debounceSearch]);
 
   /**  ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -273,7 +289,7 @@ const LandingPage = () => {
             <div
               className={`font-play max-sm:mt-15 max-sm:px-1 h-10 text-3xl max-sm:text-2xl mt-10 mb-2 max-sm:mb-0 text-transparent bg-linear-to-r from-blue-500 to-red-600 bg-clip-text`}
             >
-              Find Your favourite Games
+              Find Your Favourite Games
             </div>
           </div>
           {/* Wrapper for search bar */}
@@ -309,7 +325,7 @@ const LandingPage = () => {
             games.length > 0 &&
             games.map((g) => (
               <li key={g.id} className="max-sm:px-1">
-                <Card {...g} isOpen={sideNav} />
+                <Card {...g} sideNav={sideNav} />
               </li>
             ))}
         </ul>

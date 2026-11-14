@@ -49,8 +49,10 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [index, setIndex] = useState(0);
   const platRef = useRef<HTMLDivElement | null>(null);
+  const storeRef = useRef<HTMLDivElement | null>(null);
 
   const shotRef = useRef<HTMLDivElement | null>(null);
+  const shotsRefMaster = useRef<HTMLDivElement | null>(null);
   const [popOut, setPopOut] = useState(false);
   const { theme } = useTheme();
 
@@ -85,6 +87,23 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     pullShots();
   }, [params]);
 
+  // Element-revealing detection and implementation for screenshots (sliding-in) ------------------------------------------------------------------------------
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry], observer) => {
+      const el = shotsRefMaster.current
+      if(entry.isIntersecting && el){
+        el.dataset.observer = 'seen'
+        observer.disconnect();
+      }
+      
+    }, { threshold: 0.2 })
+
+    observer.observe(shotsRefMaster.current as Element)
+
+    return () => observer.disconnect()
+  }, [])
+
+
   const handlePointerDown = (
     e: React.PointerEvent,
   ) => {
@@ -94,7 +113,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
       setToMove(true);
       cancelAnimationFrame(rafId.current)// Stops previous gliding
       const x = e.pageX;
-      setClientX(x - (shotRef.current.scrollLeft || 0));
+      setClientX(x - (shotRef.current.scrollLeft || 0)); // Same as proper clientX
 
       setLastX(x - (shotRef.current.scrollLeft || 0));
       velocity.current = 0
@@ -131,16 +150,23 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
       const x = e.pageX;
 
       if (window.innerWidth < 1035){
+        /**
+         * Manual calculation for clientX is always best: e.clientX may not account for margin right or left but e.pageX - element.scollleft = (proper clientX)
+         */
         walk = (x - (shotRef.current.scrollLeft || 0) - clientX) * 0.8;
       }else{
         walk = (x - (shotRef.current.scrollLeft || 0) - clientX) * 0.5;
       }
 
-      const xx = x - (shotRef.current.scrollLeft || 0);
+      const xx = x - (shotRef.current.scrollLeft || 0); // xx is same as proper clientX
       const now = performance.now();
       const dt = now - lastTime.current;
 
       if(dt > 0){
+        /**
+         * 16: 60fps means 1000ms / 60 = 16.666...8 so 16. requestAnimationFrame() fires 60 times per second making it 60fps
+         * if requestAnimationFrame() fires 120 times per sec (120fps) then dt * 8 (1000/120 = 8.333....4)
+         */
         velocity.current = -(xx - lastX) / dt * 16;
       }
 
@@ -311,6 +337,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="flex flex-row items-center justify-start gap-4 flex-wrap">
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("playstation")) && (
+              // border border-zinc-600
               <div className={`${dynamicBg} rounded-2xl w-auto px-3 h-auto flex flex-col items-start justify-center max-sm:h-20`}>
                 <div className={`flex flex-row h-4 w-fit mt-2.5 mb-0.5`}>
                   <IoTriangleOutline className={`text-blue-600 text-xl max-sm:text-lg drop-shadow-lg drop-shadow-blue-500`}/>
@@ -479,6 +506,24 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           }
         </div>
       </div>
+      {/* Working on the difference between inline and  block */}
+      {/* <div className="w-auto h-80 bg-amber-950 inline-flex gap-4 p-4">
+        <div className="flex flex-row gap-2">
+          <FaXbox className="text-4xl"/>
+          <FaXbox className="text-4xl"/>
+        </div>
+        <div className="flex flex-row gap-2">
+          <div className="flex flex-col gap-2">
+            <FaXbox className="text-4xl"/>
+            <FaXbox className="text-4xl"/>
+          </div>
+          <div className="flex flex-col gap-2">
+            <FaXbox className="text-4xl"/>
+            <FaXbox className="text-4xl"/>
+          </div>
+        </div>
+      </div>
+      <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed omnis odit quia, similique harum amet! Tempora eos laborum distinctio necessitatibus illo a nostrum quos, sint esse voluptas officia animi ullam?</div> */}
       {/* Stats  */}
       <div className="w-auto flex flex-row max-sm:flex-col gap-4 h-auto my-7 mx-3">
         <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${dynamicBg} rounded-xl p-4`}>
@@ -573,12 +618,15 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
       </div>
       {/* Requirements  */}
       {platforms && platforms.some((r) => r.requirements?.minimum) && (
-        <div className="flex flex-col justify-start my-5 mx-3 space-y-1.5 max-sm:space-y-0">
+        <div className={`flex flex-col justify-start my-5 mx-3 space-y-1.5 max-sm:space-y-0 border border-zinc-600 rounded-xl p-4`}>
           {platforms && platforms.some((r) => r.requirements?.minimum) && (
             <span className="text-xl justify-start font-play mb-3 max-sm:text-sm">
               PC Requirement
             </span>
           )}
+          <div className="w-auto flex flex-row justify-center">
+            <div className="h-2 w-full border-t border-zinc-600" />
+          </div>
           {platforms &&
             platforms.map((r, i) => (
               <span
@@ -602,7 +650,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
 
       {/* Screenshots */}
       {shots && (
-        <div className={`w-auto h-60 max-sm:h-50 mx-3 mb-6`}>
+        <div ref={shotsRefMaster} data-observer='unseen' className={`w-auto h-60 max-sm:h-50 mx-3 mb-6 opacity-0 translate-y-15 data-[observer=seen]:opacity-100 data-[observer=seen]:translate-y-0 duration-300`}>
           <div
             ref={shotRef}
             onTouchEnd={() => mobileUp()}
@@ -629,6 +677,11 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         </div>
       )}
+
+      {/* Doesn't look good for mobile yet */}
+      {/* <div className="relative w-1/2 m-3 rounded-2xl p-5 overflow-hidden isolate before:content-[''] before:absolute before:-inset-[-355%_-50%] before:animate-[spin_2s_linear_infinite] before:bg-linear-to-t before:from-blue-900 before:via-white before:to-red-700 before:bg-clip-padding before:-z-2 after:content-[''] after:absolute after:inset-0.75 after:-z-1 after:bg-[#111] after:rounded-[13px]">
+        <span className="relative">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit quae nam iusto cum, rerum, minima voluptatem repellendus consectetur harum beatae nemo at ea soluta laboriosam repudiandae distinctio sint error officia.</span>
+      </div> */}
       
       {/* className={`min-w-100 max-sm:min-w-80 h-full aspect-video object-cover ${i == shots.length - 1 ? 'rounded-r-xl' : i == 0 ? 'rounded-l-xl' : 'rounded-none'}`} */}
       
@@ -641,7 +694,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             p.store.slug.includes("steam") ||
             p.store.slug.includes("epic-games"),
         ) && (
-          <section className="w-full">
+          <section className={`w-full h-auto`}>
             <div className={`flex flex-col mx-3 items-start justify-start w-fit text-lg font-mont p-3 rounded-t-2xl ${theme === "dark" ? 'bg-[#323232]/45' : 'bg-[#323232]/20'} max-sm:text-xs`}>
               {stores && "Purchase From"}
             </div>
@@ -729,16 +782,17 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   </Link>
                 )}
             </div>
-            {/* Screenshots projector */}
-            <ImageViewer
-              images={shots}
-              index={index}
-              setIndex={setIndex}
-              popOut={popOut}
-              setPopOut={setPopOut}
-            />
           </section>
         )}
+        {/* Screenshots projector */}
+        <ImageViewer
+          images={shots}
+          index={index}
+          setIndex={setIndex}
+          popOut={popOut}
+          setPopOut={setPopOut}
+          name={name}
+        />
     </>
   );
 };

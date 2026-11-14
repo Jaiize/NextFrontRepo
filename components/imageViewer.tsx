@@ -4,17 +4,20 @@ import { Screenshots } from "@/rawg.games.type";
 import Image from "next/image";
 import { SetStateAction } from "react";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import { GoDownload } from "react-icons/go"; 
 import { MdCancel } from "react-icons/md";
+import { download } from "./download";
 
 interface ImageViewProps { 
   images: Screenshots[];
-  index: number, 
+  index: number,
+  name: string
   setIndex: React.Dispatch<SetStateAction<number>> 
   popOut: boolean,
   setPopOut: (val: boolean | ((val: boolean) => boolean)) => void 
 }
 
-const ImageViewer = ({ images, index, popOut, setPopOut, setIndex }: ImageViewProps) => {
+const ImageViewer = ({ images, index, popOut, setPopOut, setIndex, name }: ImageViewProps) => {
 
   const prev = () => {
     setIndex((i) => i === 0 ? (images.length - 1) : (i -= 1));
@@ -24,10 +27,17 @@ const ImageViewer = ({ images, index, popOut, setPopOut, setIndex }: ImageViewPr
     setIndex((i) => i === (images.length - 1) ? 0 : (i += 1));
   }
 
+  const downloadImage = (url: string, name: string) => {
+    download(url, name);
+  }
+
 
   return (
     <div className={`min-w-full min-h-full fixed inset-0 z-30 transition-transform duration-200 ${popOut ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none scale-50'}`}>
       <div className="relative w-full h-full backdrop-blur-lg">
+        <div onClick={() => downloadImage(images[index].image, name)} className="absolute left-10 max-sm:left-7 top-15 cursor-pointer h-7 w-7 active:h-4 active:w-4 transition-all duration-300">
+          <GoDownload className="h-full w-full"/>
+        </div>
         <span onClick={() => setPopOut(false)} className="absolute right-10 top-15 max-sm:right-5 hover:cursor-pointer z-40">
           <MdCancel className="h-7 w-7" />
         </span>

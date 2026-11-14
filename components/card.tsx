@@ -31,7 +31,7 @@ export type CardProps = {
   genres: RawgGenre[];
   platforms: RawgPlatform[];
   stores: Store[];
-  isOpen: boolean;
+  sideNav: boolean;
 };
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -49,7 +49,7 @@ const Card = ({
   platforms,
   stores,
   id,
-  isOpen,
+  sideNav,
 }: CardProps) => {
   const [show, setShow] = useState(false);
   const divRef = useRef<HTMLDivElement | null>(null);
@@ -80,6 +80,7 @@ const Card = ({
       stores.some((p) => p.store.slug.includes("playstation")) ||
       stores.some((p) => p.store.slug.includes("xbox")));
 
+
   return (
     <div ref={divRef} className={`relative`}>
       <div
@@ -88,7 +89,7 @@ const Card = ({
         <div className="rounded-t-[10px] overflow-hidden">
           <Link
             href={`/carousel/${id}`}
-            className={`${isOpen ? "max-sm:pointer-events-none" : "max-sm:pointer-events-auto"}`}
+            className={`${sideNav ? "max-sm:pointer-events-none" : "max-sm:pointer-events-auto"}`}
           >
             <Image
               className="min-w-full h-48 aspect-auto cursor-pointer object-cover"
@@ -140,7 +141,7 @@ const Card = ({
             className={`flex flex-row justify-start items-center pretty-focus w-fit`}
           >
             <p
-              className={`font-rob ${show ? "line-clamp-none max-sm:line-clamp-1" : "line-clamp-1"} ${isOpen ? "max-sm:pointer-events-none" : "max-sm:pointer-events-auto"} max-sm:text-sm text-md hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5`}
+              className={`font-rob ${show ? "line-clamp-none max-sm:line-clamp-1" : "line-clamp-1"} ${sideNav ? "max-sm:pointer-events-none" : "max-sm:pointer-events-auto"} max-sm:text-sm text-md hover:text-blue-600 mt-2 hover:cursor-pointer mb-1.5`}
             >
               {name}
             </p>
@@ -203,41 +204,41 @@ const Card = ({
                           stores.some((p) =>
                             p.store.slug.includes("google-play"),
                           ) && (
-                            <BiLogoPlayStore aria-label="Available on Google Play store" className={`text-white-500 ml-1.5 text-lg`} />
+                            <BiLogoPlayStore aria-label="Available on Google Play store" className={`text-white-500 ${!sideNav && stores.length > 7 ? 'lg:ml-1 ml-1.5' : 'ml-1.5'} text-lg`} />
                           )}
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("playstation-store"),
                           ) && (
-                            <FaPlaystation aria-label="Available on PlayStation store" className={`text-white-500 ml-1.5 text-lg`} />
+                            <FaPlaystation aria-label="Available on PlayStation store" className={`text-white-500 ${!sideNav && stores.length > 7 ? 'lg:ml-1 ml-1.5' : 'ml-1.5'} text-lg`} />
                           )}
                         {stores &&
                           stores.some((p) => p.store.slug.includes("xbox")) && (
-                            <FaXbox aria-label="Available on Xbox store" className="text-white-500 ml-1.5 text-lg" />
+                            <FaXbox aria-label="Available on Xbox store" className={`text-white-500 ${!sideNav && stores.length > 7 ? 'lg:ml-1 ml-1.5' : 'ml-1.5'} text-lg`} />
                           )}
                         {stores &&
                           stores.some((p) => p.store.slug.includes("nintendo")) && (
-                            <TbDeviceNintendo aria-label="Available on Xbox store" className="text-white-500 ml-1.5 text-lg" />
+                            <TbDeviceNintendo aria-label="Available on Xbox store" className={`text-white-500 ${!sideNav && stores.length > 7 ? 'lg:ml-1 ml-1.5' : 'ml-1.5'} text-lg`} />
                           )}
                         {stores &&
                           stores.some((p) => p.store.slug.includes("apple-appstore")) && (
-                            <IoLogoAppleAppstore aria-label="Available on App Store" className="text-white-500 ml-1.5 text-lg" />
+                            <IoLogoAppleAppstore aria-label="Available on App Store" className={`text-white-500 ${!sideNav && stores.length > 7 ? 'lg:ml-1 ml-1.5' : 'ml-1.5'} text-lg`} />
                           )}
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("steam"),
-                          ) && <FaSteam aria-label="Available on Steam store" className="text-white-500 ml-1.5 text-lg" />
+                          ) && <FaSteam aria-label="Available on Steam store" className={`text-white-500 ${!sideNav && stores.length > 7 ? 'lg:ml-1 ml-1.5' : 'ml-1.5'} text-lg`} />
                         }
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("gog"),
-                          ) && <SiGogdotcom aria-label="Available on Gogdotcom" className="text-white-500 ml-1.5 text-lg" />
+                          ) && <SiGogdotcom aria-label="Available on Gogdotcom" className={`text-white-500 ${!sideNav && stores.length > 7 ? 'lg:ml-1 ml-1.5' : 'ml-1.5'} text-lg`} />
                         }
                         {stores &&
                           stores.some((p) =>
                             p.store.slug.includes("epic-games"),
                           ) && (
-                            <SiEpicgames aria-label="Available on Epic-Games" className="text-white-500 ml-1.5 text-lg" />
+                            <SiEpicgames aria-label="Available on Epic-Games" className={`text-white-500 ${!sideNav && stores.length > 7 ? 'lg:ml-1 ml-1.5' : 'ml-1.5'} text-lg`} />
                           )
                         }
                       </div>

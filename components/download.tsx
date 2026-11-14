@@ -62,7 +62,7 @@ export async function downloadLarge(url: string, filename: string, onProgress?: 
 
             onProgress?.({ loading, 
                 total, 
-                percent: Math.round((loading / total) - 100)
+                percent: Math.round((loading / total) * 100)
             });
         }
 

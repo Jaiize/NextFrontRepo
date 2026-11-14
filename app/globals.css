@@ -19,6 +19,7 @@
   100% {background-position: 0% 100%;}
 }
 
+
 /* --background: #e3e1e1;  Alternative for light */
 .light {
   --background: #f4f4f4;
@@ -70,6 +71,14 @@ input[type="search"]::-ms-check {
     --foreground: #ededed;
   }
 }
+
+/* Not tested yet! */
+/* .screen3xl {
+  @media (width > 2000px) {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+
+} */
 
 body {
   background: var(--background);

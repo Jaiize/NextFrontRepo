@@ -22,7 +22,7 @@ export async function download(url: string, filename: string, index?: number) {
         return
     }
     
-    const name = filename.replace(/[^a-zA-Z0-9.:]/g, '_') + index ? `_[${index}]` : `_${Date.now().toString()}`;
+    const name = filename.replace(/[^a-zA-Z0-9.:]/g, '_') + `_[${index! + 1}]` || `_${Date.now().toString()}`;
     id = show("Downloading...", 'info')
 
     const blob = await response.blob()
@@ -74,7 +74,9 @@ export async function downloadLarge(url: string, filename: string, onProgress?: 
 
     }
     
-    const name = filename.replace(/[^a-zA-Z0-9.]/g, '_') + `_${Date.now().toString()}`;
+    const name = filename.replace(/[^a-zA-Z0-9.:]/g, '_') + `_${new Date().toLocaleDateString('en-US', {
+        year: 'numeric'
+    })}`;
 
     const blob = new Blob(chunks as BlobPart[])
     if(typeof document !== 'undefined' && typeof window !== 'undefined'){

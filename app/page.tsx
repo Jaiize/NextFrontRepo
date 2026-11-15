@@ -9,7 +9,8 @@ import CustomSelect from "@/components/customSelect";
 import SideNav from "@/components/sidenav";
 import Searchbar from "@/components/searchbar";
 import ScrollTop from "@/components/scrollTop";
-import Cached from "@/lib/data/Rawgames";
+import CachedRawg from "@/lib/data/Rawgames";
+import CachedSteam from "@/lib/data/SteamGames";
 
 export interface searchProps {
   pageNum: number;
@@ -178,7 +179,8 @@ const LandingPage = () => {
         setGames(RAWG);
         setLoading(false);
       } catch (e) {
-        // const tempGames = Cached as unknown
+        // const tempGames = CachedSteam as unknown
+        // const tempGames = CachedRawg as unknown
         // setGames(tempGames as RawgGame[]);
         console.error(e instanceof Error ? e.message : 'A serious error has occurred while fetching your games data');
         setLoading(false);

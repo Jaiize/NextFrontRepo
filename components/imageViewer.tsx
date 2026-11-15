@@ -28,7 +28,7 @@ const ImageViewer = ({ images, index, popOut, setPopOut, setIndex, name }: Image
   }
 
   const downloadImage = (url: string, name: string) => {
-    download(url, name);
+    download(url, name, index);
   }
 
 

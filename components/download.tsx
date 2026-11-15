@@ -1,4 +1,5 @@
-
+"use client"
+import { appToaster } from "./apptoaster";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -6,11 +7,14 @@ if (!BASE_URL) {
   throw new Error("BASE_URL cannot be fetched from environment variable");
 }
 
-export async function download(url: string, filename: string) {
+export async function download(url: string, filename: string, index?: number) {
+    const { show, error } = appToaster();
+    let id: string = ''
     // const response = await fetch(`${BASE_URL}/api/games/download/${url}`); // make [url] in backend
     const response = await fetch(url);
     if (!response.ok) {
         console.error("Download Failed!")
+        error("Download Failed!")
         return
     } 
     if (!response.body) {
@@ -18,7 +22,8 @@ export async function download(url: string, filename: string) {
         return
     }
     
-    const name = filename.replace(/[^a-zA-Z0-9.]/g, '_') + Date.now().toString();
+    const name = filename.replace(/[^a-zA-Z0-9.:]/g, '_') + index ? `_[${index}]` : `_${Date.now().toString()}`;
+    id = show("Downloading...", 'info')
 
     const blob = await response.blob()
     if(typeof document !== 'undefined' && typeof window !== 'undefined'){
@@ -32,11 +37,12 @@ export async function download(url: string, filename: string) {
 
         window.URL.revokeObjectURL(blobUrl);
         anchor.remove();
+        show("Downloaded", 'downloaded', id)
     }
 
 } 
 
-export async function downloadLarge(url: string, filename: string, onProgress?: (data: { loading: number, total: number, percent: number }) => void ): Promise<void> {
+export async function downloadLarge(url: string, filename: string, onProgress?: (data: { loaded: number, total: number, percent: number }) => void ): Promise<void> {
     const response = await fetch(`${BASE_URL}/api/games/download/${url}`); // make [url] in backend
     if (!response.ok) {
         console.error("Download Failed!")
@@ -49,7 +55,7 @@ export async function downloadLarge(url: string, filename: string, onProgress?: 
 
     const reader = response.body.getReader();
     const chunks: Uint8Array[] = []
-    let loading = 0
+    let loaded = 0
     const total = Number(response.headers.get('Content-Length') || 0)
 
     while(true){
@@ -58,17 +64,17 @@ export async function downloadLarge(url: string, filename: string, onProgress?: 
 
         if(value){
             chunks.push(value);
-            loading += value.length;
+            loaded += value.length;
 
-            onProgress?.({ loading, 
+            onProgress?.({ loaded, 
                 total, 
-                percent: Math.round((loading / total) * 100)
+                percent: total ? Math.round((loaded / total) * 100) : 0
             });
         }
 
     }
     
-    const name = filename.replace(/[^a-zA-Z0-9.]/g, '_') + Date.now().toString();
+    const name = filename.replace(/[^a-zA-Z0-9.]/g, '_') + `_${Date.now().toString()}`;
 
     const blob = new Blob(chunks as BlobPart[])
     if(typeof document !== 'undefined' && typeof window !== 'undefined'){

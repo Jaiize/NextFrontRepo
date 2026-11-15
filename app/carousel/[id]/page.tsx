@@ -49,7 +49,6 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [index, setIndex] = useState(0);
   const platRef = useRef<HTMLDivElement | null>(null);
-  const storeRef = useRef<HTMLDivElement | null>(null);
 
   const shotRef = useRef<HTMLDivElement | null>(null);
   const shotsRefMaster = useRef<HTMLDivElement | null>(null);
@@ -201,7 +200,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   };
 
-  useEffect(() => cancelAnimationFrame(rafId.current), []) // Stops current mommentum
+  useEffect(() => cancelAnimationFrame(rafId.current), []) // Stops current mommentum at start-up
 
   // Gives Screenshot projector the clicked image to display first
   const execute = (idx: number) => {

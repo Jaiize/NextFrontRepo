@@ -12,7 +12,7 @@ import { MdDownloadDone } from "react-icons/md"
 export const appToaster = () => {
     const show = (message: string, type: 'success' | 'error' | 'downloaded' | 'info' = 'info', id?: string): string => {
         return toast.custom((t) => (
-            <div className={`flex flex-row justify-between items-center text-white rounded-lg py-3 px-4 transition-all duration-300 min-w-75 max-w-125 ${type === "success" ? 'bg-green-600' : type === 'error' ? 'bg-red-800' : type === 'info' ? 'bg-zinc-600' : 'bg-green-700' } ${t.visible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'}`}>
+            <div className={`flex flex-row justify-between items-center text-white rounded-xl shadow-md shadow-zinc-800 py-3 px-4 transition-all duration-300 min-w-75 max-w-125 ${type === "success" ? 'bg-green-600' : type === 'error' ? 'bg-red-800' : type === 'info' ? 'bg-zinc-600' : 'bg-green-700' } ${t.visible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'}`}>
                 <div className={`flex flex-row items-center gap-2`}>
                     {type === 'success' ? (<MdDone size={24}/>) : type === 'error' ? (<BiSolidError size={24}/>) : 
                         type === 'downloaded' ? (<MdDownloadDone size={24}/>) : (<BsInfoLg size={24}/>)}

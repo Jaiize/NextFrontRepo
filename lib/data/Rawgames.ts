@@ -19222,3 +19222,336 @@ const cachedGames = () => [
 ]
 
 export default cachedGames;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+{
+  "count": 24,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 3498,
+      "slug": "grand-theft-auto-v",
+      "name": "Grand Theft Auto V",
+      "released": "2013-09-17",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
+      "rating": 4.47,
+      "ratings_count": 7123,
+      "metacritic": 92,
+      "playtime": 74,
+      "genres": [{ "id": 4, "name": "Action" }, { "id": 3, "name": "Adventure" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }, { "platform": { "id": 1, "name": "Xbox One" } }, { "platform": { "id": 18, "name": "PlayStation 4" } }]
+    },
+    {
+      "id": 3328,
+      "slug": "the-witcher-3-wild-hunt",
+      "name": "The Witcher 3: Wild Hunt",
+      "released": "2015-05-18",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
+      "rating": 4.65,
+      "ratings_count": 6845,
+      "metacritic": 92,
+      "playtime": 116,
+      "genres": [{ "id": 4, "name": "Action" }, { "id": 5, "name": "RPG" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }, { "platform": { "id": 18, "name": "PlayStation 4" } }, { "platform": { "id": 1, "name": "Xbox One" } }]
+    },
+    {
+      "id": 4200,
+      "slug": "portal-2",
+      "name": "Portal 2",
+      "released": "2011-04-18",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg",
+      "rating": 4.61,
+      "ratings_count": 5421,
+      "metacritic": 95,
+      "playtime": 11,
+      "genres": [{ "id": 2, "name": "Shooter" }, { "id": 7, "name": "Puzzle" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 5286,
+      "slug": "tomb-raider",
+      "name": "Tomb Raider (2013)",
+      "released": "2013-03-05",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/203160/header.jpg",
+      "rating": 4.05,
+      "ratings_count": 3120,
+      "metacritic": 86,
+      "playtime": 15,
+      "genres": [{ "id": 4, "name": "Action" }, { "id": 3, "name": "Adventure" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 12020,
+      "slug": "left-4-dead-2",
+      "name": "Left 4 Dead 2",
+      "released": "2009-11-17",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/550/header.jpg",
+      "rating": 4.23,
+      "ratings_count": 4210,
+      "metacritic": 89,
+      "playtime": 32,
+      "genres": [{ "id": 2, "name": "Shooter" }, { "id": 4, "name": "Action" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 5679,
+      "slug": "the-elder-scrolls-v-skyrim",
+      "name": "The Elder Scrolls V: Skyrim",
+      "released": "2011-11-11",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/72850/header.jpg",
+      "rating": 4.42,
+      "ratings_count": 6234,
+      "metacritic": 94,
+      "playtime": 120,
+      "genres": [{ "id": 5, "name": "RPG" }, { "id": 4, "name": "Action" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 28,
+      "slug": "red-dead-redemption-2",
+      "name": "Red Dead Redemption 2",
+      "released": "2018-10-26",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
+      "rating": 4.59,
+      "ratings_count": 5890,
+      "metacritic": 97,
+      "playtime": 80,
+      "genres": [{ "id": 4, "name": "Action" }, { "id": 3, "name": "Adventure" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 4062,
+      "slug": "bioshock-infinite",
+      "name": "BioShock Infinite",
+      "released": "2013-03-26",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/8870/header.jpg",
+      "rating": 4.38,
+      "ratings_count": 3980,
+      "metacritic": 94,
+      "playtime": 12,
+      "genres": [{ "id": 2, "name": "Shooter" }, { "id": 4, "name": "Action" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 3439,
+      "slug": "life-is-strange-episode-1",
+      "name": "Life is Strange",
+      "released": "2015-01-30",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/319630/header.jpg",
+      "rating": 4.12,
+      "ratings_count": 2870,
+      "metacritic": 85,
+      "playtime": 15,
+      "genres": [{ "id": 3, "name": "Adventure" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 1030,
+      "slug": "limbo",
+      "name": "Limbo",
+      "released": "2010-07-21",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/48000/header.jpg",
+      "rating": 4.11,
+      "ratings_count": 3420,
+      "metacritic": 90,
+      "playtime": 4,
+      "genres": [{ "id": 51, "name": "Indie" }, { "id": 7, "name": "Puzzle" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 422,
+      "slug": "terraria",
+      "name": "Terraria",
+      "released": "2011-05-16",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
+      "rating": 4.34,
+      "ratings_count": 5120,
+      "metacritic": 83,
+      "playtime": 95,
+      "genres": [{ "id": 51, "name": "Indie" }, { "id": 4, "name": "Action" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 802,
+      "slug": "borderlands-2",
+      "name": "Borderlands 2",
+      "released": "2012-09-18",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/49520/header.jpg",
+      "rating": 4.16,
+      "ratings_count": 4320,
+      "metacritic": 89,
+      "playtime": 45,
+      "genres": [{ "id": 2, "name": "Shooter" }, { "id": 5, "name": "RPG" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 58175,
+      "slug": "god-of-war",
+      "name": "God of War",
+      "released": "2018-04-20",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/1593500/header.jpg",
+      "rating": 4.57,
+      "ratings_count": 4560,
+      "metacritic": 94,
+      "playtime": 32,
+      "genres": [{ "id": 4, "name": "Action" }, { "id": 3, "name": "Adventure" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 430,
+      "slug": "civilization-v",
+      "name": "Sid Meier's Civilization V",
+      "released": "2010-09-21",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/8930/header.jpg",
+      "rating": 4.24,
+      "ratings_count": 3890,
+      "metacritic": 90,
+      "playtime": 150,
+      "genres": [{ "id": 10, "name": "Strategy" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 13536,
+      "slug": "portal",
+      "name": "Portal",
+      "released": "2007-10-09",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/400/header.jpg",
+      "rating": 4.52,
+      "ratings_count": 4890,
+      "metacritic": 90,
+      "playtime": 3,
+      "genres": [{ "id": 7, "name": "Puzzle" }, { "id": 51, "name": "Indie" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 2454,
+      "slug": "doom",
+      "name": "DOOM (2016)",
+      "released": "2016-05-13",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/379720/header.jpg",
+      "rating": 4.27,
+      "ratings_count": 4120,
+      "metacritic": 85,
+      "playtime": 14,
+      "genres": [{ "id": 2, "name": "Shooter" }, { "id": 4, "name": "Action" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 41494,
+      "slug": "cyberpunk-2077",
+      "name": "Cyberpunk 2077",
+      "released": "2020-12-10",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg",
+      "rating": 4.03,
+      "ratings_count": 6780,
+      "metacritic": 86,
+      "playtime": 65,
+      "genres": [{ "id": 4, "name": "Action" }, { "id": 5, "name": "RPG" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 290856,
+      "slug": "apex-legends",
+      "name": "Apex Legends",
+      "released": "2019-02-04",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg",
+      "rating": 3.85,
+      "ratings_count": 3420,
+      "metacritic": 88,
+      "playtime": 120,
+      "genres": [{ "id": 2, "name": "Shooter" }, { "id": 4, "name": "Action" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 9862,
+      "slug": "cs-go",
+      "name": "Counter-Strike 2",
+      "released": "2023-09-27",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg",
+      "rating": 3.92,
+      "ratings_count": 8900,
+      "metacritic": 88,
+      "playtime": 500,
+      "genres": [{ "id": 2, "name": "Shooter" }, { "id": 4, "name": "Action" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 3498,
+      "slug": "stardew-valley",
+      "name": "Stardew Valley",
+      "released": "2016-02-26",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg",
+      "rating": 4.55,
+      "ratings_count": 6230,
+      "metacritic": 89,
+      "playtime": 120,
+      "genres": [{ "id": 51, "name": "Indie" }, { "id": 5, "name": "RPG" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 22511,
+      "slug": "hades",
+      "name": "Hades",
+      "released": "2020-09-17",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
+      "rating": 4.48,
+      "ratings_count": 4560,
+      "metacritic": 93,
+      "playtime": 35,
+      "genres": [{ "id": 51, "name": "Indie" }, { "id": 4, "name": "Action" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 11973,
+      "slug": "celeste",
+      "name": "Celeste",
+      "released": "2018-01-25",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/504230/header.jpg",
+      "rating": 4.41,
+      "ratings_count": 3890,
+      "metacritic": 94,
+      "playtime": 12,
+      "genres": [{ "id": 51, "name": "Indie" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 872,
+      "slug": "hollow-knight",
+      "name": "Hollow Knight",
+      "released": "2017-02-24",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/367520/header.jpg",
+      "rating": 4.53,
+      "ratings_count": 5120,
+      "metacritic": 90,
+      "playtime": 40,
+      "genres": [{ "id": 51, "name": "Indie" }, { "id": 4, "name": "Action" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    },
+    {
+      "id": 654,
+      "slug": "star-wars-jedi-fallen-order",
+      "name": "STAR WARS Jedi: Fallen Order",
+      "released": "2019-11-15",
+      "background_image": "https://cdn.akamai.steamstatic.com/steam/apps/1172380/header.jpg",
+      "rating": 4.15,
+      "ratings_count": 3120,
+      "metacritic": 81,
+      "playtime": 22,
+      "genres": [{ "id": 4, "name": "Action" }, { "id": 3, "name": "Adventure" }],
+      "platforms": [{ "platform": { "id": 4, "name": "PC" } }]
+    }
+  ]
+}

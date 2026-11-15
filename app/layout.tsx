@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 import {
   Geist,
   Geist_Mono,
@@ -139,6 +140,7 @@ export default function RootLayout({
         <Providers>
           <NavBar />
           <Scroller>{children}</Scroller>
+          <Toaster position="bottom-center" />
         </Providers>
       </body>
     </html>

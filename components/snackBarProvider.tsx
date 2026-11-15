@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from 'react'
 
 /** 
- *  @deprecated used react-hot-toast instead
+ * Used react-hot-toast instead
  * 
  */ 
 type Snackbar = { message: string, option?: string, type?: 'success' | 'error' | 'info' }

@@ -108,7 +108,6 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   ) => {
     if (shotRef.current) {
       e.preventDefault();
-      // shotRef.current.setPointerCapture(e.pointerId)
 
       setToMove(true);
       cancelAnimationFrame(rafId.current)// Stops previous gliding
@@ -145,7 +144,6 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
       let walk: number;
 
       e.preventDefault();
-      // shotRef.current.setPointerCapture(e.pointerId)
       
       const x = "touches" in e ? e.touches[0].pageX : e.pageX;
 
@@ -191,7 +189,6 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     if (shotRef.current) {
       setToMove(false);
       shotRef.current.style.cursor = "pointer";
-      // shotRef.current.releasePointerCapture(e .pointerId)
       rafId.current = requestAnimationFrame(momentum) // Start gliding
     }
   };
@@ -656,10 +653,6 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         <div ref={shotsRefMaster} data-observer='unseen' className={`w-auto h-60 max-sm:h-50 mx-3 mb-6 opacity-0 translate-y-15 data-[observer=seen]:opacity-100 data-[observer=seen]:translate-y-0 duration-300`}>
           <div
             ref={shotRef}
-            // onPointerDown={(e) => handlePointerDown(e)}
-            // onPointerMove={(e) => handlePointerMove(e)}
-            // onPointerUp={(e) => handlePointerUp(e)}
-            // onPointerCancel={(e) => handlePointerUp(e)}
             onMouseDown={(e) => handlePointerDown(e)}
             onMouseMove={(e) => handlePointerMove(e)}
             onMouseUp={() => handlePointerUp()}

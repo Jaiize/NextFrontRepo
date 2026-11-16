@@ -144,7 +144,6 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     if (toMove && shotRef.current && typeof window !== 'undefined') {
       let walk: number;
 
-      shotRef.current.setPointerCapture(e.pointerId)
       e.preventDefault();
       
       const x = e.pageX;
@@ -191,7 +190,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     if (shotRef.current) {
       setToMove(false);
       shotRef.current.style.cursor = "pointer";
-      shotRef.current.releasePointerCapture(e.pointerId)
+      // shotRef.current.releasePointerCapture(e.pointerId)
       rafId.current = requestAnimationFrame(momentum) // Start gliding
     }
   };
@@ -202,16 +201,9 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   };
 
-  useEffect(() => cancelAnimationFrame(rafId.current), []) // Stops current mommentum at start-up
+  useEffect(() => cancelAnimationFrame(rafId.current), []) // Stops current mommentum at start-up / render
 
-  // Allow parent to release click
-  // const onClickCapture = (e: React.MouseEvent) => {
-  //   if (shotRef.current!.scrollLeft === scrollLeft) {
-  //     e.stopPropagation();
-  //     e.preventDefault();
-  //   }
-  // } 
-
+  
   // Gives Screenshot projector the clicked image to display first
   const execute = (idx: number) => {
     // Ensures Screenshot projector knows the diffrence between (scroll / move) from a click
@@ -669,7 +661,6 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             onPointerCancel={(e) => handlePointerUp(e)}
             onPointerMove={(e) => handlePointerMove(e)}
             onPointerDown={(e) => handlePointerDown(e)}
-            // onClickCapture={(e) => onClickCapture(e)}
             className={`w-${shots.length * 100 + 150}px relative h-full flex flex-row items-center gap-3 overflow-hidden`}
           >
             {shots &&

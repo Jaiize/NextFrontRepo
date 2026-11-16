@@ -108,7 +108,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   ) => {
     if (shotRef.current) {
       e.preventDefault();
-      // shotRef.current.setPointerCapture(e.pointerId)
+      shotRef.current.setPointerCapture(e.pointerId)
 
       setToMove(true);
       cancelAnimationFrame(rafId.current)// Stops previous gliding
@@ -190,7 +190,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     if (shotRef.current) {
       setToMove(false);
       shotRef.current.style.cursor = "pointer";
-      // shotRef.current.releasePointerCapture(e.pointerId)
+      shotRef.current.releasePointerCapture(e.pointerId)
       rafId.current = requestAnimationFrame(momentum) // Start gliding
     }
   };

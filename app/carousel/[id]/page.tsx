@@ -104,7 +104,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
 
 
   const handlePointerDown = (
-    e: React.PointerEvent,
+    e: React.MouseEvent | React.TouchEvent | MouseEvent,
   ) => {
     if (shotRef.current) {
       e.preventDefault();
@@ -112,7 +112,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
 
       setToMove(true);
       cancelAnimationFrame(rafId.current)// Stops previous gliding
-      const x = e.pageX;
+      const x = "touches" in e ? e.touches[0].pageX : e.pageX;
       setClientX(x - (shotRef.current.scrollLeft || 0)); // Same as proper clientX
 
       setLastX(x - (shotRef.current.scrollLeft || 0));
@@ -139,15 +139,15 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   const handlePointerMove = (
-    e: React.PointerEvent,
+    e: React.MouseEvent | React.TouchEvent | MouseEvent,
   ) => {
     if (toMove && shotRef.current && typeof window !== 'undefined') {
       let walk: number;
 
       e.preventDefault();
-      shotRef.current.setPointerCapture(e.pointerId)
+      // shotRef.current.setPointerCapture(e.pointerId)
       
-      const x = e.pageX;
+      const x = "touches" in e ? e.touches[0].pageX : e.pageX;
 
       if (window.innerWidth < 1035){
         /**
@@ -187,11 +187,11 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   };
 
-  const handlePointerUp = (e: React.PointerEvent) => {
+  const handlePointerUp = () => {
     if (shotRef.current) {
       setToMove(false);
       shotRef.current.style.cursor = "pointer";
-      shotRef.current.releasePointerCapture(e.pointerId)
+      // shotRef.current.releasePointerCapture(e .pointerId)
       rafId.current = requestAnimationFrame(momentum) // Start gliding
     }
   };
@@ -656,12 +656,25 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         <div ref={shotsRefMaster} data-observer='unseen' className={`w-auto h-60 max-sm:h-50 mx-3 mb-6 opacity-0 translate-y-15 data-[observer=seen]:opacity-100 data-[observer=seen]:translate-y-0 duration-300`}>
           <div
             ref={shotRef}
-            onPointerDown={(e) => handlePointerDown(e)}
-            onPointerMove={(e) => handlePointerMove(e)}
-            onPointerUp={(e) => handlePointerUp(e)}
+            // onPointerDown={(e) => handlePointerDown(e)}
+            // onPointerMove={(e) => handlePointerMove(e)}
+            // onPointerUp={(e) => handlePointerUp(e)}
             // onPointerCancel={(e) => handlePointerUp(e)}
-            onTouchMove={() => mobileMove()}
-            onTouchEnd={() => mobileUp()}
+            onMouseDown={(e) => handlePointerDown(e)}
+            onMouseMove={(e) => handlePointerMove(e)}
+            onMouseUp={() => handlePointerUp()}
+            onMouseLeave={() => handlePointerUp()}
+            onTouchStart={(e) => handlePointerDown(e)}
+            onTouchMove={(e) => {
+              mobileMove()
+              handlePointerMove(e)
+            }}
+            onTouchEnd={() => 
+              {
+                mobileUp()
+                handlePointerUp()
+              }
+            }
             className={`w-${shots.length * 100 + 150}px relative h-full flex flex-row items-center gap-3 overflow-hidden`}
           >
             {shots &&

@@ -33,4 +33,6 @@ export const useSnackbar = (s: Snackbar) => {
     if (!ctx) throw new Error("useSnackbar must be use inside SnackbarProvider wrapper!")
     const { show } = ctx
     show(s)
+    // if it's to be used as a Hook, then get rid of the Snackbar parameter
+    // return ctx
 }

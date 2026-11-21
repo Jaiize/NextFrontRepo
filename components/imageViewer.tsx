@@ -35,7 +35,7 @@ const ImageViewer = ({ images, index, popOut, setPopOut, setIndex, name }: Image
   return (
     <div className={`min-w-full min-h-full fixed inset-0 z-30 transition-transform duration-200 ${popOut ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none scale-50'}`}>
       <div className="relative w-full h-full backdrop-blur-lg">
-        <div onClick={() => downloadImage(images[index].image, name)} className="absolute left-10 max-sm:left-7 top-15 cursor-pointer h-7 w-7 active:h-4 active:w-4 transition-all duration-300">
+        <div onClick={() => downloadImage(images[index].image, name)} className="absolute left-10 max-sm:left-7 top-15 cursor-pointer h-7 w-7 active:h-5 active:w-5 transition-all duration-300">
           <GoDownload className="h-full w-full"/>
         </div>
         <span onClick={() => setPopOut(false)} className="absolute right-10 top-15 max-sm:right-5 hover:cursor-pointer z-40">

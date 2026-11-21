@@ -31,7 +31,17 @@ import {
 import { IoTriangleOutline } from "react-icons/io5";
 import { FaRegCircle, FaRegSquare } from "react-icons/fa"; 
 import { RxCross1 } from "react-icons/rx";
-import { PiDesktopTowerThin, PiDesktopThin } from "react-icons/pi";
+import { PiDesktopTowerThin, PiDesktopThin } from "react-icons/pi"
+import { FcRating } from "react-icons/fc"; // Rating
+import { BsFillCalendarDateFill } from "react-icons/bs";
+import { SiCountingworkspro } from "react-icons/si";
+import { SiMetacritic } from "react-icons/si";
+import { GiConsoleController } from "react-icons/gi";
+import { GrAchievement } from "react-icons/gr";
+import { FcLinux } from "react-icons/fc"; // New Linux
+import { VscDiffAdded } from "react-icons/vsc";
+import { MdTipsAndUpdates } from "react-icons/md";
+import { CgController } from "react-icons/cg"; 
 
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -506,6 +516,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           }
         </div>
       </div>
+
       {/* Working on the difference between inline and  block */}
       {/* <div className="w-auto h-80 bg-amber-950 inline-flex gap-4 p-4">
         <div className="flex flex-row gap-2">
@@ -524,12 +535,17 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
       </div>
       <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed omnis odit quia, similique harum amet! Tempora eos laborum distinctio necessitatibus illo a nostrum quos, sint esse voluptas officia animi ullam?</div> */}
+
+
       {/* Stats  */}
       <div className="w-auto flex flex-row max-sm:flex-col gap-4 h-auto my-7 mx-3">
         <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${dynamicBg} rounded-xl p-4`}>
           {background_image && (
             <div className="flex flex-row justify-between items-center">
-              <span className="font-play text-lg">Rating:</span>
+              <div className="flex flex-row justify-between items-center gap-2">
+                <FcRating size={24}/>
+                <span className="font-play text-lg">Rating</span>
+              </div>
               <span className="text-lg text-white-600 font-grotesk">
                 <FaStar className="text-yellow-300 inline mx-1.5 text-sm mb-1" />
                 {rating}
@@ -538,7 +554,10 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {added && (
             <div className="flex flex-row justify-between items-center">
-              <span className="font-play text-lg">Added:</span>
+              <div className="flex flex-row justify-between items-center gap-2">
+                <VscDiffAdded size={24}/>
+                <span className="font-play text-lg">Added</span>
+              </div>
               <span className="text-lg text-white-600 font-grotesk">
                 {added}
               </span>
@@ -546,7 +565,10 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {genres && (
             <div className="flex flex-row justify-between">
-              <span className="text-lg font-play">{genres.length > 1 ? "Genres:" : "Genre:"}</span>
+              <div className="flex flex-row justify-between items-center gap-2">
+                <CgController size={24}/>
+                <span className="text-lg font-play">{genres.length > 1 ? "Genres" : "Genre"}</span>
+              </div>
               <div className="flex flex-col items-end">
                 {genres &&
                   genres.map((g) => (
@@ -560,7 +582,10 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {released && (
             <div className="flex flex-row justify-between items-center">
-              <span className="text-lg justify-start font-play">Release:</span>
+              <div className="flex flex-row justify-between items-center gap-2">
+                <BsFillCalendarDateFill size={19}/>
+                <span className="text-lg justify-start font-play">Release</span>
+              </div>
               <span
                 className={`${theme === "dark" ? "text-gray-400" : "text-black"} justify-end text-md font-grotesk`}
               >
@@ -575,8 +600,11 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
         <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${dynamicBg} rounded-xl p-4`}>
           {movies_count >= 1 && (
-            <div className="flex flex-row justify-between items-center">
-              <span className="font-play text-lg">Movies Count:</span>
+            <div className="flex flex-row justify-between items-center gap-2">
+              <div className="flex flex-row justify-between items-center gap-2">
+                <SiCountingworkspro size={20}/>
+                <span className="font-play text-lg">Movies Count</span>
+              </div>
               <span className="text-lg text-white-600 font-grotesk">
                 {movies_count}
               </span>
@@ -584,7 +612,10 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {metacritic >= 1 && (
             <div className="flex flex-row justify-between items-center">
-              <span className="font-play text-lg">Metacritic:</span>
+              <div className="flex flex-row justify-between items-center gap-2">
+                <SiMetacritic size={24}/>
+                <span className="font-play text-lg">Metacritic</span>
+              </div>
               <span className="text-lg text-white-600 font-grotesk">
                 {metacritic}
               </span>
@@ -592,7 +623,10 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {playtime >= 1 && (
             <div className="flex flex-row justify-between items-center">
-              <span className="font-play text-lg">Playtime:</span>
+              <div className="flex flex-row justify-center items-center gap-2">
+                <GiConsoleController size={26}/>
+                <span className="font-play text-lg">Playtime</span>
+              </div>
               <span className="text-lg text-white-600 font-grotesk">
                 {playtime}
               </span>
@@ -600,7 +634,10 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {achievements_count >= 1 && (
             <div className="flex flex-row justify-between items-center">
-              <span className="font-play text-lg">Achievements Count:</span>
+              <div className="flex flex-row justify-between items-center gap-2">
+                <GrAchievement size={20}/>
+                <span className="font-play text-lg">Achievements Count</span>
+              </div>
               <span className="text-lg text-white-600 font-grotesk">
                 {achievements_count}
               </span>
@@ -608,7 +645,10 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {esrb_rating && (
             <div className="flex flex-row justify-between items-center">
-              <span className="font-play text-lg">ESRB Rating:</span>
+              <div className="flex flex-row justify-between items-center gap-2">
+                <MdTipsAndUpdates size={24}/>
+                <span className="font-play text-lg">ESRB Rating</span>
+              </div>
               <span className="text-lg text-white-600 font-grotesk">
                 {esrb_rating.name}
               </span>

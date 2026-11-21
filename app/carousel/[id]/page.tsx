@@ -582,7 +582,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {released && (
             <div className="flex flex-row justify-between items-center">
-              <div className="flex flex-row justify-between items-center gap-2">
+              <div className="flex flex-row justify-between items-center gap-3">
                 <BsFillCalendarDateFill size={19}/>
                 <span className="text-lg justify-start font-play">Release</span>
               </div>
@@ -634,7 +634,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
           {achievements_count >= 1 && (
             <div className="flex flex-row justify-between items-center">
-              <div className="flex flex-row justify-between items-center gap-2">
+              <div className="flex flex-row justify-between items-center gap-3">
                 <GrAchievement size={20}/>
                 <span className="font-play text-lg">Achievements Count</span>
               </div>
@@ -717,8 +717,8 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
                   onClick={() => execute(i)}
                   loading="lazy"
                   alt={g.image}
-                  width={1920}
-                  height={1080}
+                  width={1280}
+                  height={720}
                   src={g.image || "/Nocontent.jpg"}
                   className={`min-w-100 max-sm:min-w-80 h-full aspect-video object-cover rounded-xl`}
                 />

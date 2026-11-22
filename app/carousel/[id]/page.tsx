@@ -428,16 +428,16 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           }
           {platforms &&
             platforms.some((p) => p.platform.slug.includes("linux")) && (
-              <div className={`${dynamicBg} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-14`}>
+              <div className={`border border-zinc-500 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-30 max-sm:h-14`}>
                 <span
                   aria-label="Available on Linux"
                   className="text-lg font-extrabold max-sm:text-sm"
                 >
                   Linux
                 </span>
-                <FaLinux
+                <FcLinux
                   aria-label="Linux Icon"
-                  className={`${theme === "dark" ? "text-amber-300" : "text-amber-800"} text-5xl max-sm:text-4xl`}
+                  className={`text-5xl max-sm:text-4xl`}
                 />
               </div>
             )
@@ -460,7 +460,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
             platforms.some((p) =>
               p.platform.slug.includes("nintendo-switch"),
             ) && (
-              <div className={`${dynamicBg} rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-14`}>
+              <div className={`border border-zinc-500 rounded-2xl w-auto px-2.5 h-18 flex flex-row gap-4 items-center justify-between max-sm:w-40 max-sm:h-14`}>
                 <span
                   aria-label="Available on Nintendo Switch"
                   className="text-lg font-extrabold max-sm:text-sm"
@@ -566,7 +566,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           {genres && (
             <div className="flex flex-row justify-between">
               <div className="flex flex-row justify-between items-center gap-2">
-                <CgController size={24}/>
+                <CgController size={24} className="text-amber-600"/>
                 <span className="text-lg font-play">{genres.length > 1 ? "Genres" : "Genre"}</span>
               </div>
               <div className="flex flex-col items-end">
@@ -601,7 +601,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         <div className={`w-1/2 flex flex-col space-y-7 h-auto max-sm:w-full max-sm:space-y-5 ${dynamicBg} rounded-xl p-4`}>
           {movies_count >= 1 && (
             <div className="flex flex-row justify-between items-center gap-2">
-              <div className="flex flex-row justify-between items-center gap-2">
+              <div className="flex flex-row justify-between items-center gap-3">
                 <SiCountingworkspro size={20}/>
                 <span className="font-play text-lg">Movies Count</span>
               </div>
@@ -613,7 +613,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           {metacritic >= 1 && (
             <div className="flex flex-row justify-between items-center">
               <div className="flex flex-row justify-between items-center gap-2">
-                <SiMetacritic size={24}/>
+                <SiMetacritic size={24} className="text-red-500"/>
                 <span className="font-play text-lg">Metacritic</span>
               </div>
               <span className="text-lg text-white-600 font-grotesk">
@@ -635,7 +635,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           {achievements_count >= 1 && (
             <div className="flex flex-row justify-between items-center">
               <div className="flex flex-row justify-between items-center gap-3">
-                <GrAchievement size={20}/>
+                <GrAchievement size={20} className="text-yellow-600"/>
                 <span className="font-play text-lg">Achievements Count</span>
               </div>
               <span className="text-lg text-white-600 font-grotesk">
@@ -646,7 +646,7 @@ const GameDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           {esrb_rating && (
             <div className="flex flex-row justify-between items-center">
               <div className="flex flex-row justify-between items-center gap-2">
-                <MdTipsAndUpdates size={24}/>
+                <MdTipsAndUpdates size={24} className="text-blue-600"/>
                 <span className="font-play text-lg">ESRB Rating</span>
               </div>
               <span className="text-lg text-white-600 font-grotesk">
